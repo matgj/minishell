@@ -5,7 +5,7 @@ void     test(t_cmds *cmds)
     int l = 0;
     while (cmds->arg[l])
     {
-        printf("cmd->arg[%i]:%s\n", l, cmds->arg[l]);
+        printf("cmd->arg[%i]:%s\n", l, cmds->arg[l]); //affiche le contenu de ma struct arg
         l++;
     }
 }
@@ -30,7 +30,6 @@ t_cmds    parse_cmd(char *cmds_pipe)
          i++;
     }
     cmds.arg[i] = NULL;
-    command_creation();
     return (cmds);
 }
 
@@ -66,23 +65,24 @@ t_cmds   *parse_pipe(char *cmds_semi)
 void    parsing(char *line)
 {
     char    **cmds_semi; //cmds_semi pour ligne de commandes separees par des SEMICOLON (=> ;)
-    t_cmds   *cmds_pipe; //cmds_pipe pour commandes separees par des PIPES (=> |)
+    t_cmds  *cmds_pipe; //cmds_pipe pour commandes separees par des PIPES (=> |)
     int     l; //ligne
-    int     c; //colonnes
+    int     i;
 
     l = 0;
     cmds_semi = ft_split(line,';');
   //  free(line); //on peut free line car on a le contenu de line dans cmds_semi
     while (cmds_semi[l]) 
     {
-        c = 0;
+        i = 0;
         printf("cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(*cmds_semi);
-        while (cmds_semi[c])
+        while (cmds_pipe[i].cast)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
         {
-            c++;
+            command_creation(*cmds_pipe);
+          // printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].cmd);
+            i++;
         }
         l++;
     }
- /* a enlever cest juste pour voir le contenu de mes tabs */
 }

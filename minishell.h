@@ -28,9 +28,9 @@ typedef struct  s_shell
 
 typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
 {
-	char	*cmd;  //commande a executees retournees par split pipes
-	char	*path;
-	char	**arg;
+	char	*cast;  //variable qui sert a eviter une erreur de compil avec un while sur cmds_pipe[i]
+	char	*path; //path exacte de l'exe.
+	char	**arg; //tokens a executes retournees par split pipes et split semi, fini par NULL
 }				t_cmds;
 
 t_shell g_shell;
@@ -40,8 +40,10 @@ int     exit_success(void);
 int     exit_failure(void);
 void    free_var(void);
 void	parsing(char *line);
+void    command_creation(t_cmds cmds);
 
 char	**env_import(char **envp);
+
 
 char 	*ft_strdup(const char *str);
 size_t	ft_strlen(const char *str);
