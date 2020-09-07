@@ -1,6 +1,8 @@
 # minishell_flmarsil
 git shared with flmarsil
 
+Tuto branch GIT https://www.youtube.com/watch?v=JTE2Fn_sCZs&ab_channel=CodemySchool
+
 workflow
 your local repository consists of three "trees" maintained by git. the first one is your Working Directory which holds the actual files. the second one is the Index which acts as a staging area and finally the HEAD which points to the last commit you've made.
 
