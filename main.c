@@ -27,11 +27,8 @@ int main (int argc, char **argv, char **envp)
 	i = 0;
 	line = NULL;
 	g_shell.status = 0;
-	g_shell.var_env = env_import(envp);
+	g_cmds.envp = env_import(envp);
 
-	char *test[] ={"ls",NULL};
-	char *env[] ={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin",NULL};
-	execve("ls", test, env);
 	while(g_shell.status == 0)
 	{ 
 		printf("> ");

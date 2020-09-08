@@ -4,8 +4,8 @@ FLAGS = -Wall -Werror -Wextra -fsanitize=address -fsanitize=address
 
 INCLUDE = -I minishell.h
 
-SRCS =	main.c execute.c exit.c parsing.c env.c command.c \
-		utils/ft_memmove.c utils/ft_strdup.c utils/ft_strjoin.c \
+SRCS =	main.c execute.c exit.c parsing.c env.c command.c test.c \
+		utils/ft_memmove.c utils/ft_strdup.c utils/ft_strjoin.c utils/ft_strcmp.c \
 		utils/ft_strlen.c utils/get_next_line_utils.c utils/get_next_line.c utils/ft_split.c
 
 OBJS = $(SRCS:.c=.o)

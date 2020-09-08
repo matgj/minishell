@@ -14,5 +14,5 @@ int     exit_failure(void)
 
 void    free_var(void)
 {
-	free(g_shell.var_env);
+	free(g_cmds.envp);
 }
