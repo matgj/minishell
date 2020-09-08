@@ -67,9 +67,9 @@ void    parsing(char *line)
         i = 0;
         printf("cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(*cmds_semi);
-        while (cmds_pipe[i].cast)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
+        while (cmds_pipe[i].name)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
         {
-            command_management(*cmds_pipe);
+            command_management(*cmds_pipe); // passer le contenu et pas un pointeur sinon ca va pas etre independant à chaque cmd
           // printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].cmd);
             i++;
         }

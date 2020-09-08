@@ -49,6 +49,7 @@ void    command_exec(t_cmds *cmds)
     char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
   //  test_argv(&cmds);
      test_name(cmds);
+   //  get_path(cmds);
     if ((pid = fork()) == -1)
          printf("fork error\n");
     else if (pid == 0)
@@ -59,12 +60,12 @@ void    command_exec(t_cmds *cmds)
 
 }
 
-void    command_management(t_cmds *cmds)
+void    command_management(t_cmds cmds)
 {
     int ret;
     pid_t pid;
 
-    command_creation(cmds); // pour initaliser name dans la struct cmd
-    if (!command_type(cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
-            command_exec(cmds); //on execute le .exe qui se trouve dans la bonne path avec execve
+    command_creation(&cmds); // pour initaliser name dans la struct cmd
+    if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
+            command_exec(&cmds); //on execute le .exe qui se trouve dans la bonne path avec execve
 }
