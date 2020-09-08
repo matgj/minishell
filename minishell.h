@@ -4,6 +4,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 
 #define BUFFER_SIZE 1024
 #define EXIT_SUCCESS 0 //false = bool 0
@@ -22,7 +23,7 @@
 typedef struct  s_shell //structure contenant les variables d environnement et le status
 {
 	int		status; //variable retournee par la fonction execute pour savoir quand quitter le minishell;
-
+	char	**envp; //liste des variables d'environnement "pointer to a null-terminated array of character pointers to null-terminated strings.  A pointer to this array is normally stored in the global variable environ. These strings pass information to the new process that is not directly an argument to the command "
 }		t_shell;
 
 typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
@@ -30,7 +31,6 @@ typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
 	char	*name; //nom de la commande recupere via argv
 	char	*path;  //path exacte de l'executable
 	char	**argv; //pointeur sur tableau de pointeur sur tokens a executes retournees par split pipes et split semi, fini par NULL. "pointer to a null-terminated array of character pointers to null-terminated character strings.  These strings construct the argument list to be made available to the new process.  At least one argument must be present in the array; by custom, the first element should be the name of the executed program (for example, the last component of path)."
-	char	**envp; //liste des variables d'environnement "pointer to a null-terminated array of character pointers to null-terminated strings.  A pointer to this array is normally stored in the global variable environ. These strings pass information to the new process that is not directly an argument to the command "
 }				t_cmds;
 
 t_cmds g_cmds;  //permet de rendre global la structure et de pas se faire chier a passer les variables en parametres;
@@ -55,8 +55,11 @@ void	parsing(char *line);
 void    command_management(t_cmds cmds);
 
 char	**env_import(char **envp);
-void     test_argv(t_cmds *cmds);
-void    test_name(t_cmds *cmds);
+char	*command_path(t_cmds *cmds);
+
+
+void     test_cmd(t_cmds cmds);
+void     test_env(t_cmds *cmds);
 
 void    ft_echo(t_cmds cmds);
 void    ft_cd(t_cmds cmds);

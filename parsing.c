@@ -8,7 +8,7 @@ t_cmds    parse_cmd(char *cmds_pipe)
 
     i = 0;
     token = ft_split(cmds_pipe,' '); //je split une commande separeees par pipe en tokens separees par espace
-//    free(cmds_pipe);
+    free(cmds_pipe);
     while (token[i])
             i++;
     if(!(cmds.argv = (char **)malloc(sizeof(char *) * i + 1 )))
@@ -39,7 +39,7 @@ t_cmds   *parse_pipe(char *cmds_semi)
     cpt = 0;
     while(cmds_pipe[cpt])
     {
-        printf("cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
+       printf("ligne separee par des pipes : cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
         cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
         cpt++;
     }
@@ -61,18 +61,19 @@ void    parsing(char *line)
 
     l = 0;
     cmds_semi = ft_split(line,';');
-  //  free(line); //on peut free line car on a le contenu de line dans cmds_semi
+    free(line); //on peut free line car on a le contenu de line dans cmds_semi
     while (cmds_semi[l]) 
     {
         i = 0;
-        printf("cmds_semi[%i]:%s\n",l, cmds_semi[l]);
-        cmds_pipe = parse_pipe(*cmds_semi);
+        printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
+        cmds_pipe = parse_pipe(cmds_semi[l++]);
         while (cmds_pipe[i].name)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
         {
             command_management(*cmds_pipe); // passer le contenu et pas un pointeur sinon ca va pas etre independant à chaque cmd
-          // printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].cmd);
-            i++;
+           //printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].name);
+           i++;
         }
-        l++;
+      free(cmds_pipe);
     }
+    free(cmds_semi);
 }

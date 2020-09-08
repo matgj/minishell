@@ -5,7 +5,7 @@ void	read_line(char **line)
 {
 	int 	ret;
 
-  	ret = get_next_line(0, line);
+  	ret = get_next_line(1, line);
 	//if (ret == 1)
 	//	execute(line);
 	//else
@@ -20,18 +20,15 @@ int main (int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	char *line;
-	char **cmd;
-//	t_cmds	*cmd;
 	int ret;
 
 	i = 0;
 	line = NULL;
 	g_shell.status = 0;
-	g_cmds.envp = env_import(envp);
-
+	g_shell.envp = env_import(envp);
+	//printf("> ");
 	while(g_shell.status == 0)
 	{ 
-		printf("> ");
 		read_line(&line); //lire la ligne entree par l'utilisateur avec GNL
 		parsing(line);   //separer la ligne en tableaux de commandes et de pipes
 		//execute(&line); 
