@@ -10,6 +10,8 @@
 #define EXIT_SUCCESS 0 //false = bool 0
 #define EXIT_FAILURE 1 //true = bool 1
 
+#define ARG_MAX 262144 // ou peut etre autre ? ou ca 131072
+
 // astuce pour rendre dup2 plus clairs dans lexecution : 
 // # define IN				1
 // # define OUT			0
@@ -31,6 +33,7 @@ typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
 	char	*name; //nom de la commande recupere via argv
 	char	*path;  //path exacte de l'executable
 	char	**argv; //pointeur sur tableau de pointeur sur tokens a executes retournees par split pipes et split semi, fini par NULL. "pointer to a null-terminated array of character pointers to null-terminated character strings.  These strings construct the argument list to be made available to the new process.  At least one argument must be present in the array; by custom, the first element should be the name of the executed program (for example, the last component of path)."
+	int		argc;
 }				t_cmds;
 
 t_cmds g_cmds;  //permet de rendre global la structure et de pas se faire chier a passer les variables en parametres;

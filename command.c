@@ -4,7 +4,7 @@
 //{
 //   est-ce que ma fonction est builtin ?
 //       si oui -> go utiliser les ft_echo ft_cd ft_pwd ft_export ft_unset ft_env ft_exit codes par nous meme, 
-//   proto des builtins = void ft_cd(t_cmd cmd), et avec la struct cmd tu recuperes les args;
+//   proto des builtins = void ft_cd(t_cmd cmd), et avec la struct cmd tu recuperes les argv;
 //       si non ->execve comme ci dessous, avec une fonction get_path qui recup la path exacte
 // 
 //}
@@ -29,15 +29,28 @@ int    command_type(t_cmds *cmds) //si cest une builtin fonction on doit la code
         return (0);
 }
 
+
 void    command_creation(t_cmds *cmds)
 {
     int i;
 
     i = 0;
+    cmds->path = NULL;
     if(!cmds->argv[i])
         cmds->name = NULL;
     else
         cmds->name = ft_strdup(cmds->argv[i]); //je cree name dans la struct name
+    i = 0;
+    while (cmds->argv[i])
+	  {
+	  	if (cmds->argv[i][0] == 3)
+	  	{
+		  	free(cmds->argv[i]);
+		  	cmds->argv[i] = ft_strdup("");
+		  }
+      i++;
+  	}
+    test_cmd(*cmds);
 }
 
 void    command_exec(t_cmds *cmds)
@@ -52,7 +65,7 @@ void    command_exec(t_cmds *cmds)
   //  test_argv(&cmds);
   //   test_name(cmds);
    //  test_path(cmds);
-   command_path(cmds);//
+  //cmds->path = command_path(cmds);//
     if ((pid = fork()) == -1) //cd or exit called in child will not affect shells environment but only child, so we need to fork>
          printf("fork error\n");
     else if (pid == 0)
@@ -71,6 +84,5 @@ void    command_management(t_cmds cmds)
     command_creation(&cmds); // pour initaliser name dans la struct cmd
     if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
             command_exec(&cmds); //on execute le .exe qui se trouve dans la bonne path avec execve
-     test_cmd(cmds);
   //  test_env(&cmds); //sors le des commentaires si tu veux vois ce que ca affiche
 }

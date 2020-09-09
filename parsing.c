@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+
 t_cmds    parse_cmd(char *cmds_pipe)
 {
     char    **token; //partie 1 de la commande
@@ -11,15 +12,19 @@ t_cmds    parse_cmd(char *cmds_pipe)
     free(cmds_pipe);
     while (token[i])
             i++;
-    if(!(cmds.argv = (char **)malloc(sizeof(char *) * i + 1 )))
+    if(!(cmds.argv = (char **)malloc(sizeof(char *) * ARG_MAX + 1)))
         return (cmds);
+    cmds.argc = i;
     i = 0;
     while(token[i])
     {
          cmds.argv[i] = token[i];
+         printf("token:%s\n",token[i]);
          i++;
-    }
+    } 
+    free(token);
     cmds.argv[i] = NULL;
+    command_management(cmds);
     return (cmds);
 }
 
@@ -43,6 +48,7 @@ t_cmds   *parse_pipe(char *cmds_semi)
         cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
         cpt++;
     }
+    //free(cmds_pipe);
     //test_argv(cmds); //affiche le contenu des argv
     return (cmds);
 }
@@ -64,16 +70,17 @@ void    parsing(char *line)
     free(line); //on peut free line car on a le contenu de line dans cmds_semi
     while (cmds_semi[l]) 
     {
-        i = 0;
+        i = 2;
         printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(cmds_semi[l++]);
-        while (cmds_pipe[i].name)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
-        {
-            command_management(*cmds_pipe); // passer le contenu et pas un pointeur sinon ca va pas etre independant à chaque cmd
+        //while (cmds_pipe[i].name)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
+        //{
+         //  execution;
+           // command_management(*cmds_pipe); // passer le contenu et pas un pointeur sinon ca va pas etre independant à chaque cmd
            //printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].name);
-           i++;
-        }
-      free(cmds_pipe);
+          // i++;
+        //};
+    //  free(cmds_pipe);
     }
     free(cmds_semi);
 }
