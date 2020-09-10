@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 t_cmds    parse_cmd(char *cmds_pipe)
 {
     char    **token; //partie 1 de la commande
@@ -24,7 +23,7 @@ t_cmds    parse_cmd(char *cmds_pipe)
     } 
     free(token);
     cmds.argv[i] = NULL;
-    command_management(cmds);
+    command_management(&cmds);
     return (cmds);
 }
 
@@ -73,13 +72,15 @@ void    parsing(char *line)
         i = 2;
         printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(cmds_semi[l++]);
-        //while (cmds_pipe[i].name)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
+       // while (cmds_pipe[i].name)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
         //{
+        // printf("cmds[%i].name:%s",i, cmds_pipe[i].name);
+         //i++;
          //  execution;
            // command_management(*cmds_pipe); // passer le contenu et pas un pointeur sinon ca va pas etre independant à chaque cmd
            //printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].name);
           // i++;
-        //};
+       // };
     //  free(cmds_pipe);
     }
     free(cmds_semi);

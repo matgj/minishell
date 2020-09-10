@@ -36,11 +36,12 @@ void    command_creation(t_cmds *cmds)
 
     i = 0;
     cmds->path = NULL;
+    cmds->input = 0;
     if(!cmds->argv[i])
         cmds->name = NULL;
     else
         cmds->name = ft_strdup(cmds->argv[i]); //je cree name dans la struct name
-    i = 0;
+     i = 0;
     while (cmds->argv[i])
 	  {
 	  	if (cmds->argv[i][0] == 3)
@@ -50,7 +51,6 @@ void    command_creation(t_cmds *cmds)
 		  }
       i++;
   	}
-    test_cmd(*cmds);
 }
 
 void    command_exec(t_cmds *cmds)
@@ -74,15 +74,38 @@ void    command_exec(t_cmds *cmds)
              printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process
     }
   }
+
+if (!ft_strcmp(cmds->name,"date"))
+  {
+   cmds->path = "/bin/wc";
+    //cmds.envp = {"ls", "-l", NULL};
+    char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
+  //  test_argv(&cmds);
+  //   test_name(cmds);
+   //  test_path(cmds);
+  //cmds->path = command_path(cmds);//
+    if ((pid = fork()) == -1) //cd or exit called in child will not affect shells environment but only child, so we need to fork>
+         printf("fork error\n");
+    else if (pid == 0)
+    {  
+        if(execve(cmds->path, cmds->argv, env) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
+             printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process
+    }
+  }
 }
 
-void    command_management(t_cmds cmds)
+void    command_management(t_cmds *cmds)
 {
     int ret;
     pid_t pid;
 
-    command_creation(&cmds); // pour initaliser name dans la struct cmd
-    if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
-            command_exec(&cmds); //on execute le .exe qui se trouve dans la bonne path avec execve
+    if(!cmds->argc)
+      return;
+    command_creation(cmds); // pour initaliser name dans la struct cmd
+    redirection(cmds);
+    test_cmd(*cmds);
+   // test_cmd(*cmds);
+    if (!command_type(cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
+            command_exec(cmds); //on execute le .exe qui se trouve dans la bonne path avec execve
   //  test_env(&cmds); //sors le des commentaires si tu veux vois ce que ca affiche
 }
