@@ -23,6 +23,8 @@ t_cmds    parse_cmd(char *cmds_pipe)
     } 
     free(token);
     cmds.argv[i] = NULL;
+    while (i < ARG_MAX)
+        cmds.output[i++] = -1;
     command_management(&cmds);
     return (cmds);
 }
@@ -32,10 +34,12 @@ t_cmds   *parse_pipe(char *cmds_semi)
     t_cmds   *cmds; //cmds a executer sans pipe ni semi
     char    **cmds_pipe; //cmds_semi pour ligne de commandes separees par des SEMICOLON (=> ;)
     int     cpt; 
+    t_cmds   nul;
 
     cpt = 0;
+    nul.name = NULL;
     cmds_pipe = ft_split(cmds_semi, '|'); // je split une ligne de commande separees par ; en commande separrees par pipe
-   // free(cmds_semi);
+    free(cmds_semi);
     while(cmds_pipe[cpt]) // on compte le nombre de commande dans la ligne de commande pour malloc 
             cpt++;
     if(!(cmds = (t_cmds*)malloc(sizeof(t_cmds) * cpt + 1))) // pour chaque commande je cree une chaine cmd
@@ -47,7 +51,9 @@ t_cmds   *parse_pipe(char *cmds_semi)
         cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
         cpt++;
     }
-    //free(cmds_pipe);
+    free(cmds_pipe);
+   // cmds[cpt] = nul; segfault qd je fais ca
+    command_plug(cmds);
     //test_argv(cmds); //affiche le contenu des argv
     return (cmds);
 }
@@ -69,18 +75,17 @@ void    parsing(char *line)
     free(line); //on peut free line car on a le contenu de line dans cmds_semi
     while (cmds_semi[l]) 
     {
-        i = 2;
+        i = 0;
         printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(cmds_semi[l++]);
-       // while (cmds_pipe[i].name)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
-        //{
-        // printf("cmds[%i].name:%s",i, cmds_pipe[i].name);
-         //i++;
+        while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
+        {
+         printf("---------------------------HEY-------------\n");
+         i++;
          //  execution;
-           // command_management(*cmds_pipe); // passer le contenu et pas un pointeur sinon ca va pas etre independant à chaque cmd
            //printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].name);
           // i++;
-       // };
+        }
     //  free(cmds_pipe);
     }
     free(cmds_semi);

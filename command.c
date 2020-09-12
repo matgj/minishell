@@ -37,7 +37,8 @@ void    command_creation(t_cmds *cmds)
     i = 0;
     cmds->path = NULL;
     cmds->input = 0;
-    if(!cmds->argv[i])
+    i = 0;
+    if (!cmds->argv[i])
         cmds->name = NULL;
     else
         cmds->name = ft_strdup(cmds->argv[i]); //je cree name dans la struct name
@@ -77,7 +78,7 @@ void    command_exec(t_cmds *cmds)
 
 if (!ft_strcmp(cmds->name,"date"))
   {
-   cmds->path = "/bin/wc";
+   cmds->path = "/bin/date";
     //cmds.envp = {"ls", "-l", NULL};
     char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
   //  test_argv(&cmds);
@@ -103,8 +104,8 @@ void    command_management(t_cmds *cmds)
       return;
     command_creation(cmds); // pour initaliser name dans la struct cmd
     redirection(cmds);
+   // command_plug(cmds);
     test_cmd(*cmds);
-   // test_cmd(*cmds);
     if (!command_type(cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
             command_exec(cmds); //on execute le .exe qui se trouve dans la bonne path avec execve
   //  test_env(&cmds); //sors le des commentaires si tu veux vois ce que ca affiche

@@ -36,7 +36,7 @@ typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
 	char	**argv;  //pointeur sur tableau de pointeur sur tokens a executes retournees par split pipes et split semi, fini par NULL. "pointer to a null-terminated array of character pointers to null-terminated character strings.  These strings construct the argument list to be made available to the new process.  At least one argument must be present in the array; by custom, the first element should be the name of the executed program (for example, the last component of path)."
 	int 	chevron; //> = redirec stdin (0) < = redic stout (1); 2 >> 3 = rien
 	int		argc;    // nombre darguments dune commande (ls -l = deux arguments, wc -l > hello.txt = 4 argument)
-	int 	*output; //tabl d'int pour les files descriptor d'une commande qui va rediriger son ouput
+	int 	output[ARG_MAX]; //tabl d'int pour les files descriptor d'une commande qui va rediriger son ouput
 	int		input;   //fd qui sert dinput a une commande
 }				t_cmds;
 
@@ -62,6 +62,7 @@ void	parsing(char *line);
 void    command_management(t_cmds *cmds);
 void	redirection(t_cmds *cmds);
 void    ft_tab_output(int *tab_fds, int fd);
+void    command_plug(t_cmds *cmds);
 
 char	**env_import(char **envp);
 char	*command_path(t_cmds *cmds);

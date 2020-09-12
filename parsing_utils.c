@@ -1,3 +1,5 @@
+#include "minishell.h"
+
 //cette fonction permet de stocker les fds des nouveaux output
 //ca va servir a gerer les pipes et >
 
