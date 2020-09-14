@@ -48,18 +48,10 @@ void    redirec_output(t_cmds *cmds, char *argv)
 //(exemple date < salut.txt va afficher la date de salut.txt)
 //je cree donc un nouveau FD
 
-void    redirec_input(t_cmds *cmds, char *argv)
-{
-   int fd;
-
-    if ((fd = open(argv, O_RDONLY)) < 0)
-        printf("error creation open function redirec < input\n");
-    cmds->input = fd; //lors de lexecution linput de ma commande sera ce fd
-}
-
 void    redirection(t_cmds *cmds)
 {
     int i;
+    int fd;
 
     i = 0;
     while (i < cmds->argc)
@@ -68,9 +60,13 @@ void    redirection(t_cmds *cmds)
         if (cmds->chevron < 3)
         {
             if (cmds->chevron == 1)
-                redirec_input(cmds, cmds->argv[i + 1]); //cmds->argv[i]);
+               {
+                    if ((fd = open(cmds->argv[i + 1], O_RDONLY)) < 0)
+                      printf("error creation open function redirec < input\n");
+                    cmds->input = fd;
+                }
              else 
-                redirec_output(cmds, cmds->argv[i + 1]); //cmds->argv[i]);
+                redirec_output(cmds, cmds->argv[i + 1]);
         i++;
         }
         i++;

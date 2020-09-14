@@ -18,7 +18,7 @@ void        command_plug(t_cmds *cmds)
 
     nb_cmds = 0;
     i = 0;
-    while (cmds[nb_cmds].name != NULL)
+    while (cmds[nb_cmds].name)
             nb_cmds++;
     while(i < nb_cmds)
     {

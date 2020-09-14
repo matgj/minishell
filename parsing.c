@@ -26,6 +26,8 @@ t_cmds    parse_cmd(char *cmds_pipe)
     while (i < ARG_MAX)
         cmds.output[i++] = -1;
     command_management(&cmds);
+    if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
+          command_exec(&cmds);
     return (cmds);
 }
 
@@ -37,11 +39,11 @@ t_cmds   *parse_pipe(char *cmds_semi)
     t_cmds   nul;
 
     cpt = 0;
-    nul.name = NULL;
     cmds_pipe = ft_split(cmds_semi, '|'); // je split une ligne de commande separees par ; en commande separrees par pipe
     free(cmds_semi);
     while(cmds_pipe[cpt]) // on compte le nombre de commande dans la ligne de commande pour malloc 
             cpt++;
+    cpt = cpt + 1; 
     if(!(cmds = (t_cmds*)malloc(sizeof(t_cmds) * cpt + 1))) // pour chaque commande je cree une chaine cmd
          return (NULL);
     cpt = 0;
@@ -52,9 +54,9 @@ t_cmds   *parse_pipe(char *cmds_semi)
         cpt++;
     }
     free(cmds_pipe);
-   // cmds[cpt] = nul; segfault qd je fais ca
+    nul.name = NULL;
+    cmds[cpt] = nul;
     command_plug(cmds);
-    //test_argv(cmds); //affiche le contenu des argv
     return (cmds);
 }
 
@@ -78,15 +80,18 @@ void    parsing(char *line)
         i = 0;
         printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(cmds_semi[l++]);
-        while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
+         while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
         {
-         printf("---------------------------HEY-------------\n");
+         //  if (!command_type(cmds_pipe)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
+           //     command_exec(cmds_pipe);
+            test_cmd(*cmds_pipe);
+            test_tab_cmds(cmds_pipe, i);
          i++;
-         //  execution;
-           //printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].name);
-          // i++;
+       //  //  execution;
+       //    //printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].name);
+       //   // i++;
         }
-    //  free(cmds_pipe);
+     free(cmds_pipe);
     }
     free(cmds_semi);
 }

@@ -54,45 +54,54 @@ void    command_creation(t_cmds *cmds)
   	}
 }
 
+
+//A common use of pipes is to send data to or receive data 
+//from a program being run as a subprocess. 
+//One way of doing this is by using a combination of 
+//pipe (to create the pipe), fork (to create the subprocess),
+//dup2 (to force the subprocess to use the pipe as its standard 
+//input or output channel), and exec (to execute the new program). 
+
+//fork()
+   //Negative Value: creation of a child process was unsuccessful.
+   //Zero: Returned to the newly created child process.
+   //Positive value: Returned to parent or caller. The value contains process ID of newly created child process.
+
+
 void    command_exec(t_cmds *cmds)
 {
     pid_t   pid;
+    int     i;
+    int     ret;
 
-  if (!ft_strcmp(cmds->name,"ls"))
-  {
-   cmds->path = "/bin/ls";
-    //cmds.envp = {"ls", "-l", NULL};
-    char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
-  //  test_argv(&cmds);
-  //   test_name(cmds);
-   //  test_path(cmds);
-  //cmds->path = command_path(cmds);//
-    if ((pid = fork()) == -1) //cd or exit called in child will not affect shells environment but only child, so we need to fork>
-         printf("fork error\n");
-    else if (pid == 0)
-    {  
-        if(execve(cmds->path, cmds->argv, env) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
-             printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process
-    }
-  }
-
-if (!ft_strcmp(cmds->name,"date"))
-  {
-   cmds->path = "/bin/date";
-    //cmds.envp = {"ls", "-l", NULL};
-    char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
-  //  test_argv(&cmds);
-  //   test_name(cmds);
-   //  test_path(cmds);
-  //cmds->path = command_path(cmds);//
-    if ((pid = fork()) == -1) //cd or exit called in child will not affect shells environment but only child, so we need to fork>
-         printf("fork error\n");
-    else if (pid == 0)
-    {  
-        if(execve(cmds->path, cmds->argv, env) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
-             printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process
-    }
-  }
+    i = 0;
+    if ((pid = fork()) == -1)
+      printf("fork error\n");
+    else if (pid == 0) //je suis dans le child
+      {  
+         if (cmds->input != 0) //si jai un input dun autre fichier a prendre
+          if(dup2(cmds->input, STDIN) == -1) //forcer le subprocess a utiliser le pipe en IN 
+              printf("dup2 error"); 
+          while(cmds->output[i]) //je parcours mon tableau de output avec les fd de chaque cmd separees par des redir
+          {
+            if (cmds->output[i] != -1)                
+                dup2(cmds->output[i], STDOUT);//forcer le subprocess a utiliser le pipe en OUT, j
+            i++;
+          }
+        cmds->path = "/bin/echo"; //if no path return error no path
+        char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
+        if ((ret = execve(cmds->path, cmds->argv, env)) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
+               printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process
+      }
+      i = 0;
+      while (cmds->output[i] != -1) 
+      {
+        if (cmds->output[i] != -1)
+         close(cmds->output[i]);
+         i++;
+      }
+      if (cmds->input != 0)
+        close(cmds->input);
 }
 
 void    command_management(t_cmds *cmds)
@@ -104,9 +113,7 @@ void    command_management(t_cmds *cmds)
       return;
     command_creation(cmds); // pour initaliser name dans la struct cmd
     redirection(cmds);
-   // command_plug(cmds);
-    test_cmd(*cmds);
-    if (!command_type(cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
-            command_exec(cmds); //on execute le .exe qui se trouve dans la bonne path avec execve
-  //  test_env(&cmds); //sors le des commentaires si tu veux vois ce que ca affiche
+   // test_cmd(*cmds);
+  //  if (!command_type(cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
+  //          command_exec(cmds); //on execute le .exe qui se trouve dans la bonne path avec execve
 }
