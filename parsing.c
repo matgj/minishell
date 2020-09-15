@@ -18,16 +18,19 @@ t_cmds    parse_cmd(char *cmds_pipe)
     while(token[i])
     {
          cmds.argv[i] = token[i];
-         printf("token:%s\n",token[i]);
+         printf("token[%i]:%s\n",i, token[i]);
          i++;
     } 
     free(token);
     cmds.argv[i] = NULL;
+    i = 0;
     while (i < ARG_MAX)
         cmds.output[i++] = -1;
     command_management(&cmds);
-    if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
-          command_exec(&cmds);
+    test_cmd(cmds);
+  //  test_tab_cmds(&cmds, i);
+      if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
+           command_exec(cmds);
     return (cmds);
 }
 
@@ -53,7 +56,7 @@ t_cmds   *parse_pipe(char *cmds_semi)
         cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
         cpt++;
     }
-    free(cmds_pipe);
+    //free(cmds_pipe);
     nul.name = NULL;
     cmds[cpt] = nul;
     command_plug(cmds);
@@ -80,17 +83,12 @@ void    parsing(char *line)
         i = 0;
         printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(cmds_semi[l++]);
-         while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
-        {
-         //  if (!command_type(cmds_pipe)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
-           //     command_exec(cmds_pipe);
-            test_cmd(*cmds_pipe);
-            test_tab_cmds(cmds_pipe, i);
+        while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
+         { 
+            // test_tab_cmds(cmds_pipe, i);
+            // command_exec(cmds_pipe[i]);
          i++;
-       //  //  execution;
-       //    //printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].name);
-       //   // i++;
-        }
+         }
      free(cmds_pipe);
     }
     free(cmds_semi);

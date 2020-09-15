@@ -67,8 +67,14 @@ void    redirection(t_cmds *cmds)
                 }
              else 
                 redirec_output(cmds, cmds->argv[i + 1]);
+        free(cmds->argv[i]);         //je free les arg que je viens de traiter
+        free(cmds->argv[i + 1]);
+        cmds->argv[i] = NULL;           // je les fait pointer sur null pour pouvoir les retirer
+        cmds->argv[i + 1] = NULL;
         i++;
+    //    command_clean(cmds); 
         }
         i++;
-    } 
+    }
+ //   command_clean(cmds); 
 } 

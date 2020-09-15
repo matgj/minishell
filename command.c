@@ -1,14 +1,5 @@
 #include "minishell.h"
 
-//t_cmds   command_type(t_cmds cmds)
-//{
-//   est-ce que ma fonction est builtin ?
-//       si oui -> go utiliser les ft_echo ft_cd ft_pwd ft_export ft_unset ft_env ft_exit codes par nous meme, 
-//   proto des builtins = void ft_cd(t_cmd cmd), et avec la struct cmd tu recuperes les argv;
-//       si non ->execve comme ci dessous, avec une fonction get_path qui recup la path exacte
-// 
-//}
-
 int    command_type(t_cmds *cmds) //si cest une builtin fonction on doit la coder nous meme, donc on redirige vers lexecution de notre propre ft_builtin
 {
     //  if (!strcmp(cmds.name,"echo"))
@@ -68,40 +59,56 @@ void    command_creation(t_cmds *cmds)
    //Positive value: Returned to parent or caller. The value contains process ID of newly created child process.
 
 
-void    command_exec(t_cmds *cmds)
+void    command_exec(t_cmds cmds)
 {
     pid_t   pid;
     int     i;
     int     ret;
 
     i = 0;
+   if (!command_type(&cmds)) //pour savoir si c une builtin ou pas
+   { 
     if ((pid = fork()) == -1)
       printf("fork error\n");
     else if (pid == 0) //je suis dans le child
       {  
-         if (cmds->input != 0) //si jai un input dun autre fichier a prendre
-          if(dup2(cmds->input, STDIN) == -1) //forcer le subprocess a utiliser le pipe en IN 
+         if (cmds.input != 0) //si jai un input dun autre fichier a prendre
+          if(dup2(cmds.input, STDIN) == -1) //forcer le subprocess a utiliser le pipe en IN 
               printf("dup2 error"); 
-          while(cmds->output[i]) //je parcours mon tableau de output avec les fd de chaque cmd separees par des redir
+          while(cmds.output[i]) //je parcours mon tableau de output avec les fd de chaque cmd separees par des redir
           {
-            if (cmds->output[i] != -1)                
-                dup2(cmds->output[i], STDOUT);//forcer le subprocess a utiliser le pipe en OUT, j
+            if (cmds.output[i] != -1)                
+                dup2(cmds.output[i], STDOUT);//forcer le subprocess a utiliser le pipe en OUT, j
             i++;
           }
-        cmds->path = "/bin/echo"; //if no path return error no path
+        if (!ft_strcmp(cmds.name, "echo"))
+           cmds.path = "/bin/echo"; //if no path return error no path
+        else if (!ft_strcmp(cmds.name, "ls"))
+             cmds.path = "/bin/ls"; 
         char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
-        if ((ret = execve(cmds->path, cmds->argv, env)) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
+        if ((ret = execve(cmds.path, cmds.argv, env)) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
                printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process
       }
       i = 0;
-      while (cmds->output[i] != -1) 
+      while (cmds.output[i] != -1) 
       {
-        if (cmds->output[i] != -1)
-         close(cmds->output[i]);
+        if (cmds.output[i] != -1)
+         close(cmds.output[i]);
          i++;
       }
-      if (cmds->input != 0)
-        close(cmds->input);
+      if (cmds.input != 0)
+        close(cmds.input);
+   }
+
+   else 
+      printf("builtin function \n");
+
+    i = 0;
+	  while (cmds.argv[i])
+		  free(cmds.argv[i++]);
+  	free(cmds.name);
+	  free(cmds.argv);
+	  free(cmds.path);
 }
 
 void    command_management(t_cmds *cmds)

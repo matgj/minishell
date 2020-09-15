@@ -53,14 +53,14 @@ void    free_var(void);
 void	parsing(char *line);
 void    command_management(t_cmds *cmds);
 int		command_type(t_cmds *cmds);
-void    command_exec(t_cmds *cmds);
+void    command_exec(t_cmds cmds);
+void	command_clean(t_cmds *cmds);
 void	redirection(t_cmds *cmds);
 void    ft_tab_output(int *tab_fds, int fd);
 void    command_plug(t_cmds *cmds);
 
 char	**env_import(char **envp);
 char	*command_path(t_cmds *cmds);
-
 
 void     test_cmd(t_cmds cmds);
 void     test_env(t_cmds *cmds);
