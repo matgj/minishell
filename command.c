@@ -74,17 +74,20 @@ void    command_exec(t_cmds cmds)
       {  
          if (cmds.input != 0) //si jai un input dun autre fichier a prendre
           if(dup2(cmds.input, STDIN) == -1) //forcer le subprocess a utiliser le pipe en IN 
-              printf("dup2 error"); 
+              printf("dup2 error input\n"); 
           while(cmds.output[i]) //je parcours mon tableau de output avec les fd de chaque cmd separees par des redir
           {
             if (cmds.output[i] != -1)                
-                dup2(cmds.output[i], STDOUT);//forcer le subprocess a utiliser le pipe en OUT, j
+                if(dup2(cmds.output[i], STDOUT) == -1) //forcer le subprocess a utiliser le pipe en OUT, j
+                   printf("dup2 error ouput\n"); 
             i++;
           }
         if (!ft_strcmp(cmds.name, "echo"))
            cmds.path = "/bin/echo"; //if no path return error no path
         else if (!ft_strcmp(cmds.name, "ls"))
              cmds.path = "/bin/ls"; 
+        else if (!ft_strcmp(cmds.name, "wc"))
+             cmds.path = "/usr/bin/wc"; 
         char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
         if ((ret = execve(cmds.path, cmds.argv, env)) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
                printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process

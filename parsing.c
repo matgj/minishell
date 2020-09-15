@@ -52,7 +52,7 @@ t_cmds   *parse_pipe(char *cmds_semi)
     cpt = 0;
     while(cmds_pipe[cpt])
     {
-       printf("ligne separee par des pipes : cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
+    //   printf("ligne separee par des pipes : cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
         cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
         cpt++;
     }
@@ -81,7 +81,7 @@ void    parsing(char *line)
     while (cmds_semi[l]) 
     {
         i = 0;
-        printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
+     //   printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(cmds_semi[l++]);
         while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
          { 

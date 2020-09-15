@@ -32,7 +32,7 @@ void        command_plug(t_cmds *cmds)
         {
            ft_tab_output(cmds[i].output, 1);
         }
-        ft_tab_output(cmds[i].output, -1);
+        ft_tab_output(cmds[i].output, -1); // a changé?
         i++;
     } 
 }

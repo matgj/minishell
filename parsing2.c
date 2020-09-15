@@ -45,7 +45,7 @@ void    redirec_output(t_cmds *cmds, char *argv)
 }
 
 //largument (input) de ma commande est modifie par <, cela devient le fichier de droite
-//(exemple date < salut.txt va afficher la date de salut.txt)
+//(wc -l < salut.txt va lister nb de ligne de salut.txt)
 //je cree donc un nouveau FD
 
 void    redirection(t_cmds *cmds)
@@ -62,8 +62,9 @@ void    redirection(t_cmds *cmds)
             if (cmds->chevron == 1)
                {
                     if ((fd = open(cmds->argv[i + 1], O_RDONLY)) < 0)
-                      printf("error creation open function redirec < input\n");
+                      printf("error open function redirec < input\n");
                     cmds->input = fd;
+                   // cmds->output[0] = 1;
                 }
              else 
                 redirec_output(cmds, cmds->argv[i + 1]);
