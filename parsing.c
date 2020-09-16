@@ -27,7 +27,7 @@ t_cmds    parse_cmd(char *cmds_pipe)
     while (i < ARG_MAX)
         cmds.output[i++] = -1;
     command_management(&cmds);
-    test_cmd(cmds);
+   test_cmd(cmds);
   //  test_tab_cmds(&cmds, i);
       if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
            command_exec(cmds);

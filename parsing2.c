@@ -65,14 +65,13 @@ void    redirection(t_cmds *cmds)
                     if ((fd = open(cmds->argv[i + 1], O_RDONLY)) < 0)
                       printf("error open function redirec < input\n");
                     cmds->input = fd;
-                   ft_tab_output(cmds->output, 1);
                 }
              else 
                 redirec_output(cmds, cmds->argv[i + 1]);
-       free(cmds->argv[i]);         //je free les arg que je viens de traiter
-       free(cmds->argv[i + 1]);
-       cmds->argv[i] = NULL;           // je les fait pointer sur null pour pouvoir les retirer
-       cmds->argv[i + 1] = NULL;
+      free(cmds->argv[i]);         //je free les arg que je viens de traiter
+      free(cmds->argv[i + 1]);
+      cmds->argv[i] = NULL;           // je les fait pointer sur null pour pouvoir les retirer
+      cmds->argv[i + 1] = NULL;
         i++;
     //    command_clean(cmds); 
         }

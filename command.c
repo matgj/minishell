@@ -77,7 +77,7 @@ void    command_exec(t_cmds cmds)
          if (cmds.input != 0) //si jai un input dun autre fichier a prendre
           if(dup2(cmds.input, STDIN) == -1) //forcer le subprocess a utiliser le pipe en IN 
               printf("dup2 error input\n"); 
-          while(cmds.output[i]) //je parcours mon tableau de output avec les fd de chaque cmd separees par des redir
+          while(cmds.output[i] != -1) //je parcours mon tableau de output avec les fd de chaque cmd separees par des redir
           {
             if (cmds.output[i] != -1)                
                 if(dup2(cmds.output[i], STDOUT) == -1) //forcer le subprocess a utiliser le pipe en OUT, j
@@ -99,22 +99,22 @@ void    command_exec(t_cmds cmds)
                printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process
       }
       i = 0;
+      if (cmds.input != 0)
+        close(cmds.input);
       while (cmds.output[i] != -1) 
       {
         if (cmds.output[i] != -1)
          close(cmds.output[i]);
          i++;
       }
-      if (cmds.input != 0)
-        close(cmds.input);
    }
 
    else 
       printf("builtin function \n");
 
     i = 0;
-	  while (cmds.argv[i])
-		  free(cmds.argv[i++]);
+	 while (cmds.argv[i])
+		 free(cmds.argv[i++]);
   	free(cmds.name);
 	  free(cmds.argv);
 	  free(cmds.path);
