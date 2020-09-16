@@ -11,15 +11,26 @@ t_cmds    parse_cmd(char *cmds_pipe)
     free(cmds_pipe);
     while (token[i])
             i++;
-    if(!(cmds.argv = (char **)malloc(sizeof(char *) * i + 1 )))
+    if(!(cmds.argv = (char **)malloc(sizeof(char *) * ARG_MAX + 1)))
         return (cmds);
+    cmds.argc = i;
     i = 0;
     while(token[i])
     {
          cmds.argv[i] = token[i];
+         printf("token[%i]:%s\n",i, token[i]);
          i++;
-    }
+    } 
+    free(token);
     cmds.argv[i] = NULL;
+    i = 0;
+    while (i < ARG_MAX)
+        cmds.output[i++] = -1;
+    command_management(&cmds);
+  //   test_cmd(cmds);
+  //  test_tab_cmds(&cmds, i);
+      if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
+           command_exec(cmds);
     return (cmds);
 }
 
@@ -28,22 +39,27 @@ t_cmds   *parse_pipe(char *cmds_semi)
     t_cmds   *cmds; //cmds a executer sans pipe ni semi
     char    **cmds_pipe; //cmds_semi pour ligne de commandes separees par des SEMICOLON (=> ;)
     int     cpt; 
+    t_cmds   nul;
 
     cpt = 0;
     cmds_pipe = ft_split(cmds_semi, '|'); // je split une ligne de commande separees par ; en commande separrees par pipe
-   // free(cmds_semi);
+    free(cmds_semi);
     while(cmds_pipe[cpt]) // on compte le nombre de commande dans la ligne de commande pour malloc 
             cpt++;
+    cpt = cpt + 1; 
     if(!(cmds = (t_cmds*)malloc(sizeof(t_cmds) * cpt + 1))) // pour chaque commande je cree une chaine cmd
          return (NULL);
     cpt = 0;
     while(cmds_pipe[cpt])
     {
-       printf("ligne separee par des pipes : cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
+    //   printf("ligne separee par des pipes : cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
         cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
         cpt++;
     }
-    //test_argv(cmds); //affiche le contenu des argv
+    //free(cmds_pipe);
+    nul.name = NULL;
+    cmds[cpt] = nul;
+    command_plug(cmds);
     return (cmds);
 }
 
@@ -65,15 +81,15 @@ void    parsing(char *line)
     while (cmds_semi[l]) 
     {
         i = 0;
-        printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
+     //   printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(cmds_semi[l++]);
-        while (cmds_pipe[i].name)            // je parcours les tokens stockees dans la struct cmd sepaerees par la multitude de split
-        {
-            command_management(*cmds_pipe); // passer le contenu et pas un pointeur sinon ca va pas etre independant à chaque cmd
-           //printf("cmds_to_execute[%i]:%s\n",i, cmds_pipe[i].name);
-           i++;
-        }
-      free(cmds_pipe);
+        while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
+         { 
+            // test_tab_cmds(cmds_pipe, i);
+            // command_exec(cmds_pipe[i]);
+         i++;
+         }
+     free(cmds_pipe);
     }
     free(cmds_semi);
 }

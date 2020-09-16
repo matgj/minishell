@@ -32,6 +32,7 @@ int main (int argc, char **argv, char **envp)
 		read_line(&line); //lire la ligne entree par l'utilisateur avec GNL
 		parsing(line);   //separer la ligne en tableaux de commandes et de pipes
 		//execute(&line); 
+		//test_cmd(g_cmds);
 	}
 	exit_success();
 //	free(line);
