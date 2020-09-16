@@ -40,36 +40,34 @@ void        command_plug(t_cmds *cmds)
 //enlever de la structure cmds les arguments que jai deja parsé
 //en creant un nouveau tab d arg sans les cases NULL
 
-// void   command_clean(t_cmds *cmds)
-// {
-//     int i;
-//     int index;
-//     char **new_argv;
+int  command_clean(t_cmds *cmds)
+{
+    int i;
+    int pos;
+    char **new_argv;
 
-//     i = 0;
-//     index = 0;
-//     while (i < cmds->argc)
-//     {
-//       if (cmds->argv[index] != NULL)
-//       {
-//           index = index + index;
-//           index++;
-//       }
-//       i++;
-//     }
-//     if(!(new_argv = (char **)malloc(sizeof(char*)*index + 1)))
-//         return ;
-//     i = 0;
-//     index = 0;
-//     while (i < cmds->argc)
-//       {
-//         if (cmds->argv[i])
-//         {
-//           new_argv[index] = cmds->argv[i];
-//           index++;
-//         } 
-//         i++;
-//       }
-//       free(cmds->argv);
-//       cmds->argv = new_argv;
-// }
+    i = 0;
+    pos = 0;
+    while (i < cmds->argc)
+    {
+      if (cmds->argv[pos] != NULL)
+            pos++;
+      i++;
+      printf("pos:%i\n", pos);
+    }
+     if(!(new_argv = (char **)malloc(sizeof(char*)*pos + 1)))
+         return(printf("nonOK\n"));
+     i = 0;
+     pos = 0;
+     while (i < cmds->argc)
+    {
+         if (cmds->argv[i])
+         {
+           new_argv[pos] = cmds->argv[i];
+           pos++;
+         } 
+         i++;
+    }
+  //     free(cmds->argv);
+    //   cmds->argv = new_argv;
+}

@@ -68,14 +68,13 @@ void    redirection(t_cmds *cmds)
                 }
              else 
                 redirec_output(cmds, cmds->argv[i + 1]);
-      free(cmds->argv[i]);         //je free les arg que je viens de traiter
-      free(cmds->argv[i + 1]);
-      cmds->argv[i] = NULL;           // je les fait pointer sur null pour pouvoir les retirer
-      cmds->argv[i + 1] = NULL;
+        free(cmds->argv[i]);         //je free les arg que je viens de traiter
+        free(cmds->argv[i + 1]);
+        cmds->argv[i] = NULL;           // je les fait pointer sur null pour pouvoir les retirer
+        cmds->argv[i + 1] = NULL;
         i++;
-    //    command_clean(cmds); 
         }
-        i++;
+    i++;
     }
- //   command_clean(cmds); 
+    command_clean(cmds); //ermet d'enlever les commande executees qui pointent sur NULL et de lier le tab d'arg a execute
 } 

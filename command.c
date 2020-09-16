@@ -112,10 +112,10 @@ void    command_exec(t_cmds cmds)
    else 
       printf("builtin function \n");
 
-    i = 0;
+   i = 0;
 	 while (cmds.argv[i])
 		 free(cmds.argv[i++]);
-  	free(cmds.name);
+ 	free(cmds.name);
 	  free(cmds.argv);
 	  free(cmds.path);
 }
