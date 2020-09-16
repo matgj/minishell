@@ -66,8 +66,10 @@ void    command_exec(t_cmds cmds)
     int     ret;
 
     i = 0;
-   if (!command_type(&cmds)) //pour savoir si c une builtin ou pas
+  if (!command_type(&cmds)) //pour savoir si c une builtin ou pas
    { 
+    if (cmds.input < 0) //si l'open de mon fichier a renvoye -1 cest qu il existe pas
+      exit(127); //127 est revnoye par /bin/sh lorsquil ne trouve pas le fichier ou folder, permet de renvoyer "zsh: no such file or directory:"
     if ((pid = fork()) == -1)
       printf("fork error\n");
     else if (pid == 0) //je suis dans le child
@@ -88,6 +90,10 @@ void    command_exec(t_cmds cmds)
              cmds.path = "/bin/ls"; 
         else if (!ft_strcmp(cmds.name, "wc"))
              cmds.path = "/usr/bin/wc"; 
+        else if (!ft_strcmp(cmds.name, "cat"))
+            cmds.path = "/bin/cat";
+        else if (!ft_strcmp(cmds.name, "grep"))
+            cmds.path = "/usr/bin/grep";
         char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
         if ((ret = execve(cmds.path, cmds.argv, env)) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
                printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process
