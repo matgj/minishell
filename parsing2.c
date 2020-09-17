@@ -76,5 +76,5 @@ void    redirection(t_cmds *cmds)
         }
     i++;
     }
-    command_clean(cmds); //ermet d'enlever les commande executees qui pointent sur NULL et de lier le tab d'arg a execute
+  //  command_clean(cmds); //ermet d'enlever les commande executees qui pointent sur NULL et de lier le tab d'arg a execute
 } 

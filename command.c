@@ -33,16 +33,17 @@ void    command_creation(t_cmds *cmds)
         cmds->name = NULL;
     else
         cmds->name = ft_strdup(cmds->argv[i]); //je cree name dans la struct name
-     i = 0;
-    while (cmds->argv[i])
-	  {
-	  	if (cmds->argv[i][0] == 3)
-	  	{
-		  	free(cmds->argv[i]);
-		  	cmds->argv[i] = ft_strdup("");
-		  }
-      i++;
-  	}
+ 
+    //  i = 0;
+    // while (cmds->argv[i])
+	  // {
+	  // 	if (cmds->argv[i][0] == 3)
+	  // 	{
+		//   	free(cmds->argv[i]);
+		//   	cmds->argv[i] = ft_strdup("");
+		//   }
+    //   i++;
+  	// }
 }
 
 

@@ -1,6 +1,8 @@
 #include "minishell.h"
 
-t_cmds    parse_cmd(char *cmds_pipe)
+//je remplis ma struct cmd
+
+t_cmds    parse_cmd(char *cmds_pipe) 
 {
     char    **token; //partie 1 de la commande
     int     i;
@@ -46,9 +48,11 @@ t_cmds   *parse_pipe(char *cmds_semi)
     free(cmds_semi);
     while(cmds_pipe[cpt]) // on compte le nombre de commande dans la ligne de commande pour malloc 
             cpt++;
-    cpt = cpt + 1; 
-    if(!(cmds = (t_cmds*)malloc(sizeof(t_cmds) * cpt + 1))) // pour chaque commande je cree une chaine cmd
-         return (NULL);
+    printf("nbre de cmd pipes:%i \n", cpt);
+    // if(!(cmds = (t_cmds*)malloc(sizeof(t_cmds) * cpt + 1))) // pour chaque commande je cree une chaine cmd
+    //      return (NULL);
+    if(!(cmds = ft_calloc(sizeof(t_cmds), cpt + 1)))// pour chaque commande separrees par des pipes je cree une struct cmd
+        return (NULL); 
     cpt = 0;
     while(cmds_pipe[cpt])
     {
@@ -56,7 +60,7 @@ t_cmds   *parse_pipe(char *cmds_semi)
         cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
         cpt++;
     }
-    //free(cmds_pipe);
+    free(cmds_pipe);
     nul.name = NULL;
     cmds[cpt] = nul;
     command_plug(cmds);

@@ -40,7 +40,7 @@ void        command_plug(t_cmds *cmds)
 //enlever de la structure cmds les arguments que jai deja parsé
 //en creant un nouveau tab d arg sans les cases NULL
 
-int  command_clean(t_cmds *cmds)
+void  command_clean(t_cmds *cmds)
 {
     int i;
     int pos;
@@ -56,7 +56,7 @@ int  command_clean(t_cmds *cmds)
       printf("pos:%i\n", pos);
     }
      if(!(new_argv = (char **)malloc(sizeof(char*)*pos + 1)))
-         return(printf("nonOK\n"));
+         return ;
      i = 0;
      pos = 0;
      while (i < cmds->argc)
