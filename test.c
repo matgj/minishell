@@ -14,12 +14,12 @@ void       test_cmd(t_cmds cmds)
    
     printf("cmds->chevron:%i\n",cmds.chevron);
     printf("cmds->input:%i\n",cmds.input);
-    l = 0;
-    while (cmds.output[l] != -1)
-    {
-        printf("cmds->ouput[%i]:%i\n", l, cmds.output[l]);
-        l++;
-    }
+    // l = 0;
+    // while (cmds.output[l] != -1)
+    // {
+    //     printf("cmds->ouput[%i]:%i\n", l, cmds.output[l]);
+    //     l++;
+    // }
 }
 
 void     test_env(t_cmds *cmds)

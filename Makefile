@@ -17,6 +17,9 @@ $(NAME) : $(OBJS)
 	
 all : $(NAME)
 
+clang : $(OBJS) 
+	@clang -o $(NAME) $(INCLUDE) $(OBJS) -g
+
 clean :
 		rm -f $(OBJS)
 		

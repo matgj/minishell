@@ -9,7 +9,6 @@
 //toujours fermer le fd qu on utilise pas (si on est dans child on ferme fd[0] sinon on ferme fd[1])
 //ensuite on duplique les fd dans le child sur les stin et stout pour
 //quon puisse exec() les program avec les streams standards
-//TODO: faut que je plug cmds + 1 avec cmds - 1 et que cmds - 1 soit STOUT
 
 void        command_plug(t_cmds *cmds)
 {
@@ -21,21 +20,27 @@ void        command_plug(t_cmds *cmds)
     i = 0;
     while (cmds[nb_cmds].name) 
               nb_cmds++;
-    while(i < nb_cmds) 
+   // printf("nb cmd:%i\n", nb_cmds);
+
+    while (i < nb_cmds) 
      {
-        if (i) // si je ne suis pas a la premiere commande
+        if (i != 0) //&& g_shell.redir == 0) // si je ne suis pas a la premiere commande et sil y n y a pas de redir
         {
-            pipe(fd); //ouvre fd[0] = read et fd[1] = write, 
-            ft_tab_output(cmds[i - 1].output, fd[1]); // l'output de la precedente commande write, je stock fd[1] de cote pour les fermer plus tard
-            cmds[i].input = fd[0]; //mon input read
+            {
+              pipe(fd); //ouvre fd[0] = read et fd[1] = write, 
+              ft_tab_output(cmds[i - 1].output, fd[1]); // l'output de la precedente commande write, je stock fd[1] de cote pour les fermer plus tard
+              cmds[i].input = fd[0]; //mon input read
+            }
         }
-        if (i == nb_cmds - 1) //si cest la derniere commande
-           ft_tab_output(cmds[i].output, 1);
-       i++;
+       if (i == nb_cmds - 1) //si cest la derniere command
+       {
+         ft_tab_output(cmds[i].output, 1);
+       }
         ft_tab_output(cmds[i].output, -1); // a changé?
-      //  i++;
-    } 
+      i++;  
+  }
 }
+
 
 //enlever de la structure cmds les arguments que jai deja parsé
 //en creant un nouveau tab d arg sans les cases NULL
@@ -52,11 +57,10 @@ void  command_clean(t_cmds *cmds)
     {
       if (cmds->argv[pos] != NULL)
             pos++;
+    //  printf("pos:%i\n", pos);
       i++;
-      printf("pos:%i\n", pos);
     }
-     if(!(new_argv = (char **)malloc(sizeof(char*)*pos + 1)))
-         return ;
+     new_argv = ft_calloc(pos + 1, sizeof(char*));
      i = 0;
      pos = 0;
      while (i < cmds->argc)
@@ -68,6 +72,8 @@ void  command_clean(t_cmds *cmds)
          } 
          i++;
     }
-  //     free(cmds->argv);
-    //   cmds->argv = new_argv;
+     new_argv[pos] = NULL;
+      free(cmds->argv);
+      cmds->argv = new_argv;
+
 }

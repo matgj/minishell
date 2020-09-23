@@ -11,4 +11,5 @@ void    ft_tab_output(int *tab_fds, int fd)
     while (tab_fds[i] != -1)
         i++;
     tab_fds[i] = fd;
+   // printf("fd = %i\n", fd);
 }

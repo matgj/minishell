@@ -6,6 +6,7 @@
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 
 #define BUFFER_SIZE 1024
 #define EXIT_SUCCESS 0 //false = bool 0
@@ -19,6 +20,8 @@ typedef struct  s_shell //structure contenant les variables d environnement et l
 {
 	int		status; //variable retournee par la fonction execute pour savoir quand quitter le minishell;
 	char	**envp; //liste des variables d'environnement "pointer to a null-terminated array of character pointers to null-terminated strings.  A pointer to this array is normally stored in the global variable environ. These strings pass information to the new process that is not directly an argument to the command "
+	int		redir;
+	int		pid;
 }		t_shell;
 
 typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
@@ -60,6 +63,7 @@ void	command_clean(t_cmds *cmds);
 void	redirection(t_cmds *cmds);
 void    ft_tab_output(int *tab_fds, int fd);
 void    command_plug(t_cmds *cmds);
+void	command_exec2();
 
 char	**env_import(char **envp);
 char	*command_path(t_cmds *cmds);

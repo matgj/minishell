@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+extern t_shell g_shell;
+
 //quel type de chevron on a ? pour savoir comment rediriger le resultat des commandes 
 // >  0 redirec the output --stdin (0) (overwrite le fichier)
 // <  1 redicec the input --stout (1);
@@ -28,6 +30,7 @@ void    redirec_output(t_cmds *cmds, char *argv)
 {
     int fd;
 
+    g_shell.redir = g_shell.redir + 1;
     if (cmds->chevron == 0)
     {
         if ((fd = open(argv, O_TRUNC | O_RDWR | O_CREAT, 0644)) < 0) //Using 0644 will create a file that is Read/Write for owner, and Read Only for everyone
@@ -61,20 +64,22 @@ void    redirection(t_cmds *cmds)
         {
             if (cmds->chevron == 1)
                {
-                    printf("cmds->argv[i + 1]:%s\n", cmds->argv[i + 1]);
+                    //printf("cmds->argv[i + 1]:%s\n", cmds->argv[i + 1]);
                     if ((fd = open(cmds->argv[i + 1], O_RDONLY)) < 0)
                       printf("error open function redirec < input\n");
                     cmds->input = fd;
                 }
              else 
                 redirec_output(cmds, cmds->argv[i + 1]);
-        free(cmds->argv[i]);         //je free les arg que je viens de traiter
-        free(cmds->argv[i + 1]);
-        cmds->argv[i] = NULL;           // je les fait pointer sur null pour pouvoir les retirer
-        cmds->argv[i + 1] = NULL;
-        i++;
+            free(cmds->argv[i]);         //je free les arg que je viens de traiter
+            free(cmds->argv[i + 1]);
+            cmds->argv[i] = NULL;           // je les fait pointer sur null pour pouvoir les retirer
+            cmds->argv[i + 1] = NULL;
+            i++;
         }
-    i++;
+        i++;
     }
-  //  command_clean(cmds); //ermet d'enlever les commande executees qui pointent sur NULL et de lier le tab d'arg a execute
+  //  test_cmd(*cmds);
+    command_clean(cmds); //ermet d'enlever les commande executees qui pointent sur NULL et de lier le tab d'arg a execute
+    //test_cmd(*cmds);
 } 

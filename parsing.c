@@ -13,26 +13,25 @@ t_cmds    parse_cmd(char *cmds_pipe)
     free(cmds_pipe);
     while (token[i])
             i++;
-    if(!(cmds.argv = (char **)malloc(sizeof(char *) * ARG_MAX + 1)))
+    if(!(cmds.argv = (char **)malloc(sizeof(char*) * i + 1)))
         return (cmds);
     cmds.argc = i;
     i = 0;
     while(token[i])
     {
          cmds.argv[i] = token[i];
-         printf("token[%i]:%s\n",i, token[i]);
+      //   printf("token[%i]:%s\n",i, token[i]);
          i++;
     } 
     free(token);
-    cmds.argv[i] = NULL;
     i = 0;
     while (i < ARG_MAX)
         cmds.output[i++] = -1;
     command_management(&cmds);
   //   test_cmd(cmds);
   //  test_tab_cmds(&cmds, i);
-      if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
-           command_exec(cmds);
+    //   if (!command_type(&cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
+    //        command_exec(cmds);
     return (cmds);
 }
 
@@ -48,15 +47,13 @@ t_cmds   *parse_pipe(char *cmds_semi)
     free(cmds_semi);
     while(cmds_pipe[cpt]) // on compte le nombre de commande dans la ligne de commande pour malloc 
             cpt++;
-    printf("nbre de cmd pipes:%i \n", cpt);
-    // if(!(cmds = (t_cmds*)malloc(sizeof(t_cmds) * cpt + 1))) // pour chaque commande je cree une chaine cmd
-    //      return (NULL);
+   // printf("nbre de cmd pipes:%i \n", cpt);
     if(!(cmds = ft_calloc(sizeof(t_cmds), cpt + 1)))// pour chaque commande separrees par des pipes je cree une struct cmd
         return (NULL); 
     cpt = 0;
     while(cmds_pipe[cpt])
     {
-    //   printf("ligne separee par des pipes : cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
+     //  printf("ligne separee par des pipes : cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
         cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
         cpt++;
     }
@@ -89,11 +86,13 @@ void    parsing(char *line)
         cmds_pipe = parse_pipe(cmds_semi[l++]);
         while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
          { 
+               command_exec(cmds_pipe[i]);
+               i++;
             // test_tab_cmds(cmds_pipe, i);
             // command_exec(cmds_pipe[i]);
-         i++;
          }
-     free(cmds_pipe);
+    //command_exec2();
+    free(cmds_pipe);
     }
     free(cmds_semi);
 }

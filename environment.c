@@ -43,6 +43,6 @@ int		check_stat(char *path, int *err, int direct)
 
  char    *command_path(t_cmds *cmds)
  {
-	test_env(cmds);
+	// test_env(cmds);
   return (NULL);
 }
