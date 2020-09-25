@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/25 12:59:34 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/25 15:27:28 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void    insert_actions(char *s)
     i = 0;
     while (s[i])
     {
+        if (s[i] == SPACE)
+            s[i] = ' ';
         if (s[i] == PIPE)
             s[i] = '|';
         if (s[i] == SEMI)
@@ -36,6 +38,8 @@ void    insert_actions(char *s)
 //TODO: how to manage >> ?
 void    clean_actions(char *c, int *q, int *dq)
 {
+     if ((*dq || *q) && *c == ' ')
+         *c = SPACE;
      if ((*dq || *q) && *c == '|')
          *c = PIPE;
      if ((*dq || *q) && *c == ';')
@@ -46,7 +50,7 @@ void    clean_actions(char *c, int *q, int *dq)
        //  c = R_OUT_A;
      if ((*dq || *q) && *c == '<')
          *c = R_IN;
-     if ((*dq) && *c == '$') //TODO: dont modify if echo "'$USER'" // modify if echo "'$USER'"
+     if ((*q) && *c == '$') //TODO: dont modify if echo "'$USER'" // modify if echo "'$USER'"
          *c = VAR;
 }
 
@@ -112,7 +116,6 @@ void    quotes(char *line)
      //   printf("-----dq = %i;\n", dq);
         bs_dq(line, &i, &q, &dq);
         backslash(line, &i, &q, &dq);
-         printf("-----dq = %i;\n", dq);
         if (line[i] == '"')
             double_quotes(&line[i], &q, &dq);
         else if (line[i] == '\'') //simple quotes

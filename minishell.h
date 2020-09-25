@@ -26,7 +26,7 @@
 #define REPLACED 7
 #define BS 3 // seul valeur pr laquelle on a pas besoin de modifier la chaine au cas ou y a un \
 //
-
+#define SPACE 8
 #define ARG_MAX 262144 // ou peut etre autre ? ou ca 131072, calcul avec le nbre de caractere max dune ligne
 
 typedef struct  s_shell //structure contenant les variables d environnement et le status
