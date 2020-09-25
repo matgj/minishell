@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/25 15:27:28 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/25 15:29:02 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void    quotes(char *line)
     dq = 0;
     while (line[i])
     {
-     //   printf("-----dq = %i;\n", dq);
         bs_dq(line, &i, &q, &dq);
         backslash(line, &i, &q, &dq);
         if (line[i] == '"')
