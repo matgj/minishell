@@ -24,7 +24,7 @@
 #define VAR 6
 
 #define REPLACED 7
-#define BS 3 // seul valeur pr laquelle on a pas besoin de modifier la chaine
+#define BS 3 // seul valeur pr laquelle on a pas besoin de modifier la chaine au cas ou y a un \
 //
 
 #define ARG_MAX 262144 // ou peut etre autre ? ou ca 131072, calcul avec le nbre de caractere max dune ligne
@@ -79,12 +79,14 @@ void    command_plug(t_cmds *cmds);
 void	command_exec2();
 void    quotes(char *line);
 void    insert_actions(char *s);
+void    double_quotes(char *c, int *q, int *dq);
+void    simple_quotes(char *c, int *q, int *dq);
 
 char	**env_import(char **envp);
 char	*command_path(t_cmds *cmds);
 
-void     test_cmd(t_cmds cmds);
-void     test_env(t_cmds *cmds);
+void    test_cmd(t_cmds cmds);
+void    test_env(t_cmds *cmds);
 void    test_tab_cmds(t_cmds *cmds, int i);
 
 void    ft_echo(t_cmds cmds);

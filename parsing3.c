@@ -6,12 +6,11 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/25 12:25:46 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/25 12:56:27 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
-
 
 void    insert_actions(char *s)
 {
@@ -37,36 +36,18 @@ void    insert_actions(char *s)
 //TODO: how to manage >> ?
 void    clean_actions(char *c, int *q, int *dq)
 {
-     if (*dq && *c == '|')
+     if ((*dq || *q) && *c == '|')
          *c = PIPE;
-     if (*dq && *c == ';')
+     if ((*dq || *q) && *c == ';')
          *c = SEMI;
-     if (*dq && *c == '>')
+     if ((*dq || *q) && *c == '>')
          *c = R_OUT;
      //if (c == '>>')
        //  c = R_OUT_A;
-     if (*dq && *c == '<')
+     if ((*dq || *q) && *c == '<')
          *c = R_IN;
-     if (*dq && *c == '$')
+     if ((*dq || *q) && *c == '$')
          *c = VAR;
-}
-
-//je remplace les quotes par un chiffre, et lorsque je traiterai ma commande
-//je remplacerai mon chiffre par un espace  
-
-void    double_quotes(char *c, int *q, int *dq)
-{
-    if (!*q && !*dq) //ouverture des doubles quotes
-    {
-        *dq = 1;
-        *c = REPLACED;
-    }
-    else if (!*q && *dq)         //fermetures des doubles quotes
-    {
-        printf("-----dq = %i;\n", *dq);
-        *dq = 0;
-        *c = REPLACED;
-    }
 }
 
 //check si y a un backslash, je remplace le caractere par un caractere neutre pour ne pas
@@ -133,7 +114,9 @@ void    quotes(char *line)
         backslash(line, &i, &q, &dq);
          printf("-----dq = %i;\n", dq);
         if (line[i] == '"')
-           double_quotes(&line[i], &q, &dq);
+            double_quotes(&line[i], &q, &dq);
+        else if (line[i] == '\'') //simple quotes
+            simple_quotes(&line[i], &q, &dq);
         else 
             clean_actions(&line[i], &q, &dq); 
         i++;
