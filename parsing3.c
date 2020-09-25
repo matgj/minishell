@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/25 12:56:27 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/25 12:59:34 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void    clean_actions(char *c, int *q, int *dq)
        //  c = R_OUT_A;
      if ((*dq || *q) && *c == '<')
          *c = R_IN;
-     if ((*dq || *q) && *c == '$')
+     if ((*dq) && *c == '$') //TODO: dont modify if echo "'$USER'" // modify if echo "'$USER'"
          *c = VAR;
 }
 
