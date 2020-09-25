@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/25 10:58:08 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/25 12:25:46 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,18 @@ void    insert_actions(char *s)
 //TODO: how to manage >> ?
 void    clean_actions(char *c, int *q, int *dq)
 {
-    if (*q || *dq)
-    {
-        if (*c == '|')
-            *c = PIPE;
-        if (*c == ';')
-            *c = SEMI;
-        if (*c == '>')
-            *c = R_OUT;
-        //if (c == '>>')
-          //  c = R_OUT_A;
-        if (*c == '<')
-            *c = R_IN;
-        if (*c == '$')
-            *c = VAR;
-    } 
+     if (*dq && *c == '|')
+         *c = PIPE;
+     if (*dq && *c == ';')
+         *c = SEMI;
+     if (*dq && *c == '>')
+         *c = R_OUT;
+     //if (c == '>>')
+       //  c = R_OUT_A;
+     if (*dq && *c == '<')
+         *c = R_IN;
+     if (*dq && *c == '$')
+         *c = VAR;
 }
 
 //je remplace les quotes par un chiffre, et lorsque je traiterai ma commande
@@ -64,8 +61,9 @@ void    double_quotes(char *c, int *q, int *dq)
         *dq = 1;
         *c = REPLACED;
     }
-    if (*dq)         //fermetures des doubles quotes
+    else if (!*q && *dq)         //fermetures des doubles quotes
     {
+        printf("-----dq = %i;\n", *dq);
         *dq = 0;
         *c = REPLACED;
     }
@@ -104,6 +102,16 @@ void    backslash(char *line, int *i, int *q, int *dq)
    }
 }
 
+//si y a un backslash a linterieur de double quotes
+void    bs_dq(char *line, int *i, int *q, int *dq)
+{
+    if (*dq && line[*i] == '\\' && line[*i + 1] == '$')
+    {
+       line[*i] = BS;
+       line[*i + 1] = VAR;
+    }
+}
+
 //analyse si ya des quotes ou backslash, quel type de quote et remplace 
 //par un caractere qui ne va pas influencer le split en plusieurs commandes
 //le backslash permet dannuler laction qui suit, par exemple 
@@ -120,12 +128,12 @@ void    quotes(char *line)
     dq = 0;
     while (line[i])
     {
-        //TODO: detecter si y a un dq + \ cela annule la " et on passe en '
+     //   printf("-----dq = %i;\n", dq);
+        bs_dq(line, &i, &q, &dq);
         backslash(line, &i, &q, &dq);
+         printf("-----dq = %i;\n", dq);
         if (line[i] == '"')
            double_quotes(&line[i], &q, &dq);
-       // else if (line[i] == '''');
-         //   simple_quotes(&line[i]), &q, &dq);
         else 
             clean_actions(&line[i], &q, &dq); 
         i++;
