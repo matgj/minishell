@@ -9,10 +9,23 @@
 # include <sys/wait.h>
 
 #define BUFFER_SIZE 1024
+
 #define EXIT_SUCCESS 0 //false = bool 0
 #define EXIT_FAILURE 1 //true = bool 1
+
 #define STDOUT 1
 #define STDIN 0
+
+#define PIPE 1
+#define SEMI 2
+#define R_OUT 4
+//#define R_OUT_A 4
+#define R_IN 5
+#define VAR 6
+
+#define REPLACED 7
+#define BS 3 // seul valeur pr laquelle on a pas besoin de modifier la chaine
+//
 
 #define ARG_MAX 262144 // ou peut etre autre ? ou ca 131072, calcul avec le nbre de caractere max dune ligne
 
@@ -64,6 +77,8 @@ void	redirection(t_cmds *cmds);
 void    ft_tab_output(int *tab_fds, int fd);
 void    command_plug(t_cmds *cmds);
 void	command_exec2();
+void    quotes(char *line);
+void    insert_actions(char *s);
 
 char	**env_import(char **envp);
 char	*command_path(t_cmds *cmds);

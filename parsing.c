@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
+/*   Updated: 2020/09/25 10:55:15 by Mathis           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 //je remplis ma struct cmd
@@ -11,6 +23,7 @@ t_cmds    parse_cmd(char *cmds_pipe)
     i = 0;
     token = ft_split(cmds_pipe,' '); //je split une commande separeees par pipe en tokens separees par espace
     free(cmds_pipe);
+   // command_quotes(token);
     while (token[i])
             i++;
     if(!(cmds.argv = (char **)malloc(sizeof(char*) * i + 1)))
@@ -20,7 +33,8 @@ t_cmds    parse_cmd(char *cmds_pipe)
     while(token[i])
     {
          cmds.argv[i] = token[i];
-      //   printf("token[%i]:%s\n",i, token[i]);
+         insert_actions(cmds.argv[i]);
+         printf("token[%i]:%s\n",i, token[i]);
          i++;
     } 
     free(token);
@@ -77,6 +91,7 @@ void    parsing(char *line)
     int     i;
 
     l = 0;
+    quotes(line); //analyse sil y a des '' "" ou '\'
     cmds_semi = ft_split(line,';');
     free(line); //on peut free line car on a le contenu de line dans cmds_semi
     while (cmds_semi[l]) 
