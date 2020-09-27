@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:01 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/24 18:43:39 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/27 13:31:39 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,5 @@ void    redirection(t_cmds *cmds)
     }
     //test_cmd(*cmds);
     command_clean(cmds); //ermet d'enlever les commande executees qui pointent sur NULL et de lier le tab d'arg a execute
-    test_cmd(*cmds);
+ //   test_cmd(*cmds);
 } 

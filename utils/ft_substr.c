@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/24 10:52:46 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/27 13:28:14 by Mathis           ###   ########.fr       */
+/*   Created: 2020/09/27 16:36:01 by Mathis            #+#    #+#             */
+/*   Updated: 2020/09/27 16:36:34 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		ft_strcmp(char *s1, char *s2)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int		i;
+	char *str;
 
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-		i++;
-	return (s1[i] - s2[i]);
+	if (!s)
+		return (ft_strdup(""));
+	if (ft_strlen(s) < start)
+		len = 0;
+	if (!(str = malloc(sizeof(char) * (len + 1))))
+		return (0);
+	ft_memmove((void *)str, &s[start], len);
+	str[len] = '\0';
+	return ((char *)str);
 }

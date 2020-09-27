@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/25 15:29:02 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/25 15:29:40 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void    quotes(char *line)
         backslash(line, &i, &q, &dq);
         if (line[i] == '"')
             double_quotes(&line[i], &q, &dq);
-        else if (line[i] == '\'') //simple quotes
+        else if (line[i] == '\'')
             simple_quotes(&line[i], &q, &dq);
         else 
             clean_actions(&line[i], &q, &dq); 

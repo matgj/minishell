@@ -35,6 +35,7 @@ typedef struct  s_shell //structure contenant les variables d environnement et l
 	char	**envp; //liste des variables d'environnement "pointer to a null-terminated array of character pointers to null-terminated strings.  A pointer to this array is normally stored in the global variable environ. These strings pass information to the new process that is not directly an argument to the command "
 	int		redir;
 	int		pid;
+	char	*var_env; //la valeur de la variable denv 
 }		t_shell;
 
 typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
@@ -59,6 +60,8 @@ void	ft_bzero(void *s, size_t n);
 char	*ft_strjoin(char *s1, char *s2);
 char	**ft_split(char const *s, char c);
 int		ft_strcmp(char *s1, char *s2);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 int 	get_next_line(int fd, char **buf);
 char	*ft_cpy_line(char *s);
@@ -81,6 +84,7 @@ void    quotes(char *line);
 void    insert_actions(char *s);
 void    double_quotes(char *c, int *q, int *dq);
 void    simple_quotes(char *c, int *q, int *dq);
+char    *var_env(char *line);
 
 char	**env_import(char **envp);
 char	*command_path(t_cmds *cmds);

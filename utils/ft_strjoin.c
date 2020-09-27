@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:53 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/24 10:52:54 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/27 17:20:02 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_memmove(str, s1, ft_strlen(s1));
 	ft_memmove(str + ft_strlen(s1), s2, ft_strlen(s2));
 	str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
-	free(s1);
+	//free(s1);
 	return (str);
 }

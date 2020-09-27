@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/25 10:55:15 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/27 17:44:27 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,17 @@ void    parsing(char *line)
 {
     char    **cmds_semi; //cmds_semi pour ligne de commandes separees par des SEMICOLON (=> ;)
     t_cmds  *cmds_pipe; //cmds_pipe pour commandes separees par des PIPES (=> |)
+    char    *line_env;
     int     l; //ligne
     int     i;
 
     l = 0;
-    quotes(line); //analyse sil y a des '' "" ou '\'
-    cmds_semi = ft_split(line,';');
-    free(line); //on peut free line car on a le contenu de line dans cmds_semi
+    quotes(line); //analyse sil y a des '' "" ou \'
+    line_env = var_env(line);//remplacer ce qui a apres un $ par la var d'env associée
+    free(line);
+    //printf("---------line : %s\n", line);
+    cmds_semi = ft_split(line_env,';');
+    free(line_env); //on peut free line car on a le contenu de line dans cmds_semi
     while (cmds_semi[l]) 
     {
         i = 0;
