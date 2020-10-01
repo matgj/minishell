@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/27 17:44:27 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/29 10:33:13 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void    parsing(char *line)
     l = 0;
     quotes(line); //analyse sil y a des '' "" ou \'
     line_env = var_env(line);//remplacer ce qui a apres un $ par la var d'env associée
-    free(line);
-    //printf("---------line : %s\n", line);
+    //free(line);
+    printf("---------line : %s\n", line_env);
     cmds_semi = ft_split(line_env,';');
     free(line_env); //on peut free line car on a le contenu de line dans cmds_semi
     while (cmds_semi[l]) 

@@ -31,6 +31,7 @@
 
 typedef struct  s_shell //structure contenant les variables d environnement et le status
 {
+	int		dquotes;
 	int		status; //variable retournee par la fonction execute pour savoir quand quitter le minishell;
 	char	**envp; //liste des variables d'environnement "pointer to a null-terminated array of character pointers to null-terminated strings.  A pointer to this array is normally stored in the global variable environ. These strings pass information to the new process that is not directly an argument to the command "
 	int		redir;

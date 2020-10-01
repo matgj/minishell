@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:02 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/24 10:52:08 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/09/29 10:28:51 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int main (int argc, char **argv, char **envp)
 	i = 0;
 	line = NULL;
 	g_shell.redir = 0;
+	g_shell.dquotes = 0;
 	g_shell.status = 0;
 	g_shell.envp = env_import(envp);
 	//printf("\e[1;1H\e[2J"); // clean the screen
