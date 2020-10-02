@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:20 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/24 10:52:21 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/02 16:02:50 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,18 @@ void  command_clean(t_cmds *cmds)
       free(cmds->argv);
       cmds->argv = new_argv;
 
+}
+
+//check pid to give the good status, 
+void    check_pid(void)
+{
+    if (g_shell.pid < 0)
+        return ;
+    while (wait(&g_shell.pid) > 0) //block the caller until a child process terminates, avoid zombi process, process executed that are still in the process table
+        (void)g_shell.pid;
+    if (g_shell.pid == 2)
+      g_shell.status = 2;
+    else
+          g_shell.status = WEXITSTATUS(g_shell.pid); //WEXITSTATUS(wstatus) returns the exit status of the child.
+    g_shell.pid = 0;
 }

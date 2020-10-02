@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/24 10:52:23 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/02 15:39:46 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ void   command_exec_child(t_cmds *cmds)
     int ret;
 
     i = 0;
+    if (cmds->input < 0) //si l'open de mon fichier a renvoye -1 cest qu il existe pas
+       {
+        exit(1); //127 est revnoye par /bin/sh lorsquil ne trouve pas le fichier ou folder, permet de renvoyer "zsh: no such file or directory:"
+       }
     if (cmds->input != 0) //si jai un input dun autre fichier a prendre
     {
      if(dup2(cmds->input, STDIN) == -1) //forcer le subprocess a utiliser le pipe en IN 
@@ -98,10 +102,12 @@ void   command_exec_child(t_cmds *cmds)
    else if (!ft_strcmp(cmds->name, "grep"))
        cmds->path = "/usr/bin/grep";
    char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
-   if ((ret = execve(cmds->path, cmds->argv, env)) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
+   if ((ret = execve(cmds->path, cmds->argv, env)) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename),  //les fonctions exec remplacent le processus en cours avec un nouveau process
           {
-            printf("execve error\n");                  //les fonctions exec remplacent le processus en cours avec un nouveau process
-            exit(127);
+            write(2, "minishell: ", 11);
+		    	  write(2, cmds->name, ft_strlen(cmds->name));
+		      	write(2, ": command not found\n", 20);
+		      	exit(127);
           }
 }
 
@@ -117,7 +123,7 @@ void   command_exec_child(t_cmds *cmds)
    //Positive value: Returned to parent or caller. The value contains process ID of newly created child process.
 
 
-void   command_exec(t_cmds cmds)
+int   command_exec(t_cmds cmds)
 {
     pid_t   pid;
     int     i;
@@ -126,18 +132,16 @@ void   command_exec(t_cmds cmds)
     i = 0;
     if (!command_type(&cmds)) //pour savoir si c une builtin ou pas
     { 
-      if (cmds.input < 0) //si l'open de mon fichier a renvoye -1 cest qu il existe pas
-       exit(127); //127 est revnoye par /bin/sh lorsquil ne trouve pas le fichier ou folder, permet de renvoyer "zsh: no such file or directory:"
       if ((pid = fork()) == -1)
+      {
         printf("fork error\n");
+        exit(127);
+      }
       else if (pid == 0) //je suis dans le child
         command_exec_child(&cmds);
       else 
        g_shell.pid = pid;
    }
-
-   else 
-      printf("builtin function \n");
 
    i = 0;
   // printf("cmds.input %i \n", cmds.input);
@@ -159,7 +163,7 @@ void   command_exec(t_cmds cmds)
    free(cmds.name);
 	 free(cmds.argv);
 	 free(cmds.path);
- //  g_shell.redir = 0;
+ return(g_shell.status == 0);
 }
 
 void    command_management(t_cmds *cmds)
@@ -180,19 +184,3 @@ void    command_management(t_cmds *cmds)
   //  if (!command_type(cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
   //          command_exec(cmds); //on execute le .exe qui se trouve dans la bonne path avec execve
 }
-
-
-// void	command_exec2(void)
-// {
-// 	if (g_shell.pid < 0)
-// 		return ;
-// 	while (wait(&g_shell.pid) > 0)
-// 		(void)g_shell.pid;
-// 	if (g_shell.pid == 2)
-// 		exit(130);
-// 	else if (g_shell.pid == 3 || g_shell.pid == 131)
-// 		exit(131);
-// 	else
-// 		WEXITSTATUS(g_shell.pid);
-// 	g_shell.pid = 0;
-// }

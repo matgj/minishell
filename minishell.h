@@ -7,6 +7,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 #define BUFFER_SIZE 1024
 
@@ -35,7 +36,7 @@ typedef struct  s_shell //structure contenant les variables d environnement et l
 	int		status; //variable retournee par la fonction execute pour savoir quand quitter le minishell;
 	char	**envp; //liste des variables d'environnement "pointer to a null-terminated array of character pointers to null-terminated strings.  A pointer to this array is normally stored in the global variable environ. These strings pass information to the new process that is not directly an argument to the command "
 	int		redir;
-	int		pid;
+	pid_t	pid;
 	char	*var_env; //la valeur de la variable denv 
 }		t_shell;
 
@@ -68,14 +69,15 @@ int 	get_next_line(int fd, char **buf);
 char	*ft_cpy_line(char *s);
 int		ft_check_bn(char *str);
 
-void	execute();
+void	execute(void);
+void	prompt(void);
 int     exit_success(void);
 int     exit_failure(void);
 void    free_var(void);
 void	parsing(char *line);
 void    command_management(t_cmds *cmds);
 int		command_type(t_cmds *cmds);
-void    command_exec(t_cmds cmds);
+int    command_exec(t_cmds cmds);
 void	command_clean(t_cmds *cmds);
 void	redirection(t_cmds *cmds);
 void    ft_tab_output(int *tab_fds, int fd);
@@ -86,6 +88,8 @@ void    insert_actions(char *s);
 void    double_quotes(char *c, int *q, int *dq);
 void    simple_quotes(char *c, int *q, int *dq);
 char    *var_env(char *line);
+void    check_pid(void);
+void    signals(void);
 
 char	**env_import(char **envp);
 char	*command_path(t_cmds *cmds);

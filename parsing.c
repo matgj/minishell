@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/29 10:33:13 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/02 12:41:25 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_cmds    parse_cmd(char *cmds_pipe)
     {
          cmds.argv[i] = token[i];
          insert_actions(cmds.argv[i]);
-         printf("token[%i]:%s\n",i, token[i]);
+        // printf("token[%i]:%s\n",i, token[i]);
          i++;
     } 
     free(token);
@@ -94,8 +94,8 @@ void    parsing(char *line)
     l = 0;
     quotes(line); //analyse sil y a des '' "" ou \'
     line_env = var_env(line);//remplacer ce qui a apres un $ par la var d'env associée
-    //free(line);
-    printf("---------line : %s\n", line_env);
+   // free(line);
+   // printf("---------line : %s\n", line_env);
     cmds_semi = ft_split(line_env,';');
     free(line_env); //on peut free line car on a le contenu de line dans cmds_semi
     while (cmds_semi[l]) 
@@ -104,14 +104,12 @@ void    parsing(char *line)
      //   printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(cmds_semi[l++]);
         while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
-         { 
+        { 
                command_exec(cmds_pipe[i]);
                i++;
-            // test_tab_cmds(cmds_pipe, i);
-            // command_exec(cmds_pipe[i]);
-         }
-    //command_exec2();
-    free(cmds_pipe);
+        }
+        check_pid();
+        free(cmds_pipe);
     }
     free(cmds_semi);
 }
