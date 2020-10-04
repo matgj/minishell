@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/02 12:41:25 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/04 12:53:47 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,49 @@ t_cmds   *parse_pipe(char *cmds_semi)
     return (cmds);
 }
 
+int     syntax_err2(char *line, int i, char c)
+{
+    if (i > 2 && line[i - 2] == '<' && (line[i - 1] == '<' || line[i - 1] == ' ') && line[i] == '<')
+		return (0);
+    if (i > 2 && line[i - 2] == '>' && (line[i - 1] == '>' || line[i - 1] == ' ') && line[i] == '>')
+		return (0);
+    if ((c == ';' || c == '|') && (line[i] == ';' || line[i] == '|'))
+        return (0);
+    if ((c == '>' && line[i] == '<') || (c == '<' && line[i] == '>'))
+		return (0);
+	return (1);
+}
+
+int     syntax_error(char *line)
+{
+   int  i;
+   char c;
+
+    i = 0;
+    if (line[0] == ';' || line[0] == '|')
+        return (0);
+    while (line[i])
+    {
+        if (!syntax_err2(line, i, c))
+            return (0);
+        if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\f' && line[i] != '\r' && line[i] != '\v')
+			c = line[i];
+        i++;
+    }
+	if (c == '>' || c == '<' || c == '|')
+		return (0);
+    if (i > 1 && line[i - 1] == '|' && line[i - 2] != '\\')
+		return (0);
+    return (1);
+}
+
+void    print_syntax_err(char *line)
+{
+    printf("syntax error near unexpected token\n");
+    g_shell.status = 2;
+   // free(line);
+}
+
 //d'abord on decoupe la ligne lue par gnl en tableau de ligne de commandes, 
 //chaque ";" dans une ligne constitue une ligne de commande à executer independamment des autres 
 //ls -l | cat -e ; echo my name is $USER ==> cest comme si dabord on entrait ls -l dans le terminal et qu'on appuie sur ENTER
@@ -94,6 +137,11 @@ void    parsing(char *line)
     l = 0;
     quotes(line); //analyse sil y a des '' "" ou \'
     line_env = var_env(line);//remplacer ce qui a apres un $ par la var d'env associée
+    if (!syntax_error(line_env))
+    {
+        print_syntax_err(line);
+        return ;
+    }
    // free(line);
    // printf("---------line : %s\n", line_env);
     cmds_semi = ft_split(line_env,';');
@@ -112,4 +160,17 @@ void    parsing(char *line)
         free(cmds_pipe);
     }
     free(cmds_semi);
+}
+
+void	read_line(char **line) 
+{
+	int 	ret;
+	char	buf[1];
+
+	ret = get_next_line(1, line);
+	if(!ret && !ft_strlen(*line)) //si ya pas de ret ni de buff je quitte le shell, pour quitter jappuis sur ctrl d
+	{
+		free(*line);
+		exit_shell(g_shell.status, 1);
+	}
 }

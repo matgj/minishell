@@ -69,15 +69,11 @@ int 	get_next_line(int fd, char **buf);
 char	*ft_cpy_line(char *s);
 int		ft_check_bn(char *str);
 
-void	execute(void);
-void	prompt(void);
-int     exit_success(void);
-int     exit_failure(void);
-void    free_var(void);
+void	read_line(char **line);
 void	parsing(char *line);
 void    command_management(t_cmds *cmds);
 int		command_type(t_cmds *cmds);
-int    command_exec(t_cmds cmds);
+int    	command_exec(t_cmds cmds);
 void	command_clean(t_cmds *cmds);
 void	redirection(t_cmds *cmds);
 void    ft_tab_output(int *tab_fds, int fd);
@@ -90,6 +86,8 @@ void    simple_quotes(char *c, int *q, int *dq);
 char    *var_env(char *line);
 void    check_pid(void);
 void    signals(void);
+void	exit_shell(int status, int newline);
+
 
 char	**env_import(char **envp);
 char	*command_path(t_cmds *cmds);

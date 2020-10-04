@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/02 15:39:46 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/04 10:48:52 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void   command_exec_child(t_cmds *cmds)
        cmds->path = "/bin/cat";
    else if (!ft_strcmp(cmds->name, "grep"))
        cmds->path = "/usr/bin/grep";
+   else if (!ft_strcmp(cmds->name, "sleep"))
+      cmds->path = "/bin/sleep";
    char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
    if ((ret = execve(cmds->path, cmds->argv, env)) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename),  //les fonctions exec remplacent le processus en cours avec un nouveau process
           {
