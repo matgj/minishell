@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:09 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/24 10:50:09 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int main ()
     pid_t pid;
 
     if((pid = fork()) == -1)
-        printf("fork error");
+        ft_printf("fork error");
     else if (pid == 0)
     {
     if(execve("/bin/ls",argv,env) == -1) // toujours bien mettre la path exacte /bin/ls en arg1 (filename)
-        printf("not ok\n");
+        ft_printf("not ok\n");
     return 0;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:11 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/06 15:27:00 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	exit_shell(int status, int newline)
 {
-	printf("exit");
+	ft_printf("exit");
 	if (newline)
-		printf("\n");
+		ft_printf("\n");
 	exit(status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:49:19 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/08 12:10:08 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int     syntax_error(char *line)
 
 void    print_syntax_err(char *line)
 {
-    printf("syntax error near unexpected token\n");
+    ft_printf("syntax error near unexpected token\n");
     g_shell.status = 2;
    // free(line);
 }

@@ -40,6 +40,7 @@ typedef struct		s_printf
 	int		wid;
 	int		prec;
 	char	type;
+	int 	fd;
 
 }					t_printf;
 
@@ -64,8 +65,9 @@ typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
 	int		input;   //fd qui sert dinput a une commande
 }				t_cmds;
 
-t_cmds g_cmds;  //permet de rendre global la structure et de pas se faire chier a passer les variables en parametres;
+t_cmds	g_cmds;  //permet de rendre global la structure et de pas se faire chier a passer les variables en parametres;
 t_shell g_shell;
+t_printf g_printf;
 
 char 	*ft_strdup(const char *str);
 size_t	ft_strlen(const char *str);
@@ -82,7 +84,7 @@ int 	get_next_line(int fd, char **buf);
 char	*ft_cpy_line(char *s);
 int		ft_check_bn(char *str);
 
-void				ft_putchar(char c, int *res);
+void	ft_putchar(char c, int *res);
 void				ft_putstr(char *src, int *res);
 int					ft_printf(const char *src, ...);
 int					ft_atoi_mini(const char *src, int *i);

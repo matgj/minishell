@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/08 12:19:16 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 15:30:34 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_cmds    parse_cmd(char *cmds_pipe)
     {
          cmds.argv[i] = token[i];
          insert_actions(cmds.argv[i]);
-      //  printf("token[%i]:%s\n",i, token[i]);
+      //  ft_printf("token[%i]:%s\n",i, token[i]);
          i++;
     } 
     free(token);
@@ -60,13 +60,13 @@ t_cmds   *parse_pipe(char *cmds_semi)
     free(cmds_semi);
     while(cmds_pipe[cpt]) // on compte le nombre de commande dans la ligne de commande pour malloc 
             cpt++;
-   // printf("nbre de cmd pipes:%i \n", cpt);
+   // ft_printf("nbre de cmd pipes:%i \n", cpt);
     if(!(cmds = ft_calloc(sizeof(t_cmds), cpt + 1)))// pour chaque commande separrees par des pipes je cree une struct cmd
         return (NULL); 
     cpt = 0;
     while(cmds_pipe[cpt])
     {
-     //  printf("ligne separee par des pipes : cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
+     //  ft_printf("ligne separee par des pipes : cmds_pipes[%i]:%s\n", cpt, cmds_pipe[cpt]);
         cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
         cpt++;
     }
@@ -99,13 +99,13 @@ void    parsing(char *line)
         return ;
     }
     //free(line);
-   // printf("---------line : %s\n", line_env);
+   // ft_printf("---------line : %s\n", line_env);
     cmds_semi = ft_split(line_env,';');
     free(line_env); //on peut free line car on a le contenu de line dans cmds_semi
     while (cmds_semi[l]) 
     {
         i = 0;
-     //   printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
+     //   ft_printf("ligne separee par des points virgules => cmds_semi[%i]:%s\n",l, cmds_semi[l]);
         cmds_pipe = parse_pipe(cmds_semi[l++]);
         while (cmds_pipe[i].name)            // je parcours mon tableau de structure commande separees par des pipes
         { 
@@ -129,4 +129,6 @@ void	read_line(char **line)
 		free(*line);
 		exit_shell(g_shell.status, 1);
 	}
+    while (!ret)
+		ret = read(1, buf, 1);
 }

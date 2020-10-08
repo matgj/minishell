@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:06 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/24 10:50:07 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void    ft_tab_output(int *tab_fds, int fd)
     while (tab_fds[i] != -1)
         i++;
     tab_fds[i] = fd;
-   // printf("fd = %i\n", fd);
+   // ft_printf("fd = %i\n", fd);
 }

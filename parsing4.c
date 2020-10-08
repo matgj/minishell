@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 12:54:18 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/06 13:42:23 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,25 @@ char    *replace_env(char *to_find, char *line, int start, int end)
     char *tab[3];
     
     tab[0] = ft_substr(line, 0, start);
-  //  printf("tab[0]:%s\n", tab[0]);
+  //  ft_printf("tab[0]:%s\n", tab[0]);
     tab[1] = ft_substr(line, end, ft_strlen(line) - end);
-  //  printf("tab[1]:%s\n", tab[1]);
+  //  ft_printf("tab[1]:%s\n", tab[1]);
   //  tab[2] = ft_strjoin("  ", tab[1]);
-  //  printf("tab[2]:%s\n", tab[2]);
+  //  ft_printf("tab[2]:%s\n", tab[2]);
     new0 = ft_strdup(tab[0]);
- //   printf("new0:%s\n", new0);
-   // printf("%s\n", g_shell.var_env);
+ //   ft_printf("new0:%s\n", new0);
+   // ft_printf("%s\n", g_shell.var_env);
     new1 = ft_strjoin(new0, g_shell.var_env);
-   /// printf("new1:%s\n", new1);
+   /// ft_printf("new1:%s\n", new1);
     new2 = ft_strjoin(new1, tab[1]);
-   // printf("new2%s\n", new2);
+   // ft_printf("new2%s\n", new2);
     free(g_shell.var_env);
     free(tab[0]);
     free(tab[1]);
     //free(tab[2]);
     free(new0);
  //   new0 =  ft_strjoin(new2, "    ");
-   // printf("new0%s\n", new0);
+   // ft_printf("new0%s\n", new0);
     free(new1);
     return (new2);
 }
@@ -103,12 +103,12 @@ void    ft_cpy_var(char *str)
 //             while ((split_dol[l][c] != '$' || !ft_alphanum(split_dol[l][c + 1])) && split_dol[l][c])
 //                 c++;
 //             tab[1] = ft_substr(split_dol[l], 0, c);
-//             printf("---------tab[1] : %s\n", tab[1]);//
+//             ft_printf("---------tab[1] : %s\n", tab[1]);//
 //             tab[2] = ft_strjoin(tab[0], tab[1]);
-//             printf("---------tab[2] : %s\n", tab[2]);//
+//             ft_printf("---------tab[2] : %s\n", tab[2]);//
 //             free(tab[0]);
 //             tab[0] = ft_strjoin(tab[2], " ");
-//             printf("---------tab[0] : %s\n", tab[0]);//
+//             ft_printf("---------tab[0] : %s\n", tab[0]);//
 //             free(tab[1]);
 //             free(tab[2]);
 //                 //je retire le bail
@@ -134,12 +134,12 @@ char *remove_empty_var(char *line)
             while ((split_dol[l][c] != '$' || !ft_alphanum(split_dol[l][c + 1])) && split_dol[l][c])
                 c++;
             tab[1] = ft_substr(split_dol[l], 0, c);
-            // printf("---------tab[1] : %s\n", tab[1]);//
+            // ft_printf("---------tab[1] : %s\n", tab[1]);//
             tab[2] = ft_strjoin(tab[0], tab[1]);
-            // printf("---------tab[2] : %s\n", tab[2]);//
+            // ft_printf("---------tab[2] : %s\n", tab[2]);//
             free(tab[0]);
             tab[0] = ft_strjoin(tab[2], " ");
-            // printf("---------tab[0] : %s\n", tab[0]);//
+            // ft_printf("---------tab[0] : %s\n", tab[0]);//
             free(tab[1]);
             free(tab[2]);
                 //je retire le bail
@@ -182,7 +182,7 @@ char    *var_env(char *line)
               ft_cpy_var(vars_env[1]);
               new_line = replace_env(to_find, line, j, j + ft_strlen(to_find));
               line = ft_strdup(new_line);
-           //  printf("---------new_line : %s\n", new_line);//
+           //  ft_printf("---------new_line : %s\n", new_line);//
             }
             j++;
         }
@@ -191,6 +191,6 @@ char    *var_env(char *line)
         free(vars_env);
    }
     line = remove_empty_var(line); //supprimers les cases contenant des var denv vides
-  //   printf("---------line : %s\n", line);//
+  //   ft_printf("---------line : %s\n", line);//
     return (line);
 }

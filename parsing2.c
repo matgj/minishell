@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:01 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/27 13:31:39 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void    redirec_output(t_cmds *cmds, char *argv)
     if (cmds->chevron == 0)
     {
         if ((fd = open(argv, O_TRUNC | O_RDWR | O_CREAT, 0644)) < 0) //Using 0644 will create a file that is Read/Write for owner, and Read Only for everyone
-            printf("error creation open function redirec > output \n");
+            ft_printf("error creation open function redirec > output \n");
         else
             ft_tab_output(cmds->output, fd);
     }
     else if (cmds->chevron == 2)
     {
         if ((fd = open(argv, O_RDWR | O_CREAT | O_APPEND, 0644)) < 0)
-            printf("error creation open function redirec >> ouput \n");
+            ft_printf("error creation open function redirec >> ouput \n");
         else   
              ft_tab_output(cmds->output, fd);
     }
@@ -76,9 +76,9 @@ void    redirection(t_cmds *cmds)
         {
             if (cmds->chevron == 1)
                {
-                    //printf("cmds->argv[i + 1]:%s\n", cmds->argv[i + 1]);
+                    //ft_printf("cmds->argv[i + 1]:%s\n", cmds->argv[i + 1]);
                     if ((fd = open(cmds->argv[i + 1], O_RDONLY)) < 0)
-                      printf("error open function redirec < input\n");
+                      ft_printf("error open function redirec < input\n");
                     cmds->input = fd;
                 }
              else 

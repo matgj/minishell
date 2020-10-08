@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/06 15:49:12 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,14 @@ void   command_exec_child(t_cmds *cmds)
     if (cmds->input != 0) //si jai un input dun autre fichier a prendre
     {
      if(dup2(cmds->input, STDIN) == -1) //forcer le subprocess a utiliser le pipe en IN 
-         printf("dup2 error input\n"); 
+         ft_printf("dup2 error input\n"); 
     }
      while(cmds->output[i] != -1) //je parcours mon tableau de output avec les fd de chaque cmd separees par des redir
      {
        if (cmds->output[i] != STDOUT) 
        {               
            if(dup2(cmds->output[i], STDOUT) == -1) //forcer le subprocess a utiliser le pipe en OUT, j
-              printf("dup2 error ouput\n"); 
+              ft_printf("dup2 error ouput\n"); 
        }
        i++;
      }
@@ -134,7 +134,7 @@ int   command_exec(t_cmds cmds)
     { 
       if ((pid = fork()) == -1)
       {
-        printf("fork error\n");
+        ft_printf("fork error\n");
         exit(127);
       }
       else if (pid == 0) //je suis dans le child
@@ -144,12 +144,12 @@ int   command_exec(t_cmds cmds)
    }
 
    i = 0;
-  // printf("cmds.input %i \n", cmds.input);
+  // ft_printf("cmds.input %i \n", cmds.input);
    if (cmds.input != 0)
     close(cmds.input);
     while (cmds.output[i] != -1) 
     {
-     // printf("cmds.output[%i] %i \n",i, cmds.output[i]);
+     // ft_printf("cmds.output[%i] %i \n",i, cmds.output[i]);
       if (cmds.output[i] != STDOUT)
       {
         close(cmds.output[i]);
@@ -187,7 +187,7 @@ void    command_management(t_cmds *cmds)
 	  // {
 	  // 	if (cmds->argv[i][0] == REPLACED)
 	  // 	{
-	  //      //printf("hey\n");
+	  //      //ft_printf("hey\n");
     //      free(cmds->argv[i]);
     //      cmds->argv[i] = ft_strjoin("","");
 		//   }

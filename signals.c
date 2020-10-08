@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 11:48:52 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/04 10:50:39 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 13:09:02 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ void    signal_quit(int signal)
     {
         kill(g_shell.pid, signal);
         g_shell.status = 131;
-        printf("Quit: %d\n", g_shell.pid);
+        ft_printf("Quit: %d\n", g_shell.pid);
     }
 }
 
 void    signal_interrupt(int signal)
 {
-    printf("\n");
+    ft_printf("\n");
     if (!g_shell.pid)
     {
-            fprintf(stderr, "\e[1m" "bash-42$ " "\e[0m");
+           // fprintf(stderr, "\e[1m" "bash-42$ " "\e[0m");
+           	write(2, "\e[1m" "bash-42$ " "\e[0m", 25);
             g_shell.status = 130;
     }
     else
@@ -46,7 +47,7 @@ void    signal_interrupt(int signal)
 void    signals(void)
 {
     if(signal(SIGINT, &signal_interrupt) == SIG_ERR)
-        printf("Signal interrupt error\n");
+        ft_printf("Signal interrupt error\n");
     if(signal(SIGQUIT, &signal_quit) == SIG_ERR)
-        printf("Signal quit error\n");
+        ft_printf("Signal quit error\n");
 }

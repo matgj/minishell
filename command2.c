@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:20 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/06 15:51:38 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void        command_plug(t_cmds *cmds)
     i = 0;
     while (cmds[nb_cmds].name) 
               nb_cmds++;
-   // printf("nb cmd:%i\n", nb_cmds);
+   // ft_printf("nb cmd:%i\n", nb_cmds);
 
     while (i < nb_cmds) 
      {
@@ -69,7 +69,7 @@ void  command_clean(t_cmds *cmds)
     {
       if (cmds->argv[pos] != NULL)
             pos++;
-    //  printf("pos:%i\n", pos);
+    //  ft_printf("pos:%i\n", pos);
       i++;
     }
      new_argv = ft_calloc(pos + 1, sizeof(char*));
