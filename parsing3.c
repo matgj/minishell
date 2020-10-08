@@ -6,13 +6,11 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/06 13:06:32 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 16:26:21 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//juste avant d afficher la commande je remplace les caracteres par les vrai pour que cela corresponde a ce qui a ete ecrit
 
 void    insert_actions(char *s)
 {
@@ -39,7 +37,6 @@ void    insert_actions(char *s)
     } 
 }
 
-//si y a des quotes je remplace les actions par des caracteres qui n affectent pas le parsing
 void    clean_actions(char *c, int q, int dq)
 {
      if ((dq || q) && *c == ' ')
@@ -50,8 +47,6 @@ void    clean_actions(char *c, int q, int dq)
          *c = SEMI;
      else if ((dq || q) && *c == '>')
          *c = R_OUT;
-     //if (c == '>>')
-       //  c = R_OUT_A;
      else if ((dq || q) && *c == '<')
          *c = R_IN;
      else if ((q) && *c == '$')
@@ -69,10 +64,6 @@ void	replace(char *line, int i, char c, int *flag)
 	}
 	*flag = 1;
 }
-
-
-//check si y a un backslash, je remplace le caractere par un caractere neutre pour ne pas
-//affecter mon programme 
 
 int		backslash(int i, char *line, int q, int dq)
 {
@@ -98,11 +89,14 @@ int		backslash(int i, char *line, int q, int dq)
 	return (flag);
 }
 
+/*
 //analyse si ya des quotes ou backslash, quel type de quote et remplace 
 //par un caractere qui ne va pas influencer le split en plusieurs commandes
 //le backslash permet dannuler laction qui suit, par exemple 
 //echo "$USER" va sortir Mathis alors que echo "/$USER" va sortir USER
 //idem pour echo bitch > ok va creer un fichier ok et ecrire bitch alors que echo bitch />ok ecrit bitch en stdout
+*/
+
 void	quotes(char *line)
 {
 	int	q;

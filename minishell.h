@@ -13,8 +13,8 @@
 
 #define BUFFER_SIZE 1024
 
-#define EXIT_SUCCESS 0 //false = bool 0
-#define EXIT_FAILURE 1 //true = bool 1
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
 
 #define STDOUT 1
 #define STDIN 0
@@ -22,17 +22,16 @@
 #define PIPE 5
 #define SEMI 2
 #define R_OUT 7
-//#define R_OUT_A 4
 
 #define R_IN 8               
 #define VAR 4
 
 #define REPLACED 3
-#define BS 7 // seul valeur pr laquelle on a pas besoin de modifier la chaine au cas ou y a un \
+#define BS 7
 
 #define BS_Q 16
 #define SPACE 1
-#define ARG_MAX 262144 // ou peut etre autre ? ou ca 131072, calcul avec le nbre de caractere max dune ligne
+#define ARG_MAX 262144
 
 typedef struct		s_printf
 {
@@ -44,28 +43,28 @@ typedef struct		s_printf
 
 }					t_printf;
 
-typedef struct  s_shell //structure contenant les variables d environnement et le status
+typedef struct  s_shell
 {
 	int		dquotes;
-	int		status; //variable retournee par la fonction execute pour savoir quand quitter le minishell;
-	char	**envp; //liste des variables d'environnement "pointer to a null-terminated array of character pointers to null-terminated strings.  A pointer to this array is normally stored in the global variable environ. These strings pass information to the new process that is not directly an argument to the command "
+	int		status;
+	char	**envp;
 	int		redir;
 	pid_t	pid;
-	char	*var_env; //la valeur de la variable denv 
+	char	*var_env;
 }		t_shell;
 
-typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
+typedef	struct	s_cmds
 {
-	char	*name;   //nom de la commande recupere via argv
-	char	*path;   //path exacte de l'executable
-	char	**argv;  //pointeur sur tableau de pointeur sur tokens a executes retournees par split pipes et split semi, fini par NULL. "pointer to a null-terminated array of character pointers to null-terminated character strings.  These strings construct the argument list to be made available to the new process.  At least one argument must be present in the array; by custom, the first element should be the name of the executed program (for example, the last component of path)."
-	int 	chevron; //> = redirec stdin (0) < = redic stout (1); 2 >> redic with append, 3 = rien
-	int		argc;    // nombre darguments dune commande (ls -l = deux arguments, wc -l > hello.txt = 4 argument)
-	int 	output[ARG_MAX]; //tabl d'int pour les files descriptor d'une commande qui va rediriger son ouput
-	int		input;   //fd qui sert dinput a une commande
+	char	*name; 
+	char	*path;  
+	char	**argv;
+	int 	chevron;
+	int		argc;
+	int 	output[ARG_MAX];
+	int		input;
 }				t_cmds;
 
-t_cmds	g_cmds;  //permet de rendre global la structure et de pas se faire chier a passer les variables en parametres;
+t_cmds	g_cmds;
 t_shell g_shell;
 t_printf g_printf;
 

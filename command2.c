@@ -6,12 +6,13 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:20 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/08 16:21:42 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 //lier les fd des commandes separees par des pipes
 //syscall pipe
 //dans pipe, fd[0] = read et fd[1] = write
@@ -21,10 +22,11 @@
 //toujours fermer le fd qu on utilise pas (si on est dans child on ferme fd[0] sinon on ferme fd[1])
 //ensuite on duplique les fd dans le child sur les stin et stout pour
 //quon puisse exec() les program avec les streams standards
+*/
 
 void        command_plug(t_cmds *cmds)
 {
-    int   nb_cmds; //nb de commandes liees par des pipes
+    int   nb_cmds;
     int   fd[2];
     int   i;
 
@@ -32,30 +34,30 @@ void        command_plug(t_cmds *cmds)
     i = 0;
     while (cmds[nb_cmds].name) 
               nb_cmds++;
-   // ft_printf("nb cmd:%i\n", nb_cmds);
 
     while (i < nb_cmds) 
      {
-        if (i != 0) //&& g_shell.redir == 0) // si je ne suis pas a la premiere commande et sil y n y a pas de redir
+        if (i != 0)
         {
             {
-              pipe(fd); //ouvre fd[0] = read et fd[1] = write, 
-              ft_tab_output(cmds[i - 1].output, fd[1]); // l'output de la precedente commande write, je stock fd[1] de cote pour les fermer plus tard
-              cmds[i].input = fd[0]; //mon input read
+              pipe(fd);
+              ft_tab_output(cmds[i - 1].output, fd[1]);
+              cmds[i].input = fd[0];
             }
         }
-       if (i == nb_cmds - 1) //si cest la derniere command
+       if (i == nb_cmds - 1)
        {
          ft_tab_output(cmds[i].output, 1);
        }
-        ft_tab_output(cmds[i].output, -1); // a changé?
+        ft_tab_output(cmds[i].output, -1);
       i++;  
   }
 }
 
-
+/*
 //enlever de la structure cmds les arguments que jai deja parsé
 //en creant un nouveau tab d arg sans les cases NULL
+*/
 
 void  command_clean(t_cmds *cmds)
 {
@@ -69,7 +71,6 @@ void  command_clean(t_cmds *cmds)
     {
       if (cmds->argv[pos] != NULL)
             pos++;
-    //  ft_printf("pos:%i\n", pos);
       i++;
     }
      new_argv = ft_calloc(pos + 1, sizeof(char*));
@@ -90,16 +91,15 @@ void  command_clean(t_cmds *cmds)
 
 }
 
-//check pid to give the good status, 
 void    check_pid(void)
 {
     if (g_shell.pid < 0)
         return ;
-    while (wait(&g_shell.pid) > 0) //block the caller until a child process terminates, avoid zombi process, process executed that are still in the process table
+    while (wait(&g_shell.pid) > 0)
         (void)g_shell.pid;
     if (g_shell.pid == 2)
       g_shell.status = 2;
     else
-          g_shell.status = WEXITSTATUS(g_shell.pid); //WEXITSTATUS(wstatus) returns the exit status of the child.
+          g_shell.status = WEXITSTATUS(g_shell.pid);
     g_shell.pid = 0;
 }
