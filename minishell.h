@@ -8,6 +8,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <stdarg.h>
+# include <string.h>
 
 #define BUFFER_SIZE 1024
 
@@ -31,6 +33,15 @@
 #define BS_Q 16
 #define SPACE 1
 #define ARG_MAX 262144 // ou peut etre autre ? ou ca 131072, calcul avec le nbre de caractere max dune ligne
+
+typedef struct		s_printf
+{
+	char	flag;
+	int		wid;
+	int		prec;
+	char	type;
+
+}					t_printf;
 
 typedef struct  s_shell //structure contenant les variables d environnement et le status
 {
@@ -70,6 +81,40 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int 	get_next_line(int fd, char **buf);
 char	*ft_cpy_line(char *s);
 int		ft_check_bn(char *str);
+
+void				ft_putchar(char c, int *res);
+void				ft_putstr(char *src, int *res);
+int					ft_printf(const char *src, ...);
+int					ft_atoi_mini(const char *src, int *i);
+char				*ft_itoa_base(long int nb, int base, char *base_tab);
+void				ft_c(va_list arg_list, t_printf *conv, int *res);
+void				ft_s(va_list arg_list, t_printf *conv, int *res);
+void				ft_mod(t_printf *conv, int *res);
+void				ft_di(va_list arg_list, t_printf *conv,
+	int *res, char *base_tab);
+void				ft_u(va_list arg_list, t_printf *conv,
+	int *res, char *base_tab);
+void				ft_x(va_list arg_list, t_printf *conv,
+	int *res, char *base_tab);
+void				ft_p(va_list arg_list, t_printf *conv,
+	int *res, char *base_tab);
+void				ft_zero(t_printf *conv, char *src, int *res, int s_len);
+void				ft_minus(t_printf *conv, char *src, int *res, int s_len);
+void				ft_spaces(t_printf *conv, char *src, int *res, int s_len);
+void				ft_space_s(t_printf *conv, char *str, int *res, int len);
+void				ft_zero_s(t_printf *conv, char *str,
+int *res, int len);
+void				ft_minus_s(t_printf *conv, char *str,
+int *res, int len);
+void				ft_flags_prec(const char *src, int *i,
+	va_list arg_list, t_printf *conv);
+void				ft_flags_wid(const char *src, int *i,
+	va_list arg_list, t_printf *conv);
+void				ft_flags_zero_minus(const char *src,
+	int *i, t_printf *conv);
+void				ft_flag_p(t_printf *conv, char *str, int *res, int len);
+int					ft_check_type(char c);
+
 
 void	read_line(char **line);
 void	parsing(char *line);
