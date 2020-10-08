@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/04 10:48:52 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/06 15:49:12 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@ int    command_type(t_cmds *cmds) //si cest une builtin fonction on doit la code
         return (0);
 }
 
+void	cmd_last_arg(t_cmds *cmds)
+{
+	int	i;
+
+	if (!cmds->argc)
+		return ;
+	i = 0;
+	while (cmds->argv[i] && (!ft_strcmp(cmds->argv[i], ">") ||
+		!ft_strcmp(cmds->argv[i], "<")))
+		i += 2;
+	if (!cmds->argv[i])
+		cmds->name = NULL;
+	else
+		cmds->name = ft_strdup(cmds->argv[i]);
+}
 
 void    command_creation(t_cmds *cmds)
 {
@@ -47,17 +62,6 @@ void    command_creation(t_cmds *cmds)
         cmds->name = NULL;
     else
         cmds->name = ft_strdup(cmds->argv[i]); //je cree name dans la struct name
- 
-    //  i = 0;
-    // while (cmds->argv[i])
-	  // {
-	  // 	if (cmds->argv[i][0] == 3)
-	  // 	{
-		//   	free(cmds->argv[i]);
-		//   	cmds->argv[i] = ft_strdup("");
-		//   }
-    //   i++;
-  	// }
 }
 
 //A common use of pipes is to send data to or receive data 
@@ -112,12 +116,6 @@ void   command_exec_child(t_cmds *cmds)
 		      	exit(127);
           }
 }
-
-// void   command_exec_parent(t_cmds *cmds)
-// {
-
-// }
-
 
 //fork()
    //Negative Value: creation of a child process was unsuccessful.
@@ -178,10 +176,23 @@ void    command_management(t_cmds *cmds)
     if(!cmds->argc)
       return;
     command_creation(cmds); // pour initaliser name dans la struct cmd
+    cmd_last_arg(cmds); //cas ou line commence avec un chevron, cmd est le dernier arg
     redirection(cmds);
     while(cmds->argv[i])
         i++;
     cmds->argc = i;
+     
+    // i = 0;
+    // while (cmds->argv[i])
+	  // {
+	  // 	if (cmds->argv[i][0] == REPLACED)
+	  // 	{
+	  //      //printf("hey\n");
+    //      free(cmds->argv[i]);
+    //      cmds->argv[i] = ft_strjoin("","");
+		//   }
+    //   i++;
+  	// }
    // test_cmd(*cmds);
   //  if (!command_type(cmds)) //pour savoir si cest une builtin fonction, si ca n'est pas une builtin on execute l'exe qu'on a dans path
   //          command_exec(cmds); //on execute le .exe qui se trouve dans la bonne path avec execve

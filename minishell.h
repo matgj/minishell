@@ -17,17 +17,19 @@
 #define STDOUT 1
 #define STDIN 0
 
-#define PIPE 1
+#define PIPE 5
 #define SEMI 2
-#define R_OUT 4
+#define R_OUT 7
 //#define R_OUT_A 4
-#define R_IN 5
-#define VAR 6
 
-#define REPLACED 7
-#define BS 3 // seul valeur pr laquelle on a pas besoin de modifier la chaine au cas ou y a un \
-//
-#define SPACE 8
+#define R_IN 8               
+#define VAR 4
+
+#define REPLACED 3
+#define BS 7 // seul valeur pr laquelle on a pas besoin de modifier la chaine au cas ou y a un \
+
+#define BS_Q 16
+#define SPACE 1
 #define ARG_MAX 262144 // ou peut etre autre ? ou ca 131072, calcul avec le nbre de caractere max dune ligne
 
 typedef struct  s_shell //structure contenant les variables d environnement et le status
@@ -71,10 +73,12 @@ int		ft_check_bn(char *str);
 
 void	read_line(char **line);
 void	parsing(char *line);
+void	parse_token(char ***token, char *cmds_pipe);
 void    command_management(t_cmds *cmds);
 int		command_type(t_cmds *cmds);
 int    	command_exec(t_cmds cmds);
 void	command_clean(t_cmds *cmds);
+char	*join_splits(char **tabs);
 void	redirection(t_cmds *cmds);
 void    ft_tab_output(int *tab_fds, int fd);
 void    command_plug(t_cmds *cmds);
@@ -87,6 +91,10 @@ char    *var_env(char *line);
 void    check_pid(void);
 void    signals(void);
 void	exit_shell(int status, int newline);
+void	free_split(char **tabs);
+int     syntax_error(char *line);
+int     syntax_err2(char *line, int i, char c);
+void    print_syntax_err(char *line);
 
 
 char	**env_import(char **envp);

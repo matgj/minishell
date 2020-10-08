@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:11 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/03 11:08:20 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/06 15:27:00 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,14 @@ void	exit_shell(int status, int newline)
 	if (newline)
 		printf("\n");
 	exit(status);
+}
+
+void			free_split(char **tabs)
+{
+	int i;
+
+	i = 0;
+	while (tabs[i])
+		free(tabs[i++]);
+	free(tabs);
 }

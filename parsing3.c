@@ -6,11 +6,13 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/25 15:29:40 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/06 13:06:32 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
+
+//juste avant d afficher la commande je remplace les caracteres par les vrai pour que cela corresponde a ce qui a ete ecrit
 
 void    insert_actions(char *s)
 {
@@ -21,80 +23,79 @@ void    insert_actions(char *s)
     {
         if (s[i] == SPACE)
             s[i] = ' ';
-        if (s[i] == PIPE)
+        else if (s[i] == PIPE)
             s[i] = '|';
-        if (s[i] == SEMI)
+        else if (s[i] == SEMI)
             s[i] = ';';
-        if (s[i] == R_OUT)
+        else if (s[i] == R_OUT)
             s[i] = '>';
-        if (s[i] == R_IN)
+        else if (s[i] == R_IN)
             s[i] = '<';
-        if (s[i] == VAR)
-            s[i] = '$';
+        else if (s[i] == VAR)
+            s[i] = '$'; 
+        if (s[i] == 6) //TODO:number 6 seems interesting
+             s[i] = ' '; 
         i++;
     } 
 }
 
-//TODO: how to manage >> ?
-void    clean_actions(char *c, int *q, int *dq)
+//si y a des quotes je remplace les actions par des caracteres qui n affectent pas le parsing
+void    clean_actions(char *c, int q, int dq)
 {
-     if ((*dq || *q) && *c == ' ')
+     if ((dq || q) && *c == ' ')
          *c = SPACE;
-     if ((*dq || *q) && *c == '|')
+     else if ((dq || q) && *c == '|')
          *c = PIPE;
-     if ((*dq || *q) && *c == ';')
+     else if ((dq || q) && *c == ';')
          *c = SEMI;
-     if ((*dq || *q) && *c == '>')
+     else if ((dq || q) && *c == '>')
          *c = R_OUT;
      //if (c == '>>')
        //  c = R_OUT_A;
-     if ((*dq || *q) && *c == '<')
+     else if ((dq || q) && *c == '<')
          *c = R_IN;
-     if ((*q) && *c == '$') //TODO: dont modify if echo "'$USER'" // modify if echo "'$USER'"
+     else if ((q) && *c == '$')
          *c = VAR;
 }
+
+void	replace(char *line, int i, char c, int *flag)
+{
+	if (line[i] == '\\' && line[i - 1] == '\\')
+		line[i] = REPLACED;
+	else
+	{
+		line[i - 1] = REPLACED;
+		line[i] = c;
+	}
+	*flag = 1;
+}
+
 
 //check si y a un backslash, je remplace le caractere par un caractere neutre pour ne pas
 //affecter mon programme 
 
-void    backslash(char *line, int *i, int *q, int *dq)
+int		backslash(int i, char *line, int q, int dq)
 {
-   if (line[*i] == '\\' && line[*i + 1] == '|')
-   {
-       line[*i] = BS;
-       line[*i + 1] = PIPE;
-   }
-  else if (line[*i] == '\\' && line[*i + 1] == ';')
-   {
-       line[*i] = BS;
-       line[*i + 1] = SEMI;
-   }
-   else if (line[*i] == '\\' && line[*i + 1] == '>')
-   {
-       line[*i] = BS;
-       line[*i + 1] = R_OUT;
-   }
+	int flag;
 
-   else if (line[*i] == '\\' && line[*i + 1] == '<')
-   {
-       line[*i] = BS;
-       line[*i + 1] = R_IN;
-   }
-   else if (line[*i] == '\\' && line[*i + 1] == '$')
-   {
-       line[*i] = BS;
-       line[*i + 1] = VAR;
-   }
-}
-
-//si y a un backslash a linterieur de double quotes
-void    bs_dq(char *line, int *i, int *q, int *dq)
-{
-    if (*dq && line[*i] == '\\' && line[*i + 1] == '$')
-    {
-       line[*i] = BS;
-       line[*i + 1] = VAR;
-    }
+	flag = 0;
+	if (line[i - 1] == '\\' && line[i] == '\\' && !q && i > 0)
+		replace(line, i, REPLACED, &flag);
+	else if (line[i - 1] == '\\' && line[i] == '$' && !q && i > 0)
+		replace(line, i, VAR, &flag);
+	else if (line[i - 1] == '\\' && line[i] == ';' && !q && !dq && i > 0)
+		replace(line, i, SEMI, &flag);
+	else if (line[i - 1] == '\\' && line[i] == '|' && !q && !dq && i > 0)
+		replace(line, i, PIPE, &flag);
+	else if (line[i - 1] == '\\' && line[i] == ' ' && !q && !dq && i > 0)
+		replace(line, i, SPACE, &flag);
+	else if (line[i - 1] == '\\' && line[i] == '>' && !q && !dq && i > 0)
+		replace(line, i, R_OUT, &flag);
+	else if (line[i - 1] == '\\' && line[i] == '<' && !q && !dq && i > 0)
+		replace(line, i, R_IN, &flag);
+	else if (line[i - 1] == '\\' && !q && !dq && i > 0)
+		replace(line, i, line[i], &flag);
+	return (flag);
 }
 
 //analyse si ya des quotes ou backslash, quel type de quote et remplace 
@@ -102,25 +103,27 @@ void    bs_dq(char *line, int *i, int *q, int *dq)
 //le backslash permet dannuler laction qui suit, par exemple 
 //echo "$USER" va sortir Mathis alors que echo "/$USER" va sortir USER
 //idem pour echo bitch > ok va creer un fichier ok et ecrire bitch alors que echo bitch />ok ecrit bitch en stdout
-void    quotes(char *line)
+void	quotes(char *line)
 {
-    int i;
-    int q;
-    int dq;
+	int	q;
+	int	dq;
+	int	i;
 
-    i = 0;
-    q = 0;
-    dq = 0;
-    while (line[i])
-    {
-        bs_dq(line, &i, &q, &dq);
-        backslash(line, &i, &q, &dq);
-        if (line[i] == '"')
-            double_quotes(&line[i], &q, &dq);
-        else if (line[i] == '\'')
-            simple_quotes(&line[i], &q, &dq);
-        else 
-            clean_actions(&line[i], &q, &dq); 
+	q = 0;
+	dq = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i - 1] == '\\' && i > 0 && ((line[i] == '\'' && !dq && !q) || (line[i] == '"' && !q)))
+			line[i - 1] = REPLACED;
+		else if (backslash(i, line, q, dq))
+			(void)i;
+		else if (line[i] == '\'')
+			simple_quotes(&line[i], &q, &dq);
+		else if (line[i] == '"')
+			double_quotes(&line[i], &q, &dq);
+		else
+			clean_actions(&line[i], q, dq);
         i++;
-    }
+	}
 }

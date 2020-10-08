@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 12:54:18 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/01 10:24:07 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/06 13:42:23 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,6 @@ char    *var_env(char *line)
         free(vars_env);
    }
     line = remove_empty_var(line); //supprimers les cases contenant des var denv vides
-   //  printf("---------line : %s\n", line);//
+  //   printf("---------line : %s\n", line);//
     return (line);
 }
