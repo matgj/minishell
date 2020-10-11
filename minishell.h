@@ -1,5 +1,5 @@
 #ifndef MINISHELL_H
-# define MINISHELL_H 
+# define MINISHELL_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -24,7 +24,7 @@
 #define R_OUT 7
 //#define R_OUT_A 4
 
-#define R_IN 8               
+#define R_IN 8
 #define VAR 4
 
 #define REPLACED 3
@@ -51,7 +51,7 @@ typedef struct  s_shell //structure contenant les variables d environnement et l
 	char	**envp; //liste des variables d'environnement "pointer to a null-terminated array of character pointers to null-terminated strings.  A pointer to this array is normally stored in the global variable environ. These strings pass information to the new process that is not directly an argument to the command "
 	int		redir;
 	pid_t	pid;
-	char	*var_env; //la valeur de la variable denv 
+	char	*var_env; //la valeur de la variable denv
 }		t_shell;
 
 typedef	struct	s_cmds  // structure contenant toutes les infos d'une commande
@@ -142,6 +142,9 @@ void	free_split(char **tabs);
 int     syntax_error(char *line);
 int     syntax_err2(char *line, int i, char c);
 void    print_syntax_err(char *line);
+int    command_type_parent(t_cmds cmds);
+int    command_type_child(t_cmds cmds);
+
 
 
 char	**env_import(char **envp);
