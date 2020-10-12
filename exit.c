@@ -6,11 +6,13 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:11 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/08 12:56:57 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/12 13:39:47 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_shell g_shell;
 
 void	exit_shell(int status, int newline)
 {

@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/08 16:16:33 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/12 12:56:40 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,33 @@
 
 extern t_shell g_shell;
 
-int    command_type(t_cmds *cmds)
+int    command_type_parent(t_cmds cmds) //si cest une builtin fonction on doit la coder nous meme, donc on redirige vers lexecution de notre propre ft_builtin
 {
+    if (!ft_strcmp(cmds.name, "cd"))
+    	ft_cd(cmds);
+    // else if (!ft_strcmp(cmds->name, "export"))
+    // 	ft_export(cmds);
+    // else if (!ft_strcmp(cmds->name, "unset"))
+    // 	ft_unset(cmds);
+    else if (!ft_strcmp(cmds.name, "exit"))
+    	ft_exit(cmds);
+    else
+    	return (0);
+    return (1);
+
+}
+
+int    command_type_child(t_cmds cmds) //si cest une builtin fonction on doit la coder nous meme, donc on redirige vers lexecution de notre propre ft_builtin
+{
+      if (!ft_strcmp(cmds.name,"echo"))
+          ft_echo(cmds);
+    //  else if(!ft_strcmp(cmds.name,"pwd"))
+    //     ft_pwd(cmds);
+    //  else if(!ft_strcmp(cmds.name,"env"))
+    //     ft_env(cmds);
+      else
         return (0);
+      return (1);
 }
 
 void	cmd_last_arg(t_cmds *cmds)
@@ -46,20 +70,20 @@ void    command_creation(t_cmds *cmds)
     if (!cmds->argv[i])
         cmds->name = NULL;
     else
-        cmds->name = ft_strdup(cmds->argv[i]); 
+        cmds->name = ft_strdup(cmds->argv[i]);
 }
 
 /*
-//A common use of pipes is to send data to or receive data 
-//from a program being run as a subprocess. 
-//One way of doing this is by using a combination of 
+//A common use of pipes is to send data to or receive data
+//from a program being run as a subprocess.
+//One way of doing this is by using a combination of
 //pipe (to create the pipe), fork (to create the subprocess),
-//dup2 (to force the subprocess to use the pipe as its standard 
-//input or output channel), and exec (to execute the new program). 
+//dup2 (to force the subprocess to use the pipe as its standard
+//input or output channel), and exec (to execute the new program).
 */
 
 void   command_exec_child(t_cmds *cmds)
-{ 
+{
     int i;
     int ret;
 
@@ -68,26 +92,26 @@ void   command_exec_child(t_cmds *cmds)
        {
         exit(1);
        }
-    if (cmds->input != 0) 
+    if (cmds->input != 0)
     {
-     if(dup2(cmds->input, STDIN) == -1) 
-         ft_printf("dup2 error input\n"); 
+     if(dup2(cmds->input, STDIN) == -1)
+         ft_printf("dup2 error input\n");
     }
-     while(cmds->output[i] != -1) 
+     while(cmds->output[i] != -1)
      {
-       if (cmds->output[i] != STDOUT) 
-       {               
+       if (cmds->output[i] != STDOUT)
+       {
            if(dup2(cmds->output[i], STDOUT) == -1)
-              ft_printf("dup2 error ouput\n"); 
+              ft_printf("dup2 error ouput\n");
        }
        i++;
      }
-   if (!ft_strcmp(cmds->name, "echo"))
-      cmds->path = "/bin/echo";
-   else if (!ft_strcmp(cmds->name, "ls"))
-        cmds->path = "/bin/ls"; 
+  // if (!ft_strcmp(cmds->name, "echo"))
+    //  cmds->path = "/bin/echo";
+    if (!ft_strcmp(cmds->name, "ls"))
+        cmds->path = "/bin/ls";
    else if (!ft_strcmp(cmds->name, "wc"))
-        cmds->path = "/usr/bin/wc"; 
+        cmds->path = "/usr/bin/wc";
    else if (!ft_strcmp(cmds->name, "cat"))
        cmds->path = "/bin/cat";
    else if (!ft_strcmp(cmds->name, "grep"))
@@ -116,9 +140,22 @@ int   command_exec(t_cmds cmds)
     int     i;
     int     ret;
 
+     i = 0;
+      if (command_type_parent(cmds))
+      {
+        i = 0;
+        while (cmds.argv[i])
+        free(cmds.argv[i++]);
+        free(cmds.name);
+        free(cmds.argv);
+        free(cmds.path);
+        g_shell.pid = -1;
+        return (1);
+    }
+
     i = 0;
-    if (!command_type(&cmds))
-    { 
+    if (!command_type_child(cmds))
+    {
       if ((pid = fork()) == -1)
       {
         ft_printf("fork error\n");
@@ -126,15 +163,15 @@ int   command_exec(t_cmds cmds)
       }
       else if (pid == 0)
         command_exec_child(&cmds);
-      else 
+      else
        g_shell.pid = pid;
    }
 
    i = 0;
-  
+
    if (cmds.input != 0)
     close(cmds.input);
-    while (cmds.output[i] != -1) 
+    while (cmds.output[i] != -1)
     {
       if (cmds.output[i] != STDOUT)
       {
@@ -142,7 +179,7 @@ int   command_exec(t_cmds cmds)
       }
       i++;
     }
-  
+
   i = 0;
 	while (cmds.argv[i])
 	  free(cmds.argv[i++]);
@@ -167,5 +204,5 @@ void    command_management(t_cmds *cmds)
     while(cmds->argv[i])
         i++;
     cmds->argc = i;
-  
+
 }

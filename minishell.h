@@ -1,5 +1,5 @@
 #ifndef MINISHELL_H
-# define MINISHELL_H 
+# define MINISHELL_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -23,7 +23,7 @@
 #define SEMI 2
 #define R_OUT 7
 
-#define R_IN 8               
+#define R_IN 8
 #define VAR 4
 
 #define REPLACED 3
@@ -51,12 +51,13 @@ typedef struct  s_shell
 	int		redir;
 	pid_t	pid;
 	char	*var_env;
+	int		d;
 }		t_shell;
 
 typedef	struct	s_cmds
 {
-	char	*name; 
-	char	*path;  
+	char	*name;
+	char	*path;
 	char	**argv;
 	int 	chevron;
 	int		argc;
@@ -121,7 +122,8 @@ void	read_line(char **line);
 void	parsing(char *line);
 void	parse_token(char ***token, char *cmds_pipe);
 void    command_management(t_cmds *cmds);
-int		command_type(t_cmds *cmds);
+int		command_type_child(t_cmds cmds);
+int		command_type_parent(t_cmds cmds);
 int    	command_exec(t_cmds cmds);
 void	command_clean(t_cmds *cmds);
 char	*join_splits(char **tabs);

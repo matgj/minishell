@@ -6,11 +6,13 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/09 10:44:22 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/12 14:08:11 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_shell g_shell;
 
 t_cmds	parse_cmd(char *cmds_pipe)
 {
@@ -37,6 +39,7 @@ t_cmds	parse_cmd(char *cmds_pipe)
 	while (i < ARG_MAX)
 		cmds.output[i++] = -1;
 	command_management(&cmds);
+	test_cmd(cmds);
 	return (cmds);
 }
 
@@ -114,6 +117,8 @@ void	parsing(char *line)
 	free(cmds_semi);
 }
 
+/*read line and manage ctrl d */
+
 void	read_line(char **line)
 {
 	int		ret;
@@ -125,4 +130,6 @@ void	read_line(char **line)
 		free(*line);
 		exit_shell(g_shell.status, 1);
 	}
+	while (!ret)
+		ret = read(1, buf, 1);
 }

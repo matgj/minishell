@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/08 16:26:21 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/12 14:07:00 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ void    insert_actions(char *s)
     {
         if (s[i] == SPACE)
             s[i] = ' ';
-        else if (s[i] == PIPE)
+        if (s[i] == PIPE)
             s[i] = '|';
-        else if (s[i] == SEMI)
+        if (s[i] == SEMI)
             s[i] = ';';
-        else if (s[i] == R_OUT)
+       	if (s[i] == R_OUT)
             s[i] = '>';
-        else if (s[i] == R_IN)
+        if (s[i] == R_IN)
             s[i] = '<';
-        else if (s[i] == VAR)
-            s[i] = '$'; 
-        if (s[i] == 6) //TODO:number 6 seems interesting
-             s[i] = ' '; 
+        if (s[i] == VAR)
+            s[i] = '$';
+        if (s[i] == 3) //TODO:number 6 seems interesting
+             s[i] = ' ';
         i++;
-    } 
+    }
 }
 
 void    clean_actions(char *c, int q, int dq)
@@ -90,9 +90,9 @@ int		backslash(int i, char *line, int q, int dq)
 }
 
 /*
-//analyse si ya des quotes ou backslash, quel type de quote et remplace 
+//analyse si ya des quotes ou backslash, quel type de quote et remplace
 //par un caractere qui ne va pas influencer le split en plusieurs commandes
-//le backslash permet dannuler laction qui suit, par exemple 
+//le backslash permet dannuler laction qui suit, par exemple
 //echo "$USER" va sortir Mathis alors que echo "/$USER" va sortir USER
 //idem pour echo bitch > ok va creer un fichier ok et ecrire bitch alors que echo bitch />ok ecrit bitch en stdout
 */

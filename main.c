@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:02 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/08 16:16:58 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/12 13:35:48 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int main (int argc, char **argv, char **envp)
 {
 	int i;
 	t_shell shell;
-	t_printf printf;	
+	t_printf printf;
 	(void)argc;
 	(void)argv;
 	char *line;
@@ -27,6 +27,7 @@ int main (int argc, char **argv, char **envp)
 	g_shell.redir = 0;
 	g_shell.dquotes = 0;
 	g_shell.status = 0;
+	g_shell.d = 0;
 	g_shell.envp = env_import(envp);
 	ft_printf("\e[1;1H\e[2J\n");
 	printf.fd = 2;
