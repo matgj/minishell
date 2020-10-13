@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:53:05 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 12:50:53 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 20:54:12 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int		get_next_line(int fd, char **line)
 	int			ret;
 
 	*line = NULL;
-	ret = 2;
 	if (!line || fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
 	if (!(buf = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
@@ -69,8 +68,6 @@ int		get_next_line(int fd, char **line)
 	*line = ft_cpy_line(save);
 	save = cut_line(save);
 	if (ret == 0)
-	{
 		return (0);
-	}
 	return (1);
 }

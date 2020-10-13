@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 17:20:52 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 20:41:32 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_shell g_shell;
 
-int		command_type_parent(t_cmds cmds) //si cest une builtin fonction on doit la coder nous meme, donc on redirige vers lexecution de notre propre ft_builtin
+int		command_type_parent(t_cmds cmds)
 {
 	if (!ft_strcmp(cmds.name, "cd"))
 		ft_cd(cmds);
@@ -30,7 +30,7 @@ int		command_type_parent(t_cmds cmds) //si cest une builtin fonction on doit la 
 
 }
 
-int		command_type_child(t_cmds cmds) //si cest une builtin fonction on doit la coder nous meme, donc on redirige vers lexecution de notre propre ft_builtin
+int		command_type_child(t_cmds cmds)
 {
 
 	//if (!ft_strcmp(cmds.name,"echo"))
@@ -42,35 +42,6 @@ int		command_type_child(t_cmds cmds) //si cest une builtin fonction on doit la c
 //	else
 		return (0);
 //	return (1);
-}
-
-void	cmd_last_arg(t_cmds *cmds)
-{
-	int	i;
-
-	if (!cmds->argc)
-		return ;
-	i = 0;
-	while (cmds->argv[i] && (!ft_strcmp(cmds->argv[i], ">") ||
-		!ft_strcmp(cmds->argv[i], "<")))
-		i += 2;
-	if (!cmds->argv[i])
-		cmds->name = NULL;
-	else
-		cmds->name = ft_strdup(cmds->argv[i]);
-}
-
-void	command_creation(t_cmds *cmds)
-{
-	int i;
-	i = 0;
-	cmds->path = NULL;
-	cmds->input = 0;
-	i = 0;
-	if (!cmds->argv[i])
-		cmds->name = NULL;
-	else
-		cmds->name = ft_strdup(cmds->argv[i]);
 }
 
 /*
@@ -124,28 +95,27 @@ void   command_exec_child(t_cmds *cmds)
 		exit(127);
 	}
 }
+
 /*
 **fork()
 **Negative Value: creation of a child process was unsuccessful.
 **Zero: Returned to the newly created child process.
-**Positive value: Returned to parent or caller. The value contains process ID of newly created child process.
+**Positive value: Returned to parent or caller. The value
+**contains process ID of newly created child process.
 */
 
 int		command_exec(t_cmds cmds)
 {
 	pid_t	pid;
 	int		i;
-	int 	ret;
+	int		ret;
 
-	i = 0;
 	if (command_type_parent(cmds))
-    {
-		i = 0;
+	{
 		free_struct(cmds);
 		g_shell.pid = -1;
 		return (1);
 	}
-	i = 0;
 	if (!command_type_child(cmds))
 	{
 		if ((pid = fork()) == -1)
@@ -153,45 +123,29 @@ int		command_exec(t_cmds cmds)
 			ft_printf("fork error\n");
 			exit(127);
 		}
-	else if (pid == 0)
-		command_exec_child(&cmds);
-	else
-		g_shell.pid = pid;
+		else if (pid == 0)
+			command_exec_child(&cmds);
+		else
+			g_shell.pid = pid;
 	}
-	i = 0;
-	if (cmds.input != 0)
-	close(cmds.input);
-	while (cmds.output[i] != -1)
-	{
-		if (cmds.output[i] != STDOUT)
-		{
-		close(cmds.output[i]);
-		}
-		i++;
-	}
-
-	i = 0;
-	while (cmds.argv[i])
-	free(cmds.argv[i++]);
-	free(cmds.name);
-	free(cmds.argv);
-	free(cmds.path);
-	return(g_shell.status == 0);
+	close_fds(&cmds);
+	free_struct(cmds);
+	return (g_shell.status == 0);
 }
 
 void	command_management(t_cmds *cmds)
 {
-	int ret;
-	pid_t pid;
-	int i;
+	int		ret;
+	pid_t	pid;
+	int		i;
+
 	i = 0;
-	if(!cmds->argc)
-		return;
+	if (!cmds->argc)
+		return ;
 	command_creation(cmds);
 	cmd_last_arg(cmds);
 	redirection(cmds);
-	while(cmds->argv[i])
+	while (cmds->argv[i])
 		i++;
 	cmds->argc = i;
-
 }
