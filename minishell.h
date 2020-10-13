@@ -142,6 +142,7 @@ void	free_split(char **tabs);
 int     syntax_error(char *line);
 int     syntax_err2(char *line, int i, char c);
 void    print_syntax_err(char *line);
+int		empty(char *line);
 
 void	free_struct(t_cmds cmds);
 

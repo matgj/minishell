@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 12:50:59 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 15:26:37 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ t_cmds	parse_cmd(char *cmds_pipe)
 	while (i < ARG_MAX)
 		cmds.output[i++] = -1;
 	command_management(&cmds);
-	test_cmd(cmds);
+	//test_cmd(cmds);
 	return (cmds);
 }
 
-t_cmds	*parse_pipe2(char *cmds_semi)
+t_cmds	*parse_pipe(char *cmds_semi)
 {
 	t_cmds	*cmds;
 	char	**cmds_pipe;
@@ -57,11 +57,13 @@ t_cmds	*parse_pipe2(char *cmds_semi)
 		cpt++;
 	if (!(cmds = ft_calloc(sizeof(t_cmds), cpt + 1)))
 		return (NULL);
-	cpt = 0;
-	while (cmds_pipe[cpt])
+	cpt = -1;
+	while (cmds_pipe[++cpt])
 	{
-		cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
-		cpt++;
+		if (!empty(cmds_pipe[cpt]))
+			cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
+		else
+			free(cmds_pipe[cpt]);
 	}
 	free(cmds_pipe);
 	nul.name = NULL;
@@ -70,22 +72,15 @@ t_cmds	*parse_pipe2(char *cmds_semi)
 	return (cmds);
 }
 
-void	parsing_pipe(char *cmds_semi)
+void	command_loop(t_cmds *cmds_pipe)
 {
-	int		l;
-	int		i;
-	t_cmds	*cmds_pipe;
+	int i;
 
-	l = 0;
-	while (cmds_semi[l])
-	{
-		i = 0;
-		cmds_pipe = parse_pipe2(&cmds_semi[l++]);
-		while (cmds_pipe[i].name)
-			command_exec(cmds_pipe[i++]);
-		check_pid();
-		free(cmds_pipe);
-	}
+	i = 0;
+	while (cmds_pipe[i].name)
+		command_exec(cmds_pipe[i++]);
+	check_pid();
+	free(cmds_pipe);
 }
 
 /*
@@ -102,7 +97,11 @@ void	parsing(char *line)
 {
 	char	**cmds_semi;
 	char	*line_env;
+	int		l;
+	int		i;
+	t_cmds	*cmds_pipe;
 
+	l = 0;
 	quotes(line);
 	line_env = var_env(line);
 	if (!syntax_error(line_env))
@@ -111,19 +110,25 @@ void	parsing(char *line)
 		return ;
 	}
 	//free(line);
-	cmds_semi = ft_split(line_env,';');
+	cmds_semi = ft_split(line_env, ';');
 	free(line_env);
-	parsing_pipe(*cmds_semi);
+	while (cmds_semi[l])
+	{
+		cmds_pipe = parse_pipe(cmds_semi[l++]);
+		command_loop(cmds_pipe);
+	}
 	free(cmds_semi);
 }
 
-/*read line and manage ctrl d */
+/*
+**read line and manage ctrl d
+*/
 
 void	read_line(char **line)
 {
 	int		ret;
 	char	buf[1];
-	int i;
+	int		i;
 
 	i = 1;
 	ret = get_next_line(1, line);
@@ -133,7 +138,5 @@ void	read_line(char **line)
 		exit_shell(g_shell.status, 1);
 	}
 	while (!ret)
-	{
 		ret = read(1, buf, 1);
-	}
 }

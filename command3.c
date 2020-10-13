@@ -6,7 +6,20 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 12:05:46 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 12:05:47 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 15:19:26 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+int		empty(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
