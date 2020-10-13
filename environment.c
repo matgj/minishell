@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:16 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/08 16:22:23 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 18:27:53 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ t_shell g_shell;
 
 char	**env_import(char **envp)
 {
-	char 	**tab;
-	int 	i;
+	char	**tab;
+	int		i;
 
 	i = 0;
-	while((envp[i]))
+	while ((envp[i]))
 		i++;
-	if(!(tab = (char**)malloc(sizeof(char*) * i + 1)))
+	if (!(tab = (char**)malloc(sizeof(char*) * i + 1)))
 		return (NULL);
 	i = 0;
 	while ((envp[i] != NULL))

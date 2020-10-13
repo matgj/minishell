@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 11:48:52 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 12:51:11 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 18:25:23 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 extern t_shell g_shell;
 extern t_printf g_printf;
 
-void    signal_quit(int signal)
+void	signal_quit(int signal)
 {
-	if(g_shell.pid)
-    {
-        kill(g_shell.pid, signal);
-        g_shell.status = 131;
-        ft_printf("Quit: %d\n", g_shell.pid);
-    }
+	if (g_shell.pid)
+	{
+		kill(g_shell.pid, signal);
+		g_shell.status = 131;
+		ft_printf("Quit: %d\n", g_shell.pid);
+	}
 }
 
-void    signal_interrupt(int signal)
+void	signal_interrupt(int signal)
 {
 	ft_printf("\b\b  \b\b");
 	if (!g_shell.pid)
@@ -36,16 +36,16 @@ void    signal_interrupt(int signal)
 	}
 	else
 	{
-	    ft_printf("^C", 25);
+		ft_printf("^C", 25);
 		ft_printf("\n");
 		kill(g_shell.pid, signal);
 	}
 }
 
-void    signals(void)
+void	signals(void)
 {
-    if(signal(SIGINT, &signal_interrupt) == SIG_ERR)
-        ft_printf("Signal interrupt error\n");
-    if(signal(SIGQUIT, &signal_quit) == SIG_ERR)
-        ft_printf("Signal quit error\n");
+	if (signal(SIGINT, &signal_interrupt) == SIG_ERR)
+		ft_printf("Signal interrupt error\n");
+	if (signal(SIGQUIT, &signal_quit) == SIG_ERR)
+		ft_printf("Signal quit error\n");
 }

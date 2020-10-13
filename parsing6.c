@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 16:52:10 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 16:55:55 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 18:22:56 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	double_quotes(char *c, int *q, int *dq)
 	}
 }
 
-void    simple_quotes(char *c, int *q, int *dq)
+void	simple_quotes(char *c, int *q, int *dq)
 {
 	if (!*q && !*dq)
 	{
