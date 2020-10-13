@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/12 14:08:11 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 12:50:59 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ void	read_line(char **line)
 {
 	int		ret;
 	char	buf[1];
+	int i;
 
+	i = 1;
 	ret = get_next_line(1, line);
 	if (!ret && !ft_strlen(*line))
 	{
@@ -131,5 +133,7 @@ void	read_line(char **line)
 		exit_shell(g_shell.status, 1);
 	}
 	while (!ret)
+	{
 		ret = read(1, buf, 1);
+	}
 }

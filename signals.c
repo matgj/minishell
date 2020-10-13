@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 11:48:52 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/12 13:36:18 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 12:51:11 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern t_printf g_printf;
 
 void    signal_quit(int signal)
 {
-    if(g_shell.pid && !g_shell.d)
+	if(g_shell.pid)
     {
         kill(g_shell.pid, signal);
         g_shell.status = 131;
@@ -27,14 +27,19 @@ void    signal_quit(int signal)
 
 void    signal_interrupt(int signal)
 {
-    ft_printf("\n");
-    if (!g_shell.pid)
-    {
-           	ft_printf("\e[1m" "bash-42$ " "\e[0m", 25);
-            g_shell.status = 130;
-    }
-    else
-        kill(g_shell.pid, signal);
+	ft_printf("\b\b  \b\b");
+	if (!g_shell.pid)
+	{
+		ft_printf("\n");
+		ft_printf("\e[1m" "bash-42$ " "\e[0m", 25);
+		g_shell.status = 130;
+	}
+	else
+	{
+	    ft_printf("^C", 25);
+		ft_printf("\n");
+		kill(g_shell.pid, signal);
+	}
 }
 
 void    signals(void)

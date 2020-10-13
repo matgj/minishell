@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:26 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/12 12:54:15 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 12:05:03 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void    ft_exit(t_cmds cmds)
 {
 	if (cmds.argc == 1)
 		exit_shell(0, 0); //ces juste un exemple jimagine que cest pls complique que ca
+
 }

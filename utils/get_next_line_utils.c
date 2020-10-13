@@ -6,11 +6,13 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:53:01 by Mathis            #+#    #+#             */
-/*   Updated: 2020/09/24 10:53:02 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 12:35:38 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern t_shell g_shell;
 
 int		ft_check_bn(char *str)
 {

@@ -6,22 +6,22 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:20 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/08 16:21:42 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 12:06:19 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-//lier les fd des commandes separees par des pipes
-//syscall pipe
-//dans pipe, fd[0] = read et fd[1] = write
-//fork return 0 on success
-//on fork pour avoir 2 process et faire le lien entre deux programmes
-//parent receive data from child (data are sent when fd is close, so child close fd1 and parent fd0)
-//toujours fermer le fd qu on utilise pas (si on est dans child on ferme fd[0] sinon on ferme fd[1])
-//ensuite on duplique les fd dans le child sur les stin et stout pour
-//quon puisse exec() les program avec les streams standards
+**lier les fd des commandes separees par des pipes
+**syscall pipe
+**dans pipe, fd[0] = read et fd[1] = write
+**fork return 0 on success
+**on fork pour avoir 2 process et faire le lien entre deux programmes
+**parent receive data from child (data are sent when fd is close, so child close fd1 and parent fd0)
+**toujours fermer le fd qu on utilise pas (si on est dans child on ferme fd[0] sinon on ferme fd[1])
+**ensuite on duplique les fd dans le child sur les stin et stout pour
+**quon puisse exec() les program avec les streams standards
 */
 
 void        command_plug(t_cmds *cmds)
@@ -32,10 +32,10 @@ void        command_plug(t_cmds *cmds)
 
     nb_cmds = 0;
     i = 0;
-    while (cmds[nb_cmds].name) 
+    while (cmds[nb_cmds].name)
               nb_cmds++;
 
-    while (i < nb_cmds) 
+    while (i < nb_cmds)
      {
         if (i != 0)
         {
@@ -50,13 +50,13 @@ void        command_plug(t_cmds *cmds)
          ft_tab_output(cmds[i].output, 1);
        }
         ft_tab_output(cmds[i].output, -1);
-      i++;  
+      i++;
   }
 }
 
 /*
-//enlever de la structure cmds les arguments que jai deja parsé
-//en creant un nouveau tab d arg sans les cases NULL
+**enlever de la structure cmds les arguments que jai deja parsé
+**en creant un nouveau tab d arg sans les cases NULL
 */
 
 void  command_clean(t_cmds *cmds)
@@ -82,7 +82,7 @@ void  command_clean(t_cmds *cmds)
          {
            new_argv[pos] = cmds->argv[i];
            pos++;
-         } 
+         }
          i++;
     }
      new_argv[pos] = NULL;

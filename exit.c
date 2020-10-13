@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:11 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/12 13:39:47 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 12:16:44 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exit_shell(int status, int newline)
 	exit(status);
 }
 
-void			free_split(char **tabs)
+void	free_split(char **tabs)
 {
 	int i;
 
@@ -30,4 +30,16 @@ void			free_split(char **tabs)
 	while (tabs[i])
 		free(tabs[i++]);
 	free(tabs);
+}
+
+void	free_struct(t_cmds cmds)
+{
+	int i;
+
+	i = 0;
+	while (cmds.argv[i])
+		free(cmds.argv[i++]);
+	free(cmds.name);
+	free(cmds.argv);
+	free(cmds.path);
 }

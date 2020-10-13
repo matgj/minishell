@@ -6,11 +6,13 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:53:05 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/02 15:41:20 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 12:50:53 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern t_shell g_shell;
 
 char	*cut_line(char *s)
 {
