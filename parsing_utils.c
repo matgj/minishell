@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:06 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 18:01:14 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 18:14:10 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,10 @@ void    ft_tab_output(int *tab_fds, int fd)
     tab_fds[i] = fd;
 }
 
+
+void    print_syntax_err(char *line)
+{
+    ft_printf("syntax error near unexpected token\n");
+    g_shell.status = 2;
+   // free(line);
+}
