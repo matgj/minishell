@@ -28,6 +28,7 @@
 
 #define REPLACED 3
 #define BS 7
+#define A 6
 
 #define BS_Q 16
 #define SPACE 1
@@ -116,7 +117,9 @@ void				ft_flags_zero_minus(const char *src,
 void				ft_flag_p(t_printf *conv, char *str, int *res, int len);
 int					ft_check_type(char c);
 
-
+void	ft_cpy_var(char *str);
+int		ft_alphanum(char c);
+char	*dol_create(void);
 void	read_line(char **line);
 void	parsing(char *line);
 void	parse_token(char ***token, char *cmds_pipe);

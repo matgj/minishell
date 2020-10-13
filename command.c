@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 12:13:38 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 17:20:52 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ int		command_type_parent(t_cmds cmds) //si cest une builtin fonction on doit la 
 int		command_type_child(t_cmds cmds) //si cest une builtin fonction on doit la coder nous meme, donc on redirige vers lexecution de notre propre ft_builtin
 {
 
-	if (!ft_strcmp(cmds.name,"echo"))
-		ft_echo(cmds);
+	//if (!ft_strcmp(cmds.name,"echo"))
+	//	ft_echo(cmds);
 		//  else if(!ft_strcmp(cmds.name,"pwd"))
 		//     ft_pwd(cmds);
 		//  else if(!ft_strcmp(cmds.name,"env"))
 		//     ft_env(cmds);
-	else
+//	else
 		return (0);
-	return (1);
+//	return (1);
 }
 
 void	cmd_last_arg(t_cmds *cmds)
@@ -103,8 +103,8 @@ void   command_exec_child(t_cmds *cmds)
 		}
 		i++;
 	 }
- 	 // if (!ft_strcmp(cmds->name, "echo"))
-    //  cmds->path = "/bin/echo";
+ 	if (!ft_strcmp(cmds->name, "echo"))
+      cmds->path = "/bin/echo";
 	if (!ft_strcmp(cmds->name, "ls"))
 		cmds->path = "/bin/ls";
 	else if (!ft_strcmp(cmds->name, "wc"))

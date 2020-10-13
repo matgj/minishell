@@ -6,51 +6,51 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/12 14:07:00 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/13 15:47:23 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    insert_actions(char *s)
+void	insert_actions(char *s)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (s[i])
-    {
-        if (s[i] == SPACE)
-            s[i] = ' ';
-        if (s[i] == PIPE)
-            s[i] = '|';
-        if (s[i] == SEMI)
-            s[i] = ';';
-       	if (s[i] == R_OUT)
-            s[i] = '>';
-        if (s[i] == R_IN)
-            s[i] = '<';
-        if (s[i] == VAR)
-            s[i] = '$';
-        if (s[i] == 3) //TODO:number 6 seems interesting
-             s[i] = ' ';
-        i++;
-    }
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == SPACE)
+			s[i] = ' ';
+		if (s[i] == PIPE)
+			s[i] = '|';
+		if (s[i] == SEMI)
+			s[i] = ';';
+		if (s[i] == R_OUT)
+			s[i] = '>';
+		if (s[i] == R_IN)
+			s[i] = '<';
+		if (s[i] == VAR)
+			s[i] = '$';
+		// if (s[i] == A
+		//       s[i] = ' ';
+		i++;
+	}
 }
 
-void    clean_actions(char *c, int q, int dq)
+void	clean_actions(char *c, int q, int dq)
 {
-     if ((dq || q) && *c == ' ')
-         *c = SPACE;
-     else if ((dq || q) && *c == '|')
-         *c = PIPE;
-     else if ((dq || q) && *c == ';')
-         *c = SEMI;
-     else if ((dq || q) && *c == '>')
-         *c = R_OUT;
-     else if ((dq || q) && *c == '<')
-         *c = R_IN;
-     else if ((q) && *c == '$')
-         *c = VAR;
+	if ((dq || q) && *c == ' ')
+		*c = SPACE;
+	else if ((dq || q) && *c == '|')
+		*c = PIPE;
+	else if ((dq || q) && *c == ';')
+		*c = SEMI;
+	else if ((dq || q) && *c == '>')
+		*c = R_OUT;
+	else if ((dq || q) && *c == '<')
+		*c = R_IN;
+	else if ((q) && *c == '$')
+		*c = VAR;
 }
 
 void	replace(char *line, int i, char c, int *flag)
@@ -90,11 +90,12 @@ int		backslash(int i, char *line, int q, int dq)
 }
 
 /*
-//analyse si ya des quotes ou backslash, quel type de quote et remplace
-//par un caractere qui ne va pas influencer le split en plusieurs commandes
-//le backslash permet dannuler laction qui suit, par exemple
-//echo "$USER" va sortir Mathis alors que echo "/$USER" va sortir USER
-//idem pour echo bitch > ok va creer un fichier ok et ecrire bitch alors que echo bitch />ok ecrit bitch en stdout
+**analyse si ya des quotes ou backslash, quel type de quote et remplace
+**par un caractere qui ne va pas influencer le split en plusieurs commandes
+**le backslash permet dannuler laction qui suit, par exemple
+**echo "$USER" va sortir Mathis alors que echo "/$USER" va sortir USER
+**idem pour echo bitch > ok va creer un fichier
+**ok et ecrire bitch alors que echo bitch />ok ecrit bitch en stdout
 */
 
 void	quotes(char *line)
@@ -108,7 +109,8 @@ void	quotes(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i - 1] == '\\' && i > 0 && ((line[i] == '\'' && !dq && !q) || (line[i] == '"' && !q)))
+		if (line[i - 1] == '\\' && i > 0 &&
+			((line[i] == '\'' && !dq && !q) || (line[i] == '"' && !q)))
 			line[i - 1] = REPLACED;
 		else if (backslash(i, line, q, dq))
 			(void)i;
@@ -118,6 +120,6 @@ void	quotes(char *line)
 			double_quotes(&line[i], &q, &dq);
 		else
 			clean_actions(&line[i], q, dq);
-        i++;
+		i++;
 	}
 }
