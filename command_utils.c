@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:25:04 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/14 11:48:37 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/14 12:18:32 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	close_fds(t_cmds cmds)
 	int i;
 
 	i = 0;
-	if (cmds->input != 0)
-		close(cmds->input);
-	while (cmds->output[i] != -1)
+	if (cmds.input != 0)
+		close(cmds.input);
+	while (cmds.output[i] != -1)
 	{
-		if (cmds->output[i] != STDOUT)
+		if (cmds.output[i] != STDOUT)
 		{
-			close(cmds->output[i]);
+			close(cmds.output[i]);
 		}
 		i++;
 	}

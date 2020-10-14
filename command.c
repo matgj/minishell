@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/14 11:49:39 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/14 12:18:09 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,39 +58,39 @@ void   command_exec_child(t_cmds cmds)
 	int i;
 	int ret;
 	i = 0;
-	if (cmds->input < 0)
+	if (cmds.input < 0)
 		 exit(1);
-	if (cmds->input != 0)
+	if (cmds.input != 0)
 	{
-		if(dup2(cmds->input, STDIN) == -1)
+		if(dup2(cmds.input, STDIN) == -1)
 			ft_printf("dup2 error input\n");
 	}
-		while(cmds->output[i] != -1)
+		while(cmds.output[i] != -1)
 	 	{
-		if (cmds->output[i] != STDOUT)
+		if (cmds.output[i] != STDOUT)
 		{
-			if(dup2(cmds->output[i], STDOUT) == -1)
+			if(dup2(cmds.output[i], STDOUT) == -1)
 	    		ft_printf("dup2 error ouput\n");
 		}
 		i++;
 	 }
- 	if (!ft_strcmp(cmds->name, "echo"))
-      cmds->path = "/bin/echo";
-	if (!ft_strcmp(cmds->name, "ls"))
-		cmds->path = "/bin/ls";
-	else if (!ft_strcmp(cmds->name, "wc"))
-		cmds->path = "/usr/bin/wc";
-   else if (!ft_strcmp(cmds->name, "cat"))
-		cmds->path = "/bin/cat";
-   else if (!ft_strcmp(cmds->name, "grep"))
-		cmds->path = "/usr/bin/grep";
-   else if (!ft_strcmp(cmds->name, "sleep"))
-		cmds->path = "/bin/sleep";
+ 	if (!ft_strcmp(cmds.name, "echo"))
+      cmds.path = "/bin/echo";
+	if (!ft_strcmp(cmds.name, "ls"))
+		cmds.path = "/bin/ls";
+	else if (!ft_strcmp(cmds.name, "wc"))
+		cmds.path = "/usr/bin/wc";
+   else if (!ft_strcmp(cmds.name, "cat"))
+		cmds.path = "/bin/cat";
+   else if (!ft_strcmp(cmds.name, "grep"))
+		cmds.path = "/usr/bin/grep";
+   else if (!ft_strcmp(cmds.name, "sleep"))
+		cmds.path = "/bin/sleep";
 	char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
-	if ((ret = execve(cmds->path, cmds->argv, env)) == -1)
+	if ((ret = execve(cmds.path, cmds.argv, env)) == -1)
 	{
 		write(2, "minishell: ", 11);
-		write(2, cmds->name, ft_strlen(cmds->name));
+		write(2, cmds.name, ft_strlen(cmds.name));
 		write(2, ": command not found\n", 20);
 		exit(127);
 	}
