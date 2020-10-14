@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:25:04 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 20:50:30 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/14 11:48:37 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	cmd_last_arg(t_cmds *cmds)
 		cmds->name = ft_strdup(cmds->argv[i]);
 }
 
-void	close_fds(t_cmds *cmds)
+void	close_fds(t_cmds cmds)
 {
 	int i;
 

@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 20:41:32 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/14 11:49:39 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		command_type_child(t_cmds cmds)
 **input or output channel), and exec (to execute the new program).
 */
 
-void   command_exec_child(t_cmds *cmds)
+void   command_exec_child(t_cmds cmds)
 {
 	int i;
 	int ret;
@@ -116,19 +116,16 @@ int		command_exec(t_cmds cmds)
 		g_shell.pid = -1;
 		return (1);
 	}
-	if (!command_type_child(cmds))
+	if ((pid = fork()) == -1)
 	{
-		if ((pid = fork()) == -1)
-		{
-			ft_printf("fork error\n");
-			exit(127);
-		}
-		else if (pid == 0)
-			command_exec_child(&cmds);
-		else
-			g_shell.pid = pid;
+		ft_printf("fork error\n");
+		exit(127);
 	}
-	close_fds(&cmds);
+	else if (pid == 0)
+		command_exec_child(cmds);
+	else
+		g_shell.pid = pid;
+	close_fds(cmds);
 	free_struct(cmds);
 	return (g_shell.status == 0);
 }

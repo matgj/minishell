@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:51:31 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 21:04:34 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/14 11:48:43 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int					syntax_error(char *line);
 int					syntax_err2(char *line, int i, char c);
 void				print_syntax_err(char *line);
 int					empty(char *line);
-void				close_fds(t_cmds *cmds);
+void				close_fds(t_cmds cmds);
 void				free_struct(t_cmds cmds);
 
 char				**env_import(char **envp);

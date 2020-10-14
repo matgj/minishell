@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 15:26:37 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/14 11:39:22 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	parsing(char *line)
 void	read_line(char **line)
 {
 	int		ret;
-	char	buf[1];
+	char	buf[2];
 	int		i;
 
 	i = 1;
@@ -138,5 +138,8 @@ void	read_line(char **line)
 		exit_shell(g_shell.status, 1);
 	}
 	while (!ret)
-		ret = read(1, buf, 1);
+	 {
+	 	ret = read(1, buf, 2);
+	 	//ft_printf("\b\b  ");
+	 }
 }
