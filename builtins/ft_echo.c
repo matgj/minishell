@@ -18,5 +18,6 @@ int		ft_echo(t_cmds cmds)
 		}
 		(nflag == 0) ? write(1, "\n", 1) : 0;
 	}
+	g_shell.status = 0;
 	return (1);
 }
