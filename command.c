@@ -16,32 +16,32 @@ extern t_shell g_shell;
 
 int		command_type_parent(t_cmds cmds)
 {
-	if (!ft_strcmp(cmds.name, "cd"))
-		ft_cd(cmds);
+	int ret;
+
+	ret = 0;
+	// if (!ft_strcmp(cmds.name, "cd"))
+	// 	ft_cd(cmds);
 	// else if (!ft_strcmp(cmds->name, "export"))
 	// 	ft_export(cmds);
 	// else if (!ft_strcmp(cmds->name, "unset"))
 	// 	ft_unset(cmds);
-	else if (!ft_strcmp(cmds.name, "exit"))
-		ft_exit(cmds);
-	else
-		return (0);
-	return (1);
-
+	// else if (!ft_strcmp(cmds.name, "exit"))
+	// 	ft_exit(cmds);
+	return (ret);
 }
 
 int		command_type_child(t_cmds cmds)
 {
+	int ret;
 
-	//if (!ft_strcmp(cmds.name,"echo"))
-	//	ft_echo(cmds);
-		//  else if(!ft_strcmp(cmds.name,"pwd"))
-		//     ft_pwd(cmds);
-		//  else if(!ft_strcmp(cmds.name,"env"))
-		//     ft_env(cmds);
-//	else
-		return (0);
-//	return (1);
+	ret = 0;
+	if (!ft_strcmp(cmds.name,"echo"))
+		ret = ft_echo(cmds);
+	else if(!ft_strcmp(cmds.name,"pwd"))
+		ret = ft_pwd(cmds);
+	else if(!ft_strcmp(cmds.name,"env"))
+		ret = ft_env(cmds);
+	return (ret);
 }
 
 /*
@@ -74,8 +74,8 @@ void   command_exec_child(t_cmds cmds)
 		}
 		i++;
 	 }
- 	if (!ft_strcmp(cmds.name, "echo"))
-      cmds.path = "/bin/echo";
+ 	// if (!ft_strcmp(cmds.name, "echo"))
+    //   cmds.path = "/bin/echo";
 	if (!ft_strcmp(cmds.name, "ls"))
 		cmds.path = "/bin/ls";
 	else if (!ft_strcmp(cmds.name, "wc"))
@@ -116,15 +116,18 @@ int		command_exec(t_cmds cmds)
 		g_shell.pid = -1;
 		return (1);
 	}
-	if ((pid = fork()) == -1)
+	if (!command_type_child(cmds))
 	{
-		ft_printf("fork error\n");
-		exit(127);
+		if ((pid = fork()) == -1)
+		{
+			ft_printf("fork error\n");
+			exit(127);
+		}
+		else if (pid == 0)
+			command_exec_child(cmds);
+		else
+			g_shell.pid = pid;
 	}
-	else if (pid == 0)
-		command_exec_child(cmds);
-	else
-		g_shell.pid = pid;
 	close_fds(cmds);
 	free_struct(cmds);
 	return (g_shell.status == 0);
