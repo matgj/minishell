@@ -2,10 +2,8 @@
 
 void	no_dir_file(char *str)
 {
-	// errno = 2;
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": ", 2);
-	// ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
 	g_shell.status = 1;
 }
@@ -18,6 +16,11 @@ static void		dup_strs(char **dst, char *str1, char *str2)
 	*dst = ft_strdup(tmp);
 	free(tmp);
 }
+
+/*
+** Permet de recréer une copie du tableau d'environnement tout en
+** modifiant seulement le $PWD et le $OLDPWD.
+*/
 
 void	renew_paths(t_cmds cmds, char *oldpwd)
 {
@@ -32,21 +35,17 @@ void	renew_paths(t_cmds cmds, char *oldpwd)
 	while (g_shell.envp[i])
 	{
 		if (!ft_strncmp("OLDPWD", g_shell.envp[i], 6))
-		{
 			dup_strs(&new_env[i], "OLDPWD=", oldpwd);
-			printf("new_env[i] OLDPWD = [%s]\n", new_env[i]);
-		}
 		else if (!ft_strncmp("PWD", g_shell.envp[i], 3))
 		{
 			getcwd(pwd, 256);
 			dup_strs(&new_env[i], "PWD=", pwd);
-			printf("new_env[i] PWD = [%s]\n", new_env[i]);
 		}
 		else
 			new_env[i] = ft_strdup(g_shell.envp[i]);
 		i++;
 	}
-	// free_strings(g_shell.envp);
+	// free(g_shell.envp);     penser a free ici
 	g_shell.envp = new_env;
 }
 
@@ -68,15 +67,8 @@ int		ft_cd(t_cmds cmds)
 			return (0);
 		}
 	}
-	// printf("[0] = [%s]\n", cmds.argv[0]);
-	// printf("[1] = [%s]\n", cmds.argv[1]);
-	// printf("1path = [%s]\n", cmds.path);
 	printf("1oldpath = [%s]\n", oldpwd);
-	// printf("1env_len = [%d]\n\n", g_shell.env_len);
 	renew_paths(cmds, oldpwd);
-	// printf("path = [%s]\n", cmds.path);
-	printf("oldpath = [%s]\n", oldpwd);
-	// printf("env_len = [%d]\n", g_shell.env_len);
 	g_shell.status = 0;
 	return (1);
 }

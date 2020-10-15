@@ -1,5 +1,11 @@
 #include "../minishell.h"
 
+/*
+** Ecrire directement le $PWD renvoyé par la fonction getcwd.
+** Si $PWD plus long que buffer, l'écrire manuellement après l'avoir 
+** récupéré grace à la fonction var_env.
+*/
+
 int		ft_pwd(t_cmds cmds)
 {
 	char	buf[256];
