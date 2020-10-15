@@ -19,8 +19,8 @@ int		command_type_parent(t_cmds cmds)
 	int ret;
 
 	ret = 0;
-	// if (!ft_strcmp(cmds.name, "cd"))
-	// 	ft_cd(cmds);
+	if (!ft_strcmp(cmds.name, "cd"))
+		ret = ft_cd(cmds);
 	// else if (!ft_strcmp(cmds->name, "export"))
 	// 	ft_export(cmds);
 	// else if (!ft_strcmp(cmds->name, "unset"))
@@ -37,9 +37,9 @@ int		command_type_child(t_cmds cmds)
 	ret = 0;
 	if (!ft_strcmp(cmds.name,"echo"))
 		ret = ft_echo(cmds);
-	else if(!ft_strcmp(cmds.name,"pwd"))
+	else if (!ft_strcmp(cmds.name,"pwd"))
 		ret = ft_pwd(cmds);
-	else if(!ft_strcmp(cmds.name,"env"))
+	else if (!ft_strcmp(cmds.name,"env"))
 		ret = ft_env(cmds);
 	return (ret);
 }

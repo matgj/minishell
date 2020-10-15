@@ -54,6 +54,9 @@ typedef struct		s_shell
 	int		dquotes;
 	int		status;
 	char	**envp;
+	//!!!!!!!!!!!!!!!!!
+	int 	env_len;
+	//!!!!!!!!!!!!!!!!!
 	int		redir;
 	pid_t	pid;
 	char	*var_env;
@@ -161,15 +164,6 @@ char				*command_path(t_cmds *cmds);
 void				test_cmd(t_cmds cmds);
 void				test_env(t_cmds *cmds);
 void				test_tab_cmds(t_cmds *cmds, int i);
-
-// void				ft_echo(t_cmds cmds);
-// void				ft_cd(t_cmds cmds);
-// void				ft_pwd(t_cmds cmds);
-// void				ft_export(t_cmds cmds);
-// void				ft_unset(t_cmds cmds);
-// void				ft_env(t_cmds cmds);
-// void				ft_exit(t_cmds cmds);
-
 
 void                *ft_memset(void *b, int c, size_t len);
 void                ft_putendl_fd(char *s, int fd);

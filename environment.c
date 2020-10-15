@@ -22,6 +22,9 @@ char	**env_import(char **envp)
 	i = 0;
 	while ((envp[i]))
 		i++;
+	//!!!!!!!!!!!!!!!!!
+	g_shell.env_len = i;
+	//!!!!!!!!!!!!!!!!!
 	if (!(tab = (char**)malloc(sizeof(char*) * i + 1)))
 		return (NULL);
 	i = 0;
