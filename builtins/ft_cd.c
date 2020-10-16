@@ -67,7 +67,6 @@ int		ft_cd(t_cmds cmds)
 			return (0);
 		}
 	}
-	printf("1oldpath = [%s]\n", oldpwd);
 	renew_paths(cmds, oldpwd);
 	g_shell.status = 0;
 	return (1);
