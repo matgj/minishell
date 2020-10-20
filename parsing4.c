@@ -88,6 +88,7 @@ char	*var_env(char *line)
 	while (g_shell.envp[++i])
 	{
 		dol = dol_create();
+		// printf("-----------[%s]\n", g_shell.envp[i]);
 		vars_env = ft_split(g_shell.envp[i], '=');
 		to_find = ft_strjoin(dol, vars_env[0]);
 		free(dol);

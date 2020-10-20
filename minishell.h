@@ -169,6 +169,12 @@ void				test_tab_cmds(t_cmds *cmds, int i);
 void                *ft_memset(void *b, int c, size_t len);
 void                ft_putendl_fd(char *s, int fd);
 void                ft_putstr_fd(char *s, int fd);
+int					ft_isalpha(int c);
+int					is_alnum(t_cmds cmds, int i);
+void				ft_swap(char **a, char **b);
+void				put_env(char *s, int fd, int len);
+void 				is_exist(t_cmds cmds, int *flag);
+void				sort_env(t_cmds cmds);
 
 int                 ft_echo(t_cmds cmds);
 int                 ft_cd(t_cmds cmds);

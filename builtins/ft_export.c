@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../../minishell.h"
 
 // UTILS
 int		ft_isalpha(int c)
@@ -37,21 +37,70 @@ void	ft_swap(char **a, char **b)
 	*b = c;
 }
 
-//a incruster dans ft-env.c
+void	put_env(char *s, int fd, int len)
+{
+	if (!s)
+		return ;
+	write(fd, s, len);
+}
+
+int 	before_after_egal(char *env, int j, int where, int *empty)
+{
+	int k;
+
+	if (where == 'a')
+	{
+		while (env[j])
+		{
+			if (env[j] == '=')
+			{
+				*empty = 0;
+				return (j);
+			}
+			j++;
+			(*empty)++;
+		}
+		return (j);
+	}
+	else
+	{
+		k = j;
+		while (env[j])
+			j++;
+	}
+	return (j - k);
+}
+
 void		draw_env(char **env)
 {
 	int		i;
+	int 	j;
+	int 	len;
+	int 	empty;
 
 	i = 0;
+	j = 0;
 	while (env[i])
 	{
+		empty = 0;
 		ft_putstr_fd("declare -x ", 1);
-		ft_putendl_fd(env[i++], 1);
+		j = before_after_egal(env[i], 0, 'a', &empty);
+		put_env(env[i], 1, j);
+		(empty) ? write(1, "\n", 1) : 0;
+		if (!empty)
+		{
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd("\"", 1);
+			len = j + 1;
+			j = before_after_egal(env[i], j, 'b', &empty);
+			put_env(env[i] + len, 1, j);
+			ft_putstr_fd("\"\n", 1);
+		}
+		i++;
 	}
 }
 
 //FONCTIONS PRINCIPALES EXPORT
-// ---- > mettre valeur entre " " dans draw env apres un export sans argument
 void		sort_env(t_cmds cmds)
 {
 	char	**tmp;
@@ -198,17 +247,3 @@ int		ft_export(t_cmds cmds)
 	}
 	return (1);
 }
-	// printf("\e[1;34m\n==========EXPORT==========\n");
-	// printf("g_shell.env_len = [%d]\n", g_shell.env_len);
-	// printf("argc = [%d]\n", cmds.argc);
-	// printf("flag = [%d]\n", flag);
-	// printf("============================\n\n\e[0m");
-
-	// printf("\e[1;31m\n=========CHECK ERROR=========\n");
-	// printf("flag = [%d]\n", *flag);
-	// printf("============================\n\n\e[0m");
-
-
-	// printf("\e[1;33m\n=========IS EXIST=========\n");
-	// printf("flag = [%d]\n", *flag);
-	// printf("============================\n\n\e[0m");
