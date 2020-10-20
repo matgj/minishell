@@ -1,7 +1,6 @@
 #include "../minishell.h"
 
 // UTILS
-
 int		ft_isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_'))
@@ -53,7 +52,6 @@ void		draw_env(char **env)
 
 
 //FONCTIONS PRINCIPALES EXPORT
-
 // ---- > mettre valeur entre " " dans draw env apres un export sans argument
 void		sort_env(t_cmds cmds)
 {
@@ -74,38 +72,37 @@ void		sort_env(t_cmds cmds)
 	// free_strings(tmp);
 }
 
-//verifie que l'argv a rajouter dans le nouveau tableau d'env n'existe pas deja
-// sinon le remplacer par la nouvelle
 
 char		**add_env(t_cmds cmds, int *flag)
 {
 	char	**tmp;
 	int		i;
-	int 	j;
 	int 	k;
-	int 	x;
-	int 	ret;
 
 	g_shell.env_len += (*flag);
 	printf("g_shell.env_len ADD ENV = [%d]\n\n", g_shell.env_len);
 	if (!(tmp = (char **)ft_calloc((g_shell.env_len + 1),
 				sizeof(char *))))
 		return (NULL);
-	// i = 0;
-	// //rajoute les argv a la suite de l'env existant dans le nouveau tableau
-	// k = 1;
-	// while (k < cmds.argc)
-	// {
-	// 	if (!cmds.argv[k])
-	// 		k++;
-	// 	tmp[i] = ft_strdup(cmds.argv[k]);
-	// 	i++;
-	// 	k++;
-	// }
-	// tmp[i] = NULL;
+	i = 0;
+	while (g_shell.envp[i])
+	{
+		tmp[i] = ft_strdup(g_shell.envp[i]);
+		i++;
+	}
+	k = 1;
+	while (k < cmds.argc)
+	{
+		printf("argv[%d] = %s\n", k, cmds.argv[k]);
+		if (!cmds.argv[k])
+			k++;
+		tmp[i] = ft_strdup(cmds.argv[k]);
+		i++;
+		k++;
+	}
+	tmp[i] = NULL;
 	return (tmp);
 }
-
 
 int 	is_error(char **str, int *flag)
 {
@@ -118,6 +115,22 @@ int 	is_error(char **str, int *flag)
 	return (0);
 }
 
+void 	what_to_compare(int *l, int *j, int *i, int *x)
+{
+		*l = 0;
+		*j = 0;
+		while (g_shell.envp[*i][*l])
+		{
+			if (g_shell.envp[*i][*l] != '=')
+				(*j)++;
+			if (g_shell.envp[*i][*l] == '=')
+				break ;
+			(*l)++;
+		}
+		(g_shell.envp[*i][*l] != '=') ? *j = *l : 0;
+		*x = 1;
+}
+
 void 	is_exist(t_cmds cmds, int *flag)
 {
 	int 	i;
@@ -128,18 +141,7 @@ void 	is_exist(t_cmds cmds, int *flag)
 	i = 0;
 	while (g_shell.envp[i])
 	{
-		l = 0;
-		j = 0;
-		while (g_shell.envp[i][l])
-		{
-			if (g_shell.envp[i][l] != '=')
-				j++;
-			if (g_shell.envp[i][l] == '=')
-				break ;
-			l++;
-		}
-		(g_shell.envp[i][l] != '=') ? j = l : 0;
-		x = 1;
+		what_to_compare(&l, &j, &i, &x);
 		while (x < cmds.argc)
 		{
 			if (cmds.argv[x])
@@ -156,10 +158,6 @@ void 	is_exist(t_cmds cmds, int *flag)
 		}
 		i++;
 	}
-
-	printf("\e[1;33m\n=========IS EXIST=========\n");
-	printf("flag = [%d]\n", *flag);
-	printf("============================\n\n\e[0m");
 }
 
 int		check_error_export(t_cmds cmds, int *flag)
@@ -173,20 +171,10 @@ int		check_error_export(t_cmds cmds, int *flag)
 		if ((!ft_isalpha(cmds.argv[i][0]) || !is_alnum(cmds, i))
 			&& is_error(&cmds.argv[i], flag))
 			return (0);
-		// printf ("flag = [%d]\n", *flag);
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		else if (cmds.argv[i])
-		{
-			printf("[%s]\n", cmds.argv[i]);
 			is_exist(cmds, flag);
-		}
 		i++;
 	}
-
-	printf("\e[1;31m\n=========CHECK ERROR=========\n");
-	printf("flag = [%d]\n", *flag);
-	printf("============================\n\n\e[0m");
-
 	return ((!(*flag)) ? 0 : 1);
 }
 
@@ -198,32 +186,37 @@ int		ft_export(t_cmds cmds)
 	flag = 0;
 	flag = cmds.argc - 1;
 
-	printf("\e[1;34m\n==========EXPORT==========\n");
-	printf("g_shell.env_len = [%d]\n", g_shell.env_len);
-	printf("argc = [%d]\n", cmds.argc);
-	printf("flag = [%d]\n", flag);
-	printf("============================\n\n\e[0m");
 
 	if (!cmds.argv[1])
 		sort_env(cmds);
-	else
+	else if (check_error_export(cmds, &flag))
 	{
-		tmp = (check_error_export(cmds, &flag)) ? add_env(cmds, &flag) : 0;
+		printf("JE SUIS LA\n");
+		if (!(tmp = add_env(cmds, &flag)))
+			return (0);
+		else
+		{
+			printf("tmp = [%s]\n", tmp[1]);
+			printf("JE SUIS Lo\n");
+			free_split(g_shell.envp);
+			g_shell.envp = tmp;
+			printf("g_shell.envp [%s]\n", g_shell.envp[1]);
+
+		}
 	}
-	// 	if (tmp)
-	// 	{
-	// 		free_strings(g_shell.envp);
-	// 		g_shell.envp = tmp;
-	// 		// g_shell.no_first_env = 1;
-	// 	}
-
-	// }
-
-	// printf("argv[0] = [%s]\n", cmds.argv[0]);
-	// printf("argv[1] = [%s]\n", cmds.argv[1]);
-	// printf("argv[2] = [%s]\n", cmds.argv[2]);
-	// printf("argv[3] = [%s]\n", cmds.argv[3]);
-	// printf("argv[4] = [%s]\n", cmds.argv[4]);
-	// printf("argc = [%d]\n\n", cmds.argc);
 	return (1);
 }
+	// printf("\e[1;34m\n==========EXPORT==========\n");
+	// printf("g_shell.env_len = [%d]\n", g_shell.env_len);
+	// printf("argc = [%d]\n", cmds.argc);
+	// printf("flag = [%d]\n", flag);
+	// printf("============================\n\n\e[0m");
+
+	// printf("\e[1;31m\n=========CHECK ERROR=========\n");
+	// printf("flag = [%d]\n", *flag);
+	// printf("============================\n\n\e[0m");
+
+
+	// printf("\e[1;33m\n=========IS EXIST=========\n");
+	// printf("flag = [%d]\n", *flag);
+	// printf("============================\n\n\e[0m");
