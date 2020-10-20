@@ -56,6 +56,7 @@ typedef struct		s_shell
 	char	**envp;
 	//!!!!!!!!!!!!!!!!!
 	int 	env_len;
+	int 	no_first_env;
 	//!!!!!!!!!!!!!!!!!
 	int		redir;
 	pid_t	pid;

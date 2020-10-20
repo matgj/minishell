@@ -27,6 +27,9 @@ int	main(int argc, char **argv, char **envp)
 	g_shell.dquotes = 0;
 	g_shell.status = 0;
 	g_shell.envp = env_import(envp);
+	// //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// (!g_shell.no_first_env) ? g_shell.envp = env_import(envp) : 0;
+	// //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	ft_printf("\e[1;1H\e[2J\n");
 	printf.fd = 2;
 	while (1)

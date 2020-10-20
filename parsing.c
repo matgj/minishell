@@ -142,4 +142,5 @@ void	read_line(char **line)
 	 	ret = read(1, buf, 2);
 	 	//ft_printf("\b\b  ");
 	 }
+	// system("leaks minishell");
 }

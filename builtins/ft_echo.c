@@ -5,6 +5,7 @@ int		ft_echo(t_cmds cmds)
 	int 		i;
 	int 		nflag;
 
+
 	if (!cmds.argv[1])
 		write(1, "\n", 1);
 	else
