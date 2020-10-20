@@ -50,7 +50,6 @@ void		draw_env(char **env)
 	}
 }
 
-
 //FONCTIONS PRINCIPALES EXPORT
 // ---- > mettre valeur entre " " dans draw env apres un export sans argument
 void		sort_env(t_cmds cmds)
@@ -71,7 +70,6 @@ void		sort_env(t_cmds cmds)
 	draw_env(tmp);
 	// free_strings(tmp);
 }
-
 
 char		**add_env(t_cmds cmds, int *flag)
 {
@@ -191,16 +189,12 @@ int		ft_export(t_cmds cmds)
 		sort_env(cmds);
 	else if (check_error_export(cmds, &flag))
 	{
-		printf("JE SUIS LA\n");
 		if (!(tmp = add_env(cmds, &flag)))
 			return (0);
 		else
 		{
-			printf("tmp = [%s]\n", tmp[1]);
-			printf("JE SUIS Lo\n");
 			free_split(g_shell.envp);
 			g_shell.envp = tmp;
-			printf("g_shell.envp [%s]\n", g_shell.envp[1]);
 
 		}
 	}
