@@ -1,5 +1,11 @@
 #include "../../minishell.h"
 
+/*
+** Cette fonction affiche le nom et le message d'erreur dans le cas ou la variable exportée n'est pas correcte.
+** Chaque variable fausse décrémente la variable flag qui servira pour la taille du malloc du nouveau tableau.
+** Elle est appelée dans la fonction check_error_export.
+*/
+
 int 	is_error(char **str, int *flag)
 {
 	ft_putstr_fd("bash: export: \'", 2);
@@ -10,6 +16,16 @@ int 	is_error(char **str, int *flag)
 	*str = NULL;
 	return (0);
 }
+
+/*
+** Cette fonction vérifie que les variables exportées ne contiennent pas d'erreur.
+** Première lettre doit obligatoirement être un tiret du bas "_" ou une lettre alphabétique majuscule ou minuscule.
+** Aucun autre type de caractères dans le nom de la variable autres que lettre alphabétique ou tiret du bas "_".
+** Si la/les variable(s) exportée(s) ne contienne(nt) aucune erreur, elle appelle la fonction is_exist pour 
+** vérifier si elle(s) existe(nt) déjà dans le tableau d'environnement.
+** Elle retourne ensuite le nombre exacte de variables à ajouter au tableau existant.
+** Elle est appelée dans la fonction ft_export.
+*/
 
 int		check_error_export(t_cmds cmds, int *flag)
 {
@@ -28,6 +44,12 @@ int		check_error_export(t_cmds cmds, int *flag)
 	}
 	return ((!(*flag)) ? 0 : 1);
 }
+
+/*
+** Cette fonction malloc le nouveau tableau d'environnement avec la taille nécessaire à l'ajout des nouvelles
+** variables exportées. Elle ajoute ensuite les variables existantes puis les nouvelles.
+** Elle est appelée dans la fonction ft_export.
+*/
 
 char		**add_env(t_cmds cmds, int *flag)
 {
@@ -58,15 +80,18 @@ char		**add_env(t_cmds cmds, int *flag)
 	return (tmp);
 }
 
-int		ft_export(t_cmds cmds)
+/*
+** Cette fonction à pour but d'afficher le tableau d'environnement, d'y ajouter des variables, avec ou sans valeurs
+** et de les trier.
+*/
+
+int			ft_export(t_cmds cmds)
 {
 	char	**tmp;
 	int 	flag;
 
 	flag = 0;
 	flag = cmds.argc - 1;
-
-
 	if (!cmds.argv[1])
 		sort_env(cmds);
 	else if (check_error_export(cmds, &flag))

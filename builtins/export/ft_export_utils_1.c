@@ -1,5 +1,14 @@
 #include "../../minishell.h"
 
+/*
+**	Cette fonction permet de calculer le nombre de caractères avant le signe '=' de chaque variable
+** 	dans le tableau d'environnement existant. Ce qui servira à comparer les noms des variables exportées 
+** 	des noms des variables existantes.
+** 	Si la variable existe dans le tableau d'environnement mais qu'elle ne posséde aucune valeur, il n'y 
+** 	a donc pas de signe '='. La fonction renvoit alors le nombre total de caractères, qui correspondent donc
+** 	au nom entier de la variable.
+*/
+
 void 	what_to_compare(int *l, int *j, int *i, int *x)
 {
 		*l = 0;
@@ -15,6 +24,13 @@ void 	what_to_compare(int *l, int *j, int *i, int *x)
 		(g_shell.envp[*i][*l] != '=') ? *j = *l : 0;
 		*x = 1;
 }
+
+/*
+**	Cette fonction vérifie si la variable exportée existe déjà dans le tableau d'environnement. 
+** 	Si elle trouve une correspondance, elle free la valeur correspondante dans le tableau existant 
+**	pour ensuite mettre la nouvelle valeur. La variable flag est décrémentée puis mise à NULL
+** 	car elle ne sera pas comptabilisée comme variable a rajouter au tableau.
+*/
 
 void 	is_exist(t_cmds cmds, int *flag)
 {
@@ -45,6 +61,14 @@ void 	is_exist(t_cmds cmds, int *flag)
 	}
 }
 
+/*
+**	Cette fonction compte le nombre de caractères avant ou après le signe '=' 
+**	Si on lui envoit en paramètre la lettre 'a' pour "after" elle comptera les caractères
+**	du nom de la variable.
+**	Si on lui envoit en paramètre la lettre 'b' pour "before" elle comptera les caractères
+**	de la valeur de la variable.
+*/
+
 int 	before_after_egal(char *env, int j, int where, int *empty)
 {
 	int k;
@@ -71,6 +95,14 @@ int 	before_after_egal(char *env, int j, int where, int *empty)
 	}
 	return (j - k);
 }
+
+/*
+**	Cette fonction récupère le tableau d'environnement trié au préalable par la fonction sort_env
+**  et a pour but d'appliquer la mise en forme après avoir utilisé la commande "export" sans argument.
+**	Avant chaque nom de variable elle affiche "declare -x".
+**	Elle vérifie si la valeur de la variable est existante ou nulle.
+**	Si nulle : pas de signe "=" à afficher et pas de double quote entourant la valeur de la variable.
+*/
 
 void		draw_env(char **env)
 {
@@ -100,6 +132,10 @@ void		draw_env(char **env)
 		i++;
 	}
 }
+
+/*
+**	Cette fonction récupère le tableau d'environnement et le trie.
+*/
 
 void		sort_env(t_cmds cmds)
 {
