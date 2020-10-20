@@ -78,7 +78,6 @@ char		**add_env(t_cmds cmds, int *flag)
 	int 	k;
 
 	g_shell.env_len += (*flag);
-	printf("g_shell.env_len ADD ENV = [%d]\n\n", g_shell.env_len);
 	if (!(tmp = (char **)ft_calloc((g_shell.env_len + 1),
 				sizeof(char *))))
 		return (NULL);
@@ -91,7 +90,6 @@ char		**add_env(t_cmds cmds, int *flag)
 	k = 1;
 	while (k < cmds.argc)
 	{
-		printf("argv[%d] = %s\n", k, cmds.argv[k]);
 		if (!cmds.argv[k])
 			k++;
 		tmp[i] = ft_strdup(cmds.argv[k]);
