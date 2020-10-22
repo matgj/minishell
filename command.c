@@ -23,8 +23,8 @@ int		command_type_parent(t_cmds cmds)
 		ret = ft_cd(cmds);
 	else if (!ft_strcmp(cmds.name, "export"))
 		ret = ft_export(cmds);
-	// else if (!ft_strcmp(cmds->name, "unset"))
-	// 	ft_unset(cmds);
+	else if (!ft_strcmp(cmds.name, "unset"))
+		ret = ft_unset(cmds);
 	// else if (!ft_strcmp(cmds.name, "exit"))
 	// 	ft_exit(cmds);
 	return (ret);

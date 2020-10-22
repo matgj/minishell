@@ -32,7 +32,7 @@ void 	what_to_compare(int *l, int *j, int *i, int *x)
 ** 	car elle ne sera pas comptabilisée comme variable a rajouter au tableau.
 */
 
-void 	is_exist(t_cmds cmds, int *flag)
+void 	is_exist(t_cmds cmds, int *flag, int export)
 {
 	int 	i;
 	int 	j;
@@ -49,10 +49,9 @@ void 	is_exist(t_cmds cmds, int *flag)
 			{
 				if (!ft_strncmp(g_shell.envp[i], cmds.argv[x], j))
 				{
-					free(g_shell.envp[i]);
-					g_shell.envp[i] = ft_strdup(cmds.argv[x]);
-					*flag -= 1;
-					cmds.argv[x] = NULL;
+
+					is_match(cmds, &i, &x, export);
+					(export) ? *flag -= 1 : 0;
 				}
 			}
 			x++;
@@ -101,7 +100,8 @@ int 	before_after_egal(char *env, int j, int where, int *empty)
 **  et a pour but d'appliquer la mise en forme après avoir utilisé la commande "export" sans argument.
 **	Avant chaque nom de variable elle affiche "declare -x".
 **	Elle vérifie si la valeur de la variable est existante ou nulle.
-**	Si nulle : pas de signe "=" à afficher et pas de double quote entourant la valeur de la variable.
+**	Si nulle : pas de signe "=" à afficher et pas de double quotes entourant la valeur de la variable.
+**	Si existante : affichage de la valeur de la variable entre double quotes.
 */
 
 void		draw_env(char **env)
@@ -130,7 +130,7 @@ void		draw_env(char **env)
 			ft_putstr_fd("\"\n", 1);
 		}
 		i++;
-	}
+	}		
 }
 
 /*
@@ -152,6 +152,10 @@ void		sort_env(t_cmds cmds)
 			if ((ft_strncmp(tmp[i], tmp[j], ft_strlen(tmp[j]))) > 0)
 				ft_swap(&tmp[i], &tmp[j]);
 	}
+	// i = 0;
+	// while (tmp[i++])
+	// 	printf("tmp[%d] = %s\n", i, tmp[i]);
+	// printf("\n\n");
 	draw_env(tmp);
 	// free_strings(tmp);
 }

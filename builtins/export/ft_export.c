@@ -6,9 +6,10 @@
 ** Elle est appelée dans la fonction check_error_export.
 */
 
-int 	is_error(char **str, int *flag)
+int 	is_error(char **str, int *flag, int export)
 {
-	ft_putstr_fd("bash: export: \'", 2);
+	ft_putstr_fd("bash: ", 2);
+	(export) ? ft_putstr_fd("export: \'", 2) : ft_putstr_fd("unset: \'", 2);
 	ft_putstr_fd(*str, 2);
 	ft_putstr_fd("\': not a valid identifier\n", 2);
 	g_shell.status = 1;
@@ -30,16 +31,15 @@ int 	is_error(char **str, int *flag)
 int		check_error_export(t_cmds cmds, int *flag)
 {
 	int 	i;
-	int 	k;
 
 	i = 1;
 	while (cmds.argv[i])
 	{
-		if ((!ft_isalpha(cmds.argv[i][0]) || !is_alnum(cmds, i))
-			&& is_error(&cmds.argv[i], flag))
+		if ((!ft_isalpha(cmds.argv[i][0]) || !is_alnum(cmds, i, 1))
+			&& is_error(&cmds.argv[i], flag, 1))
 			return (0);
 		else if (cmds.argv[i])
-			is_exist(cmds, flag);
+			is_exist(cmds, flag, 1);
 		i++;
 	}
 	return ((!(*flag)) ? 0 : 1);
@@ -58,13 +58,14 @@ char		**add_env(t_cmds cmds, int *flag)
 	int 	k;
 
 	g_shell.env_len += (*flag);
-	if (!(tmp = (char **)ft_calloc((g_shell.env_len + 1),
+	if (!(tmp = (char **)ft_calloc((g_shell.env_len),
 				sizeof(char *))))
 		return (NULL);
 	i = 0;
 	while (g_shell.envp[i])
 	{
-		tmp[i] = ft_strdup(g_shell.envp[i]);
+		if (!(tmp[i] = ft_strdup(g_shell.envp[i])))
+			return (NULL);
 		i++;
 	}
 	k = 1;
@@ -72,9 +73,8 @@ char		**add_env(t_cmds cmds, int *flag)
 	{
 		if (!cmds.argv[k])
 			k++;
-		tmp[i] = ft_strdup(cmds.argv[k]);
-		i++;
-		k++;
+		else if (!(tmp[i++] = ft_strdup(cmds.argv[k++])))
+			return (NULL);
 	}
 	tmp[i] = NULL;
 	return (tmp);
@@ -90,7 +90,6 @@ int			ft_export(t_cmds cmds)
 	char	**tmp;
 	int 	flag;
 
-	flag = 0;
 	flag = cmds.argc - 1;
 	if (!cmds.argv[1])
 		sort_env(cmds);
@@ -102,8 +101,10 @@ int			ft_export(t_cmds cmds)
 		{
 			free_split(g_shell.envp);
 			g_shell.envp = tmp;
-
 		}
 	}
+	// int i = 0;
+	// while (g_shell.envp[i++])
+	// 	printf("envp[%d] = [%s]\n", i, g_shell.envp[i]);
 	return (1);
 }

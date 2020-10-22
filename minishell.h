@@ -170,12 +170,13 @@ void                *ft_memset(void *b, int c, size_t len);
 void                ft_putendl_fd(char *s, int fd);
 void                ft_putstr_fd(char *s, int fd);
 int					ft_isalpha(int c);
-int					is_alnum(t_cmds cmds, int i);
+int					is_alnum(t_cmds cmds, int i, int export);
 void				ft_swap(char **a, char **b);
 void				put_env(char *s, int fd, int len);
-void 				is_exist(t_cmds cmds, int *flag);
+void 				is_exist(t_cmds cmds, int *flag, int export);
 void				sort_env(t_cmds cmds);
-
+int 				is_error(char **str, int *flag, int export);
+void				is_match(t_cmds cmds, int *i, int *x, int export);
 int                 ft_echo(t_cmds cmds);
 int                 ft_cd(t_cmds cmds);
 int                 ft_pwd(t_cmds cmds);
