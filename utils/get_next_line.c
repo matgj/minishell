@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:53:05 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 20:54:12 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:58 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ char	*cut_line(char *s)
 		i++;
 	if (!s[i])
 	{
-		free(s);
+		mfree(s);
 		return (0);
 	}
-	if (!(str = malloc(sizeof(char) * (ft_strlen(s) - i + 1))))
+	if (!(str = mmalloc(sizeof(char) * (ft_strlen(s) - i + 1))))
 		return (0);
 	i++;
 	while (s[i])
@@ -39,7 +39,7 @@ char	*cut_line(char *s)
 		j++;
 	}
 	str[j] = '\0';
-	free(s);
+	mfree(s);
 	return (str);
 }
 
@@ -52,19 +52,19 @@ int		get_next_line(int fd, char **line)
 	*line = NULL;
 	if (!line || fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
-	if (!(buf = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
+	if (!(buf = mmalloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
 	while (!ft_check_bn(save) && ret != 0)
 	{
 		if ((ret = read(fd, buf, BUFFER_SIZE)) == -1)
 		{
-			free(buf);
+			mfree(buf);
 			return (-1);
 		}
 		buf[ret] = '\0';
 		save = ft_strjoin(save, buf);
 	}
-	free(buf);
+	mfree(buf);
 	*line = ft_cpy_line(save);
 	save = cut_line(save);
 	if (ret == 0)

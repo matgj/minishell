@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 12:54:18 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 18:05:56 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:58 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ char	*replace_env(char *to_find, char *line, int start, int end)
 	new0 = ft_strdup(tab[0]);
 	new1 = ft_strjoin(new0, g_shell.var_env);
 	new2 = ft_strjoin(new1, tab[1]);
-	free(g_shell.var_env);
-	free(tab[0]);
-	free(tab[1]);
-	free(new0);
-	free(new1);
+	mfree(g_shell.var_env);
+	mfree(tab[0]);
+	mfree(tab[1]);
+	mfree(new0);
+	mfree(new1);
 	return (new2);
 }
 
@@ -53,13 +53,13 @@ char	*remove_empty_var(char *line)
 			c++;
 		tab[1] = ft_substr(split_dol[l], 0, c);
 		tab[2] = ft_strjoin(tab[0], tab[1]);
-		free(tab[0]);
+		mfree(tab[0]);
 		tab[0] = ft_strjoin(tab[2], " ");
-		free(tab[1]);
-		free(tab[2]);
+		mfree(tab[1]);
+		mfree(tab[2]);
 		l++;
 	}
-	free(line);
+	mfree(line);
 	return (tab[0]);
 }
 
@@ -91,12 +91,12 @@ char	*var_env(char *line)
 		// printf("-----------[%s]\n", g_shell.envp[i]);
 		vars_env = ft_split(g_shell.envp[i], '=');
 		to_find = ft_strjoin(dol, vars_env[0]);
-		free(dol);
+		mfree(dol);
 		j = -1;
 		while (line[++j])
 			line = var_env2(line, j, &to_find, &vars_env);
-		free(to_find);
-		free(vars_env);
+		mfree(to_find);
+		mfree(vars_env);
 	}
 	line = remove_empty_var(line);
 	return (line);

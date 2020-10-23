@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:53:01 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 12:35:38 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:41 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_cpy_line(char *s)
 	i = 0;
 	while (s[i] && s[i] != '\n')
 		i++;
-	if (!(str = malloc(sizeof(char) * (i + 1))))
+	if (!(str = mmalloc(sizeof(char) * (i + 1))))
 		return (0);
 	i = 0;
 	while (s[i] && s[i] != '\n')

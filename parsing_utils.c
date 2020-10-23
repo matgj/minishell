@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:06 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 20:57:49 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:58 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*dol_create(void)
 {
 	char *dol1;
 
-	if (!(dol1 = (char *)malloc(sizeof(char) * 2)))
+	if (!(dol1 = (char *)mmalloc(sizeof(char) * 2)))
 		return (NULL);
 	dol1[0] = '$';
 	dol1[1] = '\0';
@@ -51,5 +51,5 @@ void	print_syntax_err(char *line)
 {
 	ft_printf("syntax error near unexpected token\n");
 	g_shell.status = 2;
-	// free(line);
+	// mfree(line);
 }

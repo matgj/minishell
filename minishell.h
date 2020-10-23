@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:51:31 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/14 11:48:43 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/23 16:06:21 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,14 @@ typedef	struct		s_cmds
 	int		argc;
 	int		output[ARG_MAX];
 	int		input;
+	char	*status;
 }					t_cmds;
+
+typedef struct		s_list
+{
+	void			*data;
+	struct s_list	*next;
+}					t_list;
 
 t_cmds		g_cmds;
 t_shell		g_shell;
@@ -86,6 +93,7 @@ void				ft_bzero(void *s, size_t n);
 char				*ft_strjoin(char *s1, char *s2);
 char				**ft_split(char const *s, char c);
 int					ft_strcmp(char *s1, char *s2);
+char				*ft_strcat(char *dest, char *src);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					get_next_line(int fd, char **buf);
@@ -96,6 +104,8 @@ void				ft_putchar(char c, int *res);
 void				ft_putstr(char *src, int *res);
 int					ft_printf(const char *src, ...);
 int					ft_atoi_mini(const char *src, int *i);
+int					ft_atoi(const char *str);
+char				*ft_itoa(unsigned long n);
 char				*ft_itoa_base(long int nb, int base, char *base_tab);
 void				ft_c(va_list arg_list, t_printf *conv, int *res);
 void				ft_s(va_list arg_list, t_printf *conv, int *res);
@@ -124,6 +134,7 @@ void				ft_flags_zero_minus(const char *src,
 	int *i, t_printf *conv);
 void				ft_flag_p(t_printf *conv, char *str, int *res, int len);
 int					ft_check_type(char c);
+void				env_status(int n);
 
 void				ft_cpy_var(char *str);
 int					ft_alphanum(char c);
@@ -152,12 +163,22 @@ void				check_pid(void);
 void				signals(void);
 void				exit_shell(int status, int newline);
 void				free_split(char **tabs);
+void				free_binary(char *binary, char **paths);
 int					syntax_error(char *line);
 int					syntax_err2(char *line, int i, char c);
 void				print_syntax_err(char *line);
 int					empty(char *line);
 void				close_fds(t_cmds cmds);
+char				*find_path(char *cmd);
 void				free_struct(t_cmds cmds);
+char				**add_env(t_cmds cmds, int *flag);
+void				plug_fd(t_cmds cmds);
+
+void				*mmalloc(unsigned int size);
+void				*mrealloc(void *ptr, size_t size);
+int					free_all_malloc(void);
+int					mfree(void *to_mfree);
+extern t_list		*g_all_malloc;
 
 char				**env_import(char **envp);
 char				*command_path(t_cmds *cmds);
@@ -183,6 +204,6 @@ int                 ft_pwd(t_cmds cmds);
 int                 ft_export(t_cmds cmds);
 int                 ft_unset(t_cmds cmds);
 int                 ft_env(t_cmds cmds);
-int                 ft_exit(t_cmds cmds);
+int					ft_exit(t_cmds cmds);
 
 #endif

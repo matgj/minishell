@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/14 12:18:09 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/23 16:04:41 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_shell g_shell;
 
-int		command_type_parent(t_cmds cmds)
+int		builtin_type_parent(t_cmds cmds)
 {
 	int ret;
 
@@ -25,12 +25,12 @@ int		command_type_parent(t_cmds cmds)
 		ret = ft_export(cmds);
 	else if (!ft_strcmp(cmds.name, "unset"))
 		ret = ft_unset(cmds);
-	// else if (!ft_strcmp(cmds.name, "exit"))
-	// 	ft_exit(cmds);
+	else if (!ft_strcmp(cmds.name, "exit"))
+	 	ret = ft_exit(cmds);
 	return (ret);
 }
 
-int		command_type_child(t_cmds cmds)
+int		builtin_type_child(t_cmds cmds)
 {
 	int ret;
 
@@ -58,41 +58,21 @@ void   command_exec_child(t_cmds cmds)
 	int i;
 	int ret;
 	i = 0;
-	if (cmds.input < 0)
-		 exit(1);
-	if (cmds.input != 0)
+	plug_fd(cmds);
+	if (!builtin_type_child(cmds))
 	{
-		if(dup2(cmds.input, STDIN) == -1)
-			ft_printf("dup2 error input\n");
-	}
-		while(cmds.output[i] != -1)
-	 	{
-		if (cmds.output[i] != STDOUT)
+		 if (cmds.input < 0)
+		 	 exit(1);
+		cmds.path = find_path(cmds.name);
+		if (!cmds.path)
+			ret = -1;
+		else if ((ret = execve(cmds.path, cmds.argv, g_shell.envp)) == -1)
 		{
-			if(dup2(cmds.output[i], STDOUT) == -1)
-	    		ft_printf("dup2 error ouput\n");
+			write(2, "minishell: ", 11);
+			write(2, cmds.name, ft_strlen(cmds.name));
+			write(2, ": command not found\n", 20);
+			exit(127);
 		}
-		i++;
-	 }
- 	// if (!ft_strcmp(cmds.name, "echo"))
-    //   cmds.path = "/bin/echo";
-	if (!ft_strcmp(cmds.name, "ls"))
-		cmds.path = "/bin/ls";
-	else if (!ft_strcmp(cmds.name, "wc"))
-		cmds.path = "/usr/bin/wc";
-   else if (!ft_strcmp(cmds.name, "cat"))
-		cmds.path = "/bin/cat";
-   else if (!ft_strcmp(cmds.name, "grep"))
-		cmds.path = "/usr/bin/grep";
-   else if (!ft_strcmp(cmds.name, "sleep"))
-		cmds.path = "/bin/sleep";
-	char *env[]={"PATH=/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/Frameworks/Python.framework",NULL};
-	if ((ret = execve(cmds.path, cmds.argv, env)) == -1)
-	{
-		write(2, "minishell: ", 11);
-		write(2, cmds.name, ft_strlen(cmds.name));
-		write(2, ": command not found\n", 20);
-		exit(127);
 	}
 }
 
@@ -110,24 +90,21 @@ int		command_exec(t_cmds cmds)
 	int		i;
 	int		ret;
 
-	if (command_type_parent(cmds))
+	if (builtin_type_parent(cmds))
 	{
 		free_struct(cmds);
 		g_shell.pid = -1;
 		return (1);
 	}
-	if (!command_type_child(cmds))
+	if ((pid = fork()) == -1)
 	{
-		if ((pid = fork()) == -1)
-		{
-			ft_printf("fork error\n");
-			exit(127);
-		}
-		else if (pid == 0)
-			command_exec_child(cmds);
-		else
-			g_shell.pid = pid;
+		ft_printf("fork error\n");
+		exit(127);
 	}
+	else if (pid == 0)
+			command_exec_child(cmds);
+	else
+			g_shell.pid = pid;
 	close_fds(cmds);
 	free_struct(cmds);
 	return (g_shell.status == 0);

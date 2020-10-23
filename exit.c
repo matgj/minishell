@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:11 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 12:16:44 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/23 16:15:19 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	exit_shell(int status, int newline)
 	ft_printf("exit");
 	if (newline)
 		ft_printf("\n");
+	free_all_malloc();
 	exit(status);
 }
 
@@ -28,8 +29,8 @@ void	free_split(char **tabs)
 
 	i = 0;
 	while (tabs[i])
-		free(tabs[i++]);
-	free(tabs);
+		mfree(tabs[i++]);
+	mfree(tabs);
 }
 
 void	free_struct(t_cmds cmds)
@@ -38,8 +39,21 @@ void	free_struct(t_cmds cmds)
 
 	i = 0;
 	while (cmds.argv[i])
-		free(cmds.argv[i++]);
-	free(cmds.name);
-	free(cmds.argv);
-	free(cmds.path);
+		mfree(cmds.argv[i++]);
+	mfree(cmds.name);
+	mfree(cmds.argv);
+	mfree(cmds.path);
+}
+
+void	env_status(int n)
+{
+	char	*status;
+	char	*env_var;
+
+	status = ft_itoa(n);
+	g_shell.status = n;
+	env_var = ft_strjoin("?=", status);
+	//add_env((void), env_var, 1, 0);
+	mfree(env_var);
+	mfree(status);
 }

@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:27:48 by magrosje          #+#    #+#             */
-/*   Updated: 2020/10/08 15:57:04 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:58 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_flag_p_spaces(t_printf *conv, char *str, int *res, int len)
 		ft_putstr("0x", res);
 		ft_putstr(str, res);
 	}
-	free(str);
+	mfree(str);
 	str = NULL;
 }
 

@@ -2,9 +2,9 @@
 
 /*
 **	Cette fonction permet de calculer le nombre de caractères avant le signe '=' de chaque variable
-** 	dans le tableau d'environnement existant. Ce qui servira à comparer les noms des variables exportées 
+** 	dans le tableau d'environnement existant. Ce qui servira à comparer les noms des variables exportées
 ** 	des noms des variables existantes.
-** 	Si la variable existe dans le tableau d'environnement mais qu'elle ne posséde aucune valeur, il n'y 
+** 	Si la variable existe dans le tableau d'environnement mais qu'elle ne posséde aucune valeur, il n'y
 ** 	a donc pas de signe '='. La fonction renvoit alors le nombre total de caractères, qui correspondent donc
 ** 	au nom entier de la variable.
 */
@@ -26,8 +26,8 @@ void 	what_to_compare(int *l, int *j, int *i, int *x)
 }
 
 /*
-**	Cette fonction vérifie si la variable exportée existe déjà dans le tableau d'environnement. 
-** 	Si elle trouve une correspondance, elle free la valeur correspondante dans le tableau existant 
+**	Cette fonction vérifie si la variable exportée existe déjà dans le tableau d'environnement.
+** 	Si elle trouve une correspondance, elle mfree la valeur correspondante dans le tableau existant
 **	pour ensuite mettre la nouvelle valeur. La variable flag est décrémentée puis mise à NULL
 ** 	car elle ne sera pas comptabilisée comme variable a rajouter au tableau.
 */
@@ -61,7 +61,7 @@ void 	is_exist(t_cmds cmds, int *flag, int export)
 }
 
 /*
-**	Cette fonction compte le nombre de caractères avant ou après le signe '=' 
+**	Cette fonction compte le nombre de caractères avant ou après le signe '='
 **	Si on lui envoit en paramètre la lettre 'a' pour "after" elle comptera les caractères
 **	du nom de la variable.
 **	Si on lui envoit en paramètre la lettre 'b' pour "before" elle comptera les caractères
@@ -130,7 +130,7 @@ void		draw_env(char **env)
 			ft_putstr_fd("\"\n", 1);
 		}
 		i++;
-	}		
+	}
 }
 
 /*
@@ -157,5 +157,5 @@ void		sort_env(t_cmds cmds)
 	// 	printf("tmp[%d] = %s\n", i, tmp[i]);
 	// printf("\n\n");
 	draw_env(tmp);
-	// free_strings(tmp);
+	// mfree_strings(tmp);
 }

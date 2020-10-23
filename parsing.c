@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/14 11:39:22 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/23 16:16:30 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_cmds	parse_cmd(char *cmds_pipe)
 		insert_actions(cmds.argv[i]);
 		i++;
 	}
-	free(token);
+	mfree(token);
 	i = 0;
 	while (i < ARG_MAX)
 		cmds.output[i++] = -1;
@@ -52,7 +52,7 @@ t_cmds	*parse_pipe(char *cmds_semi)
 
 	cpt = 0;
 	cmds_pipe = ft_split(cmds_semi, '|');
-	free(cmds_semi);
+	mfree(cmds_semi);
 	while (cmds_pipe[cpt])
 		cpt++;
 	if (!(cmds = ft_calloc(sizeof(t_cmds), cpt + 1)))
@@ -63,9 +63,9 @@ t_cmds	*parse_pipe(char *cmds_semi)
 		if (!empty(cmds_pipe[cpt]))
 			cmds[cpt] = parse_cmd(cmds_pipe[cpt]);
 		else
-			free(cmds_pipe[cpt]);
+			mfree(cmds_pipe[cpt]);
 	}
-	free(cmds_pipe);
+	mfree(cmds_pipe);
 	nul.name = NULL;
 	cmds[cpt] = nul;
 	command_plug(cmds);
@@ -80,7 +80,7 @@ void	command_loop(t_cmds *cmds_pipe)
 	while (cmds_pipe[i].name)
 		command_exec(cmds_pipe[i++]);
 	check_pid();
-	free(cmds_pipe);
+	mfree(cmds_pipe);
 }
 
 /*
@@ -109,15 +109,15 @@ void	parsing(char *line)
 		print_syntax_err(line);
 		return ;
 	}
-	//free(line);
+	//mfree(line);
 	cmds_semi = ft_split(line_env, ';');
-	free(line_env);
+	mfree(line_env);
 	while (cmds_semi[l])
 	{
 		cmds_pipe = parse_pipe(cmds_semi[l++]);
 		command_loop(cmds_pipe);
 	}
-	free(cmds_semi);
+	mfree(cmds_semi);
 }
 
 /*
@@ -127,19 +127,19 @@ void	parsing(char *line)
 void	read_line(char **line)
 {
 	int		ret;
-	char	buf[2];
+	char	buf[1];
 	int		i;
 
 	i = 1;
 	ret = get_next_line(1, line);
 	if (!ret && !ft_strlen(*line))
 	{
-		free(*line);
+		mfree(*line);
 		exit_shell(g_shell.status, 1);
 	}
 	while (!ret)
 	 {
-	 	ret = read(1, buf, 2);
+	 	ret = read(1, buf, 1);
 	 	//ft_printf("\b\b  ");
 	 }
 	// system("leaks minishell");

@@ -3,7 +3,7 @@
 /*
 ** Cette fonction est appelée au moment ou une variable correspond a une variable existante,
 ** dans le tableau d'environnement.
-** Dans le cas ou elle est appelé par la fonction ft_export, elle permet de remplacer la variable 
+** Dans le cas ou elle est appelé par la fonction ft_export, elle permet de remplacer la variable
 ** concernée par la nouvelle variable exportée.
 ** Dans le cas ou elle est appelé par la fonction ft_unset, elle supprime la variable sans la remplacer.
 */
@@ -11,7 +11,7 @@
 //.............................
 void		is_match(t_cmds cmds, int *i, int *x, int export)
 {
-	free(g_shell.envp[*i]);
+	mfree(g_shell.envp[*i]);
 	// ft_swap(g_shell.envp[*i], g_shell.envp[*i + 1]);
 	// g_shell.envp[*i] = NULL;
 

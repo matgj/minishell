@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 int		ft_echo(t_cmds cmds)
-{	
+{
 	int 		i;
 	int 		nflag;
 

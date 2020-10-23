@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:49:19 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 18:21:51 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:15:13 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*replace_quotes(char *line)
 
 	i = 0;
 	new = ft_split(line, REPLACED);
-	free(line);
+	mfree(line);
 	clean = join_splits(new);
 	free_split(new);
 	return (clean);
@@ -99,7 +99,7 @@ void	parse_token(char ***token, char *cmds_pipe)
 
 	i = 0;
 	*token = ft_split(cmds_pipe, ' ');
-	free(cmds_pipe);
+	mfree(cmds_pipe);
 	while ((*token)[i])
 	{
 		(*token)[i] = replace_quotes((*token)[i]);

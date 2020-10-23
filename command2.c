@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:20 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 20:49:32 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/23 16:18:28 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	command_clean(t_cmds *cmds)
 		}
 	}
 	new_argv[pos] = NULL;
-	free(cmds->argv);
+	mfree(cmds->argv);
 	cmds->argv = new_argv;
 }
 
@@ -92,7 +92,9 @@ void	check_pid(void)
 	while (wait(&g_shell.pid) > 0)
 		(void)g_shell.pid;
 	if (g_shell.pid == 2)
-		g_shell.status = 2;
+		g_shell.status = 130;
+	else if (g_shell.pid == 3 || g_shell.pid == 131)
+		g_shell.status = 131;
 	else
 		g_shell.status = WEXITSTATUS(g_shell.pid);
 	g_shell.pid = 0;

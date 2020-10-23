@@ -18,7 +18,7 @@ int 		check_error_unset(t_cmds cmds, int *flag)
 }
 
 //....................
-// 
+//
 char		**delete_env(t_cmds cmds, int *flag)
 {
 	char	**tmp;
@@ -45,7 +45,7 @@ int			ft_unset(t_cmds cmds)
 {
 	char	**tmp;
 	int 	flag;
-	
+
 	flag = cmds.argc - 1;
 	if (!cmds.argv[1])
 		return (1);

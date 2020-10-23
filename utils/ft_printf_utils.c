@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 17:24:39 by magrosje          #+#    #+#             */
-/*   Updated: 2020/10/08 15:57:04 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:41 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*ft_nb_zero(void)
 {
 	char *str;
 
-	if (!(str = (char*)malloc(sizeof(char) * 2)))
+	if (!(str = (char*)mmalloc(sizeof(char) * 2)))
 		return (NULL);
 	str[0] = '0';
 	str[1] = '\0';
@@ -60,7 +60,7 @@ char		*ft_itoa_base(long int nb, int base, char *base_tab)
 	else
 	{
 		lnb = nb;
-		if (!(str = (char*)malloc(sizeof(char) * len)))
+		if (!(str = (char*)mmalloc(sizeof(char) * len)))
 			return (NULL);
 		if (nb < 0)
 		{

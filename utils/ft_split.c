@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:42 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 20:52:55 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:41 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_str_line(char const *s, char c)
 	j = 0;
 	while (s[i] != '\0' && s[i] != c)
 		i++;
-	if (!(str = (char*)malloc(sizeof(char) * (i + 1))))
+	if (!(str = (char*)mmalloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	while (s[j] != '\0' && s[j] != c)
 	{
@@ -64,7 +64,7 @@ char	**ft_split(char const *s, char c)
 	l = 0;
 	if (!s)
 		return (NULL);
-	if (!(tab = (char **)malloc(sizeof(char *) * (ft_cpt_words(s, c) + 1))))
+	if (!(tab = (char **)mmalloc(sizeof(char *) * (ft_cpt_words(s, c) + 1))))
 		return (NULL);
 	while (s[i] != '\0')
 	{

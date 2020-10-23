@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/24 10:52:49 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/22 17:04:41 by Mathis           ###   ########.fr       */
+/*   Created: 2020/10/22 18:41:05 by Mathis            #+#    #+#             */
+/*   Updated: 2020/10/22 18:41:09 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
-char	*ft_strdup(const char *s1)
+char *ft_strcat(char *dest, char *src)
 {
-	char	*str;
-	size_t	len;
+	int i;
+	int j;
 
-	len = ft_strlen(s1);
-	if (!(str = mmalloc(sizeof(char) * (len + 1))))
-		return (0);
-	ft_memmove(str, s1, len);
-	str[len] = '\0';
-	return (str);
+	i = 0;
+	while (dest[i] != '\0')
+		i++;
+	j = 0;
+	while (src[j] != '\0')
+	{
+		dest[i + j] = src[j];
+		j++;
+	}
+	dest[i + j] = '\0';
+	return (dest);
 }
+

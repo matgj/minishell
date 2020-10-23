@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:43:28 by magrosje          #+#    #+#             */
-/*   Updated: 2020/10/08 15:57:04 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:58 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_look_args(const char *src, int *i, va_list arg_list, t_printf *conv)
 int		ft_ret(va_list arg_list, t_printf *conv, int res)
 {
 	va_end(arg_list);
-	free(conv);
+	mfree(conv);
 	return (res);
 }
 
@@ -76,7 +76,7 @@ int		ft_printf(const char *src, ...)
 	va_start(arg_list, src);
 	i = 0;
 	res = 0;
-	if (!(conv = (t_printf*)malloc(sizeof(t_printf))))
+	if (!(conv = (t_printf*)mmalloc(sizeof(t_printf))))
 		return (-1);
 	while (src[i] != 0)
 	{

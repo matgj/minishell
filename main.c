@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:02 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 12:51:34 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/23 16:11:14 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@ int	main(int argc, char **argv, char **envp)
 	t_shell		shell;
 	t_printf	printf;
 	char		*line;
+	int			fd;
 
 	i = 0;
 	(void)argc;
 	(void)argv;
+	if (read(0, NULL, 0) == -1)
+		return (0);
+	if ((fd = dup(0)) == -1)
+		return (0);
 	g_shell.redir = 0;
 	g_shell.dquotes = 0;
 	g_shell.status = 0;
@@ -31,10 +36,9 @@ int	main(int argc, char **argv, char **envp)
 	// (!g_shell.no_first_env) ? g_shell.envp = env_import(envp) : 0;
 	// //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	ft_printf("\e[1;1H\e[2J\n");
-	printf.fd = 2;
+	printf.fd = 1;
 	while (1)
 	{
-		printf.fd = 1;
 		ft_printf("\e[1m" "bash-42$ " "\e[0m", 25);
 		signals();
 		read_line(&line);

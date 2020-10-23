@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 13:20:12 by magrosje          #+#    #+#             */
-/*   Updated: 2020/10/08 15:57:04 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:58 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_flag_detail(t_printf *conv, int *res, char *src)
 	}
 	else
 		ft_putstr(src, res);
-	free(src);
+	mfree(src);
 	src = NULL;
 }
 

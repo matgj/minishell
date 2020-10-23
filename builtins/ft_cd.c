@@ -14,7 +14,7 @@ static void		dup_strs(char **dst, char *str1, char *str2)
 
 	tmp = ft_strjoin(str1, str2);
 	*dst = ft_strdup(tmp);
-	free(tmp);
+	mfree(tmp);
 }
 
 /*
@@ -45,7 +45,7 @@ void	renew_paths(t_cmds cmds, char *oldpwd)
 			new_env[i] = ft_strdup(g_shell.envp[i]);
 		i++;
 	}
-	// free(g_shell.envp);     penser a free ici
+	// mfree(g_shell.envp);     penser a mfree ici
 	g_shell.envp = new_env;
 }
 

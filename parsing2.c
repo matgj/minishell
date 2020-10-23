@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:01 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/09 10:54:08 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/22 17:04:58 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void	redirection(t_cmds *cmds)
 			}
 			else
 				redirec_output(cmds, cmds->argv[i + 1]);
-			free(cmds->argv[i]);
-			free(cmds->argv[i + 1]);
+			mfree(cmds->argv[i]);
+			mfree(cmds->argv[i + 1]);
 			cmds->argv[i] = NULL;
 			cmds->argv[i + 1] = NULL;
 			i++;
