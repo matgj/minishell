@@ -1,5 +1,9 @@
 #include "../minishell.h"
 
+/*
+**	Cette fonction parcours le tableau d'arguments et vérifie qu'il n'y a pas d'erreur
+*/
+
 int 		check_error_unset(t_cmds cmds, int *flag)
 {
 	int 	i;
@@ -14,6 +18,13 @@ int 		check_error_unset(t_cmds cmds, int *flag)
 	}
 	return ((!(*flag)) ? 0 : 1);
 }
+
+/*
+**	Cette fonction parcours le tableau d'arguments et compare chaque argument
+** 	avec la variable en cours dans le tableau d'environnement existant.
+** 	Si elle trouve une correspondance, elle renvoit une valeur au dessus de 0
+** 	Sinon elle renvoit 0.
+*/
 
 int 	is_exist_unset(t_cmds cmds, int *i)
 {
@@ -38,6 +49,16 @@ int 	is_exist_unset(t_cmds cmds, int *i)
 	return(0);
 }
 
+/*
+**	Cette fonction malloc le nouveau tableau d'environnement de la taille du
+**  tableau actuel moins les variables a supprimer via la commande unset.
+** 	Elle parcours chaque variable du tableau d'environnement existant
+** 	Elle appelle is_exist_unset pour vérifier si la variable en cours est égale
+** 	a l'argument indiqué via la commande unset. 
+**  Si oui, on ne la recopie pas dans le nouveau tableau, et on passe à la suivante.
+**  Si non, la variable n'est donc pas a effacé et on peut la recopier dans le nouveau tableau.
+** 	On passe ensuite à la suivante.
+*/
 
 char		**delete_env(t_cmds cmds, int *flag)
 {
