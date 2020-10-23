@@ -11,13 +11,9 @@
 //.............................
 void		is_match(t_cmds cmds, int *i, int *x, int export)
 {
-	free(g_shell.envp[*i]);
-	// ft_swap(g_shell.envp[*i], g_shell.envp[*i + 1]);
-	// g_shell.envp[*i] = NULL;
-
-
 	if (export)
 	{
+		free(g_shell.envp[*i]);
 		g_shell.envp[*i] = NULL;
 		if (!(g_shell.envp[*i] = ft_strdup(cmds.argv[*x])))
 			return ;

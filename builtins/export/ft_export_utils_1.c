@@ -49,7 +49,6 @@ void 	is_exist(t_cmds cmds, int *flag, int export)
 			{
 				if (!ft_strncmp(g_shell.envp[i], cmds.argv[x], j))
 				{
-
 					is_match(cmds, &i, &x, export);
 					(export) ? *flag -= 1 : 0;
 				}

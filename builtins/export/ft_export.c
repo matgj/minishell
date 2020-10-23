@@ -14,7 +14,7 @@ int 	is_error(char **str, int *flag, int export)
 	ft_putstr_fd("\': not a valid identifier\n", 2);
 	g_shell.status = 1;
 	*flag -= 1;
-	*str = NULL;
+	(export) ? *str = NULL : 0;
 	return (0);
 }
 
@@ -93,7 +93,7 @@ int			ft_export(t_cmds cmds)
 	flag = cmds.argc - 1;
 	if (!cmds.argv[1])
 		sort_env(cmds);
-	else if (check_error_export(cmds, &flag))
+	if (check_error_export(cmds, &flag))
 	{
 		if (!(tmp = add_env(cmds, &flag)))
 			return (0);
