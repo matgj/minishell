@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 11:48:52 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/23 13:01:57 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 12:27:10 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	signal_quit(int signal)
 		g_shell.status = 131;
 		ft_printf("Quit: %d\n", g_shell.pid);
 	}
+	else
+		ft_printf("\b\b  \b\b");
 }
 
 void	signal_interrupt(int signal)

@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/23 16:04:41 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 12:27:38 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int		builtin_type_child(t_cmds cmds)
 		ret = ft_pwd(cmds);
 	else if (!ft_strcmp(cmds.name,"env"))
 		ret = ft_env(cmds);
+	else
+		return (0);
+	exit(0);
 	return (ret);
 }
 
@@ -66,13 +69,8 @@ void   command_exec_child(t_cmds cmds)
 		cmds.path = find_path(cmds.name);
 		if (!cmds.path)
 			ret = -1;
-		else if ((ret = execve(cmds.path, cmds.argv, g_shell.envp)) == -1)
-		{
-			write(2, "minishell: ", 11);
-			write(2, cmds.name, ft_strlen(cmds.name));
-			write(2, ": command not found\n", 20);
-			exit(127);
-		}
+		if ((ret = execve(cmds.path, cmds.argv, g_shell.envp)) == -1)
+			ft_print_err_exec(cmds);
 	}
 }
 
@@ -98,7 +96,7 @@ int		command_exec(t_cmds cmds)
 	}
 	if ((pid = fork()) == -1)
 	{
-		ft_printf("fork error\n");
+		ft_putstr_fd("fork error\n,", 2);
 		exit(127);
 	}
 	else if (pid == 0)

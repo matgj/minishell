@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/23 16:16:30 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 11:51:25 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,7 @@ void	read_line(char **line)
 		exit_shell(g_shell.status, 1);
 	}
 	while (!ret)
-	 {
-	 	ret = read(1, buf, 1);
-	 	//ft_printf("\b\b  ");
-	 }
-	// system("leaks minishell");
+	{
+		ret = read(1, buf, 1);
+	}
 }

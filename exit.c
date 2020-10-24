@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:11 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/23 16:15:19 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 10:17:06 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ extern t_shell g_shell;
 
 void	exit_shell(int status, int newline)
 {
+//	free environnement;
 	ft_printf("exit");
 	if (newline)
 		ft_printf("\n");

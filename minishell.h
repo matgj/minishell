@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:51:31 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/23 16:06:21 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 12:27:27 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ int					command_type_child(t_cmds cmds);
 int					command_type_parent(t_cmds cmds);
 int					command_exec(t_cmds cmds);
 void				command_clean(t_cmds *cmds);
+
+void				ft_print_err_exec(t_cmds cmds);
 char				*join_splits(char **tabs);
 void				redirection(t_cmds *cmds);
 void				ft_tab_output(int *tab_fds, int fd);
