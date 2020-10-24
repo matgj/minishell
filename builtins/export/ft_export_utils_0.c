@@ -1,31 +1,6 @@
 #include "../../minishell.h"
 
 /*
-** Cette fonction est appelée au moment ou une variable correspond a une variable existante,
-** dans le tableau d'environnement.
-** Dans le cas ou elle est appelé par la fonction ft_export, elle permet de remplacer la variable
-** concernée par la nouvelle variable exportée.
-** Dans le cas ou elle est appelé par la fonction ft_unset, elle supprime la variable sans la remplacer.
-*/
-
-//.............................
-void		is_match(t_cmds cmds, int *i, int *x, int export)
-{
-	mfree(g_shell.envp[*i]);
-	// ft_swap(g_shell.envp[*i], g_shell.envp[*i + 1]);
-	// g_shell.envp[*i] = NULL;
-
-
-	if (export)
-	{
-		g_shell.envp[*i] = NULL;
-		if (!(g_shell.envp[*i] = ft_strdup(cmds.argv[*x])))
-			return ;
-		cmds.argv[*x] = NULL;
-	}
-}
-
-/*
 ** Cette fonction permet de détecter si le nom de la variable exportée contient une erreur ou non.
 ** Elle vérigie la première lettre de la variable exportée.
 ** Elle est appelée dans la fonction check_error_export, fichier ft_export_utils_1.c.

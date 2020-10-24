@@ -86,7 +86,6 @@ void	add_env_status(char *env_var)
 	g_shell.envp = envp;
 }
 
-
 void	env_status(int n)
 {
 	char	*status;

@@ -200,12 +200,14 @@ void 				is_exist(t_cmds cmds, int *flag, int export);
 void				sort_env(t_cmds cmds);
 int 				is_error(char **str, int *flag, int export);
 void				is_match(t_cmds cmds, int *i, int *x, int export);
+void 				same_it_is(t_cmds cmds, int *flag);
+int 				before_egal(char *argv);
 int                 ft_echo(t_cmds cmds);
 int                 ft_cd(t_cmds cmds);
 int                 ft_pwd(t_cmds cmds);
 int                 ft_export(t_cmds cmds);
 int                 ft_unset(t_cmds cmds);
 int                 ft_env(t_cmds cmds);
-int					ft_exit(t_cmds cmds);
+int                 ft_exit(t_cmds cmds);
 
 #endif
