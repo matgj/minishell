@@ -1,6 +1,5 @@
 #include "../../minishell.h"
 
-
 /*
 ** Cette fonction est appelée au moment ou une variable correspond a une variable existante,
 ** dans le tableau d'environnement.
@@ -11,13 +10,21 @@
 
 void		is_match(t_cmds cmds, int *i, int *x, int export)
 {
+	int 	envp;
+	int		argv;
+
 	if (export)
 	{
-		free(g_shell.envp[*i]);
-		g_shell.envp[*i] = NULL;
-		if (!(g_shell.envp[*i] = ft_strdup(cmds.argv[*x])))
-			return ;
-		cmds.argv[*x] = NULL;
+		envp = before_egal(g_shell.envp[*i], 1);
+		argv = before_egal(cmds.argv[*x], 1);
+		if ((envp && argv) || (!envp && argv))
+		{
+			free(g_shell.envp[*i]);
+			g_shell.envp[*i] = NULL;
+			if (!(g_shell.envp[*i] = ft_strdup(cmds.argv[*x])))
+				return ;
+			cmds.argv[*x] = NULL;
+		}
 	}
 }
 
@@ -25,7 +32,7 @@ void		is_match(t_cmds cmds, int *i, int *x, int export)
 **	Cette fonction vérifie si la variable exportée existe déjà dans le tableau d'environnement. 
 ** 	Si elle trouve une correspondance, elle free la valeur correspondante dans le tableau existant 
 **	pour ensuite mettre la nouvelle valeur. La variable flag est décrémentée puis mise à NULL
-** 	car elle ne sera pas comptabilisée comme variable a rajouter au tableau.
+** 	car elle ne sera pas comptabilisée comme variable a rajouter/enlever au tableau.
 */
 
 void 	is_exist(t_cmds cmds, int *flag, int export)
@@ -39,17 +46,14 @@ void 	is_exist(t_cmds cmds, int *flag, int export)
 	i = 0;
 	while (g_shell.envp[i])
 	{
-		j = before_egal(g_shell.envp[i]);
+		j = before_egal(g_shell.envp[i], 0);
 		x = 1;
 		while (x < cmds.argc)
 		{
 			if (cmds.argv[x] && !ft_strncmp(g_shell.envp[i], cmds.argv[x], j))
 			{
-				// if (!ft_strncmp(g_shell.envp[i], cmds.argv[x], j))
-				// {
-					is_match(cmds, &i, &x, export);
-					(export) ? *flag -= 1 : count--;
-				// }
+				is_match(cmds, &i, &x, export);
+				(export) ? *flag -= 1 : count--;
 			}
 			x++;
 		}

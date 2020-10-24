@@ -23,18 +23,17 @@ int 	is_error(char **str, int *flag, int export)
 ** avant le signe '=' (s'il existe).
 */
 
-int 	before_egal(char *argv)
+int 	before_egal(char *argv, int egal)
 {
 	int 	i;
-
 	i = 0;
 	while (argv[i])
 	{
 		if (argv[i] == '=')
-			return (i);
+			return ((!egal) ? i : 1);
 		i++;
 	}
-	return (i);
+	return ((!egal) ? i : 0);
 }
 
 /*
@@ -57,7 +56,7 @@ void 	same_it_is(t_cmds cmds, int *flag)
 		k = i + 1;
 		while (cmds.argv[k])
 		{
-			len = before_egal(cmds.argv[i]);
+			len = before_egal(cmds.argv[i], 0);
 			if (!ft_strncmp(cmds.argv[i], cmds.argv[k], len))
 			{
 				cmds.argv[i] = NULL;

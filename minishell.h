@@ -201,7 +201,7 @@ void				sort_env(t_cmds cmds);
 int 				is_error(char **str, int *flag, int export);
 void				is_match(t_cmds cmds, int *i, int *x, int export);
 void 				same_it_is(t_cmds cmds, int *flag);
-int 				before_egal(char *argv);
+int 				before_egal(char *argv, int egal);
 int                 ft_echo(t_cmds cmds);
 int                 ft_cd(t_cmds cmds);
 int                 ft_pwd(t_cmds cmds);
