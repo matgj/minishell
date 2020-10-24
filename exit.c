@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:11 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/24 10:17:06 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 13:08:04 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,4 @@ void	free_struct(t_cmds cmds)
 	mfree(cmds.name);
 	mfree(cmds.argv);
 	mfree(cmds.path);
-}
-
-void	env_status(int n)
-{
-	char	*status;
-	char	*env_var;
-
-	status = ft_itoa(n);
-	g_shell.status = n;
-	env_var = ft_strjoin("?=", status);
-	//add_env((void), env_var, 1, 0);
-	mfree(env_var);
-	mfree(status);
 }

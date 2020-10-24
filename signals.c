@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 11:48:52 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/24 12:27:10 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 13:19:27 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	signal_quit(int signal)
 	if (g_shell.pid)
 	{
 		kill(g_shell.pid, signal);
-		g_shell.status = 131;
+		env_status(131);
 		ft_printf("Quit: %d\n", g_shell.pid);
 	}
 	else
@@ -34,7 +34,7 @@ void	signal_interrupt(int signal)
 	{
 		ft_printf("\n");
 		ft_printf("\e[1m" "bash-42$ " "\e[0m", 25);
-		g_shell.status = 130;
+		env_status(130);
 	}
 	else
 	{

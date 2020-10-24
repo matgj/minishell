@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:20 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/23 16:18:28 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 13:19:37 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	check_pid(void)
 	while (wait(&g_shell.pid) > 0)
 		(void)g_shell.pid;
 	if (g_shell.pid == 2)
-		g_shell.status = 130;
+		env_status(130);
 	else if (g_shell.pid == 3 || g_shell.pid == 131)
-		g_shell.status = 131;
+		env_status(131);
 	else
-		g_shell.status = WEXITSTATUS(g_shell.pid);
+		env_status(WEXITSTATUS(g_shell.pid));
 	g_shell.pid = 0;
 }

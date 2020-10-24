@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:06 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/24 11:59:53 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 13:19:28 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ void	print_syntax_err(char *line)
 	ft_printf("syntax error near unexpected token bro. ");
 	ft_printf("Remember, wherever there is a human being, ");
 	ft_printf("there is an opportunity for a kindness.\n");
-	g_shell.status = 2;
+	env_status(2);
 }

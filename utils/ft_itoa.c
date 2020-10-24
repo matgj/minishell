@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 20:07:41 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/23 08:22:43 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/24 13:22:54 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char				*ft_itoa(unsigned long n)
 	i = 0;
 	if (n == 0)
 		return (ft_strdup("0"));
-	if (!(tab = (char *)malloc(sizeof(char) * (size + 1))))
+	if (!(tab = (char *)mmalloc(sizeof(char) * (size + 1))))
 		return (NULL);
 	while (++i <= size)
 	{

@@ -2,7 +2,7 @@
 
 /*
 ** Ecrire directement le $PWD renvoyé par la fonction getcwd.
-** Si $PWD plus long que buffer, l'écrire manuellement après l'avoir 
+** Si $PWD plus long que buffer, l'écrire manuellement après l'avoir
 ** récupéré grace à la fonction var_env.
 */
 
@@ -17,6 +17,6 @@ int		ft_pwd(t_cmds cmds)
 		ft_putendl_fd(tmp, 1);
 	else
 		ft_putendl_fd(buf, 1);
-	g_shell.status = 0;
+	env_status(0);
 	return (1);
 }

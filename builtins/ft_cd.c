@@ -5,7 +5,7 @@ void	no_dir_file(char *str)
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd("\n", 2);
-	g_shell.status = 1;
+	env_status(1);
 }
 
 static void		dup_strs(char **dst, char *str1, char *str2)
@@ -68,6 +68,6 @@ int		ft_cd(t_cmds cmds)
 		}
 	}
 	renew_paths(cmds, oldpwd);
-	g_shell.status = 0;
+	env_status(0);
 	return (1);
 }

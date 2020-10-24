@@ -10,6 +10,6 @@ int			ft_env(t_cmds cmds)
 		ft_putendl_fd(g_shell.envp[i], 1);
 		i++;
 	}
-	g_shell.status = 0;
+	env_status(0);
 	return (1);
 }
