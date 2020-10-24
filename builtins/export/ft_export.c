@@ -12,7 +12,7 @@ int 	is_error(char **str, int *flag, int export)
 	(export) ? ft_putstr_fd("export: \'", 2) : ft_putstr_fd("unset: \'", 2);
 	ft_putstr_fd(*str, 2);
 	ft_putstr_fd("\': not a valid identifier\n", 2);
-	g_shell.status = 1;
+	env_status(1);
 	*flag -= 1;
 	(export) ? *str = NULL : 0;
 	return (0);

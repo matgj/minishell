@@ -45,7 +45,7 @@ void	renew_paths(t_cmds cmds, char *oldpwd)
 			new_env[i] = ft_strdup(g_shell.envp[i]);
 		i++;
 	}
-	// mfree(g_shell.envp);     penser a mfree ici
+	mfree(g_shell.envp);
 	g_shell.envp = new_env;
 }
 
@@ -57,7 +57,8 @@ int		ft_cd(t_cmds cmds)
 	oldpwd = NULL;
 	oldpwd = var_env("$PWD");
 	cmds.path = var_env("$HOME");
-	(!cmds.argv[1] || cmds.argv[1][0] == '~') ? chdir(cmds.path) : 0;
+	if (!cmds.argv[1] || cmds.argv[1][0] == '~')
+		chdir(cmds.path);
 	if (cmds.argv[1] && cmds.argv[1][0] != '~')
 	{
 		if ((ret = chdir(cmds.argv[1])) == -1)

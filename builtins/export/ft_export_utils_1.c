@@ -113,7 +113,7 @@ void		draw_env(char **env)
 	int 	len;
 	int 	empty;
 
-	i = 0;
+	i = 1;
 	j = 0;
 	while (env[i])
 	{
@@ -132,7 +132,7 @@ void		draw_env(char **env)
 			ft_putstr_fd("\"\n", 1);
 		}
 		i++;
-	}		
+	}
 }
 
 /*
@@ -154,10 +154,6 @@ void		sort_env(t_cmds cmds)
 			if ((ft_strncmp(tmp[i], tmp[j], ft_strlen(tmp[j]))) > 0)
 				ft_swap(&tmp[i], &tmp[j]);
 	}
-	// i = 0;
-	// while (tmp[i++])
-	// 	printf("tmp[%d] = %s\n", i, tmp[i]);
-	// printf("\n\n");
 	draw_env(tmp);
-	// free_strings(tmp);
+	// mfree(tmp);
 }
