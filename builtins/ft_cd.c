@@ -100,3 +100,4 @@ int		ft_cd(t_cmds cmds)
 		env_status(0);
 	return (1);
 }
+

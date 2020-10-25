@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:01 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/22 17:04:58 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/25 17:12:43 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,13 @@ void	redirection(t_cmds *cmds)
 			if (cmds->chevron == 1)
 			{
 				if ((fd = open(cmds->argv[i + 1], O_RDONLY)) < 0)
+				{
 					ft_printf("error open function redirec < input\n");
+				//	exit(1);
+					g_shell.status = 1;
+					//g_shell.reset = 1;
+					env_status(1);
+				}
 				cmds->input = fd;
 			}
 			else

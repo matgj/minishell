@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/24 12:39:35 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/25 17:13:30 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int		command_exec(t_cmds cmds)
 			g_shell.pid = pid;
 	close_fds(cmds);
 	free_struct(cmds);
+	if (g_shell.bad_redir == 1)
+		return (g_shell.status = 1);
 	return (g_shell.status == 0);
 }
 

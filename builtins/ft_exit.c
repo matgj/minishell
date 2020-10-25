@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 19:28:54 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/24 12:42:06 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/25 16:39:03 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_print_exit(char *arg)
 {
 	ft_printf("minishell: exit: %s: numeric argument required\n", arg);
-	exit_shell(1, 2);
+	exit_shell(2, 1);
 }
 
 int	ft_exit(t_cmds cmds)
@@ -24,7 +24,7 @@ int	ft_exit(t_cmds cmds)
 	int done;
 
 	if (cmds.argc == 1)
-		exit_shell(1, g_shell.status);
+		exit_shell(g_shell.status, 1);
 	else if (cmds.argc == 2)
 	{
 		i = -1;
@@ -36,7 +36,7 @@ int	ft_exit(t_cmds cmds)
 				done = 0;
 		}
 		if (done)
-			exit_shell(1, ft_atoi(cmds.argv[1]));
+			exit_shell(ft_atoi(cmds.argv[1]),1);
 		else
 			ft_print_exit(cmds.argv[1]);
 	}

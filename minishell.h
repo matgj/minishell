@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:51:31 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/25 11:28:31 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/25 17:07:03 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct		s_shell
 	int		redir;
 	pid_t	pid;
 	char	*var_env;
+	int		bad_redir;
 }					t_shell;
 
 typedef	struct		s_cmds
