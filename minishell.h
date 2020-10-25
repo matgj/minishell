@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:51:31 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/24 12:27:27 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/10/25 11:28:31 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ char				*find_path(char *cmd);
 void				free_struct(t_cmds cmds);
 char				**add_env(t_cmds cmds, int *flag);
 void				plug_fd(t_cmds cmds);
-
+char				*find_env(char *to_find);
 void				*mmalloc(unsigned int size);
 void				*mrealloc(void *ptr, size_t size);
 int					free_all_malloc(void);
