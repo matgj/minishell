@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-extern t_shell g_shell;
+extern		t_shell g_shell;
 
-int		builtin_type_parent(t_cmds cmds)
+int			builtin_type_parent(t_cmds cmds)
 {
-	int ret;
+	int		ret;
 
 	ret = 0;
 	if (!ft_strcmp(cmds.name, "cd"))
@@ -26,20 +26,20 @@ int		builtin_type_parent(t_cmds cmds)
 	else if (!ft_strcmp(cmds.name, "unset"))
 		ret = ft_unset(cmds);
 	else if (!ft_strcmp(cmds.name, "exit"))
-	 	ret = ft_exit(cmds);
+		ret = ft_exit(cmds);
 	return (ret);
 }
 
-int		builtin_type_child(t_cmds cmds)
+int			builtin_type_child(t_cmds cmds)
 {
-	int ret;
+	int		ret;
 
 	ret = 0;
-	if (!ft_strcmp(cmds.name,"echo"))
+	if (!ft_strcmp(cmds.name, "echo"))
 		ret = ft_echo(cmds);
-	else if (!ft_strcmp(cmds.name,"pwd"))
+	else if (!ft_strcmp(cmds.name, "pwd"))
 		ret = ft_pwd(cmds);
-	else if (!ft_strcmp(cmds.name,"env"))
+	else if (!ft_strcmp(cmds.name, "env"))
 		ret = ft_env(cmds);
 	else
 		return (0);
@@ -56,16 +56,17 @@ int		builtin_type_child(t_cmds cmds)
 **input or output channel), and exec (to execute the new program).
 */
 
-void   command_exec_child(t_cmds cmds)
+void		command_exec_child(t_cmds cmds)
 {
-	int i;
-	int ret;
+	int		i;
+	int		ret;
+
 	i = 0;
 	plug_fd(cmds);
 	if (!builtin_type_child(cmds))
 	{
-		 if (cmds.input < 0)
-		 	 exit(1);
+		if (cmds.input < 0)
+			exit(1);
 		cmds.path = find_path(cmds.name);
 		if (!cmds.path)
 			ret = -1;
@@ -82,7 +83,7 @@ void   command_exec_child(t_cmds cmds)
 **contains process ID of newly created child process.
 */
 
-int		command_exec(t_cmds cmds)
+int			command_exec(t_cmds cmds)
 {
 	pid_t	pid;
 	int		i;
@@ -100,9 +101,9 @@ int		command_exec(t_cmds cmds)
 		exit(127);
 	}
 	else if (pid == 0)
-			command_exec_child(cmds);
+		command_exec_child(cmds);
 	else
-			g_shell.pid = pid;
+		g_shell.pid = pid;
 	close_fds(cmds);
 	free_struct(cmds);
 	if (g_shell.bad_redir == 1)
@@ -110,7 +111,7 @@ int		command_exec(t_cmds cmds)
 	return (g_shell.status == 0);
 }
 
-void	command_management(t_cmds *cmds)
+void		command_management(t_cmds *cmds)
 {
 	int		ret;
 	pid_t	pid;

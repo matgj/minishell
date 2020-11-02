@@ -6,7 +6,7 @@
 ** Elle est appelée dans la fonction check_error_export.
 */
 
-int 	is_error(char **str, int *flag, int export)
+int 			is_error(char **str, int *flag, int export)
 {
 	ft_putstr_fd("bash: ", 2);
 	(export) ? ft_putstr_fd("export: \'", 2) : ft_putstr_fd("unset: \'", 2);
@@ -23,9 +23,9 @@ int 	is_error(char **str, int *flag, int export)
 ** avant le signe '=' (s'il existe).
 */
 
-int 	before_egal(char *argv, int egal)
+int 			before_egal(char *argv, int egal)
 {
-	int 	i;
+	int 		i;
 	i = 0;
 	while (argv[i])
 	{
@@ -42,12 +42,12 @@ int 	before_egal(char *argv, int egal)
 ** variable avec des valeurs differentes.
 */
 
-void 	same_it_is(t_cmds cmds, int *flag)
+void 			same_it_is(t_cmds cmds, int *flag)
 {
-	int i;
-	int k;
-	int len;
-	int is_egal;
+	int 		i;
+	int 		k;
+	int 		len;
+	int 		is_egal;
 
 	i = 1;
 	is_egal = 0;
@@ -79,9 +79,9 @@ void 	same_it_is(t_cmds cmds, int *flag)
 ** Elle est appelée dans la fonction ft_export.
 */
 
-int		check_error_export(t_cmds cmds, int *flag)
+int				check_error_export(t_cmds cmds, int *flag)
 {
-	int 	i;
+	int 		i;
 
 	i = 1;
 	same_it_is(cmds, flag);
@@ -93,8 +93,6 @@ int		check_error_export(t_cmds cmds, int *flag)
 		if ((!ft_isalpha(cmds.argv[i][0]) || !is_alnum(cmds, i, 1))
 			&& is_error(&cmds.argv[i], flag, 1))
 			return (0);
-		// if (cmds.argv[i])
-		// 	is_exist(cmds, flag, 1);
 		i++;
 	}
 	is_exist(cmds, flag, 1);
@@ -107,11 +105,11 @@ int		check_error_export(t_cmds cmds, int *flag)
 ** Elle est appelée dans la fonction ft_export.
 */
 
-char		**add_env(t_cmds cmds, int *flag)
+char			**add_env(t_cmds cmds, int *flag)
 {
-	char	**tmp;
-	int		i;
-	int 	k;
+	char		**tmp;
+	int			i;
+	int 		k;
 
 	g_shell.env_len += (*flag);
 	if (!(tmp = (char **)ft_calloc((g_shell.env_len),
@@ -141,10 +139,10 @@ char		**add_env(t_cmds cmds, int *flag)
 ** et de les trier.
 */
 
-int			ft_export(t_cmds cmds)
+int				ft_export(t_cmds cmds)
 {
-	char	**tmp;
-	int 	flag;
+	char		**tmp;
+	int 		flag;
 
 	flag = cmds.argc - 1;
 	if (!cmds.argv[1])

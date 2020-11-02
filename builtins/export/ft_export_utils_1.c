@@ -8,10 +8,10 @@
 ** Dans le cas ou elle est appelé par la fonction ft_unset, elle supprime la variable sans la remplacer.
 */
 
-void		is_match(t_cmds cmds, int *i, int *x, int export)
+void			is_match(t_cmds cmds, int *i, int *x, int export)
 {
-	int 	envp;
-	int		argv;
+	int 		envp;
+	int			argv;
 
 	if (export)
 	{
@@ -35,12 +35,12 @@ void		is_match(t_cmds cmds, int *i, int *x, int export)
 ** 	car elle ne sera pas comptabilisée comme variable a rajouter/enlever au tableau.
 */
 
-void 	is_exist(t_cmds cmds, int *flag, int export)
+void 			is_exist(t_cmds cmds, int *flag, int export)
 {
-	int 	i;
-	int 	j;
-	int 	x;
-	int 	count;
+	int 		i;
+	int 		j;
+	int 		x;
+	int 		count;
 
 	(!export) ? count = *flag : 0;
 	i = 0;
@@ -70,9 +70,9 @@ void 	is_exist(t_cmds cmds, int *flag, int export)
 **	de la valeur de la variable.
 */
 
-int 	before_after_egal(char *env, int j, int where, int *empty)
+int 			before_after_egal(char *env, int j, int where, int *empty)
 {
-	int k;
+	int 		k;
 
 	if (where == 'a')
 	{
@@ -106,12 +106,12 @@ int 	before_after_egal(char *env, int j, int where, int *empty)
 **	Si existante : affichage de la valeur de la variable entre double quotes.
 */
 
-void		draw_env(char **env)
+void			draw_env(char **env)
 {
-	int		i;
-	int 	j;
-	int 	len;
-	int 	empty;
+	int			i;
+	int 		j;
+	int 		len;
+	int 		empty;
 
 	i = 1;
 	j = 0;
@@ -139,11 +139,11 @@ void		draw_env(char **env)
 **	Cette fonction récupère le tableau d'environnement et le trie.
 */
 
-void		sort_env(t_cmds cmds)
+void			sort_env(t_cmds cmds)
 {
-	char	**tmp;
-	int		i;
-	int		j;
+	char		**tmp;
+	int			i;
+	int			j;
 
 	i = -1;
 	tmp = g_shell.envp;

@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-extern t_shell g_shell;
+extern 			t_shell g_shell;
 
-char	*replace_env(char *to_find, char *line, int start, int end)
+char			*replace_env(char *to_find, char *line, int start, int end)
 {
-	char *new0;
-	char *new1;
-	char *new2;
-	char *tab[3];
+	char 		*new0;
+	char 		*new1;
+	char 		*new2;
+	char 		*tab[3];
 
 	tab[0] = ft_substr(line, 0, start);
 	tab[1] = ft_substr(line, end, ft_strlen(line) - end);
@@ -34,13 +34,13 @@ char	*replace_env(char *to_find, char *line, int start, int end)
 	return (new2);
 }
 
-char	*remove_empty_var(char *line)
+char			*remove_empty_var(char *line)
 {
-	char	*new;
-	char	**split_dol;
-	int		l;
-	int		c;
-	char	*tab[3];
+	char		*new;
+	char		**split_dol;
+	int			l;
+	int			c;
+	char		*tab[3];
 
 	l = 0;
 	tab[0] = ft_strdup("");
@@ -63,9 +63,9 @@ char	*remove_empty_var(char *line)
 	return (tab[0]);
 }
 
-char	*var_env2(char *line, int j, char **to_find, char ***vars_env)
+char			*var_env2(char *line, int j, char **to_find, char ***vars_env)
 {
-	char *new_line;
+	char 		*new_line;
 
 	if (!ft_strncmp((line + j), *to_find, ft_strlen(*to_find)))
 	{
@@ -76,13 +76,13 @@ char	*var_env2(char *line, int j, char **to_find, char ***vars_env)
 	return (line);
 }
 
-char	*var_env(char *line)
+char			*var_env(char *line)
 {
-	int		i;
-	char	**vars_env;
-	char	*to_find;
-	char	*dol;
-	int		j;
+	int			i;
+	char		**vars_env;
+	char		*to_find;
+	char		*dol;
+	int			j;
 
 	i = -1;
 	while (g_shell.envp[++i])

@@ -7,7 +7,8 @@ int			ft_env(t_cmds cmds)
 	i = 0;
 	while (g_shell.envp[i])
 	{
-		ft_putendl_fd(g_shell.envp[i], 1);
+		if (g_shell.envp[i][0] != '?')
+			ft_putendl_fd(g_shell.envp[i], 1);
 		i++;
 	}
 	env_status(0);
