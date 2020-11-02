@@ -13,12 +13,12 @@
 #include "minishell.h"
 #include <stdio.h>
 
-char	*gnl(void)
+char			*gnl(void)
 {
-	char	*buf;
-	int		ret;
-	int		pos;
-	char	red[2];
+	char		*buf;
+	int			ret;
+	int			pos;
+	char		red[2];
 
 	pos = 0;
 	buf = (char *)mmalloc(4096);
@@ -43,7 +43,7 @@ char	*gnl(void)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int				main(int argc, char **argv, char **envp)
 {
 	int			i;
 	t_shell		shell;
@@ -63,9 +63,6 @@ int	main(int argc, char **argv, char **envp)
 	g_shell.bad_redir = 0;
 	g_shell.envp = env_import(envp);
 	env_status(0);
-	// //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// (!g_shell.no_first_env) ? g_shell.envp = env_import(envp) : 0;
-	// //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	ft_printf("\e[1;1H\e[2J\n");
 	// printf.fd = 2;
 	while (1)

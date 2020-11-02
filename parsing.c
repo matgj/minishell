@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-extern t_shell g_shell;
+extern 			t_shell g_shell;
 
-t_cmds	parse_cmd(char *cmds_pipe)
+t_cmds			parse_cmd(char *cmds_pipe)
 {
-	char	**token;
-	int		i;
-	t_cmds	cmds;
+	char		**token;
+	int			i;
+	t_cmds		cmds;
 
 	i = 0;
 	parse_token(&token, cmds_pipe);
@@ -39,16 +39,15 @@ t_cmds	parse_cmd(char *cmds_pipe)
 	while (i < ARG_MAX)
 		cmds.output[i++] = -1;
 	command_management(&cmds);
-	//test_cmd(cmds);
 	return (cmds);
 }
 
-t_cmds	*parse_pipe(char *cmds_semi)
+t_cmds			*parse_pipe(char *cmds_semi)
 {
-	t_cmds	*cmds;
-	char	**cmds_pipe;
-	int		cpt;
-	t_cmds	nul;
+	t_cmds		*cmds;
+	char		**cmds_pipe;
+	int			cpt;
+	t_cmds		nul;
 
 	cpt = 0;
 	cmds_pipe = ft_split(cmds_semi, '|');
@@ -72,9 +71,9 @@ t_cmds	*parse_pipe(char *cmds_semi)
 	return (cmds);
 }
 
-void	command_loop(t_cmds *cmds_pipe)
+void			command_loop(t_cmds *cmds_pipe)
 {
-	int i;
+	int 		i;
 
 	i = 0;
 	while (cmds_pipe[i].name)
@@ -93,13 +92,13 @@ void	command_loop(t_cmds *cmds_pipe)
 **commandes totalement distinctes
 */
 
-void	parsing(char *line)
+void			parsing(char *line)
 {
-	char	**cmds_semi;
-	char	*line_env;
-	int		l;
-	int		i;
-	t_cmds	*cmds_pipe;
+	char		**cmds_semi;
+	char		*line_env;
+	int			l;
+	int			i;
+	t_cmds		*cmds_pipe;
 
 	l = 0;
 	quotes(line);
@@ -124,11 +123,11 @@ void	parsing(char *line)
 **read line and manage ctrl d
 */
 
-void	read_line(char **line)
+void			read_line(char **line)
 {
-	int		ret;
-	char	buf[1];
-	int		i;
+	int			ret;
+	char		buf[1];
+	int			i;
 
 	i = 1;
 	ret = get_next_line(1, line);

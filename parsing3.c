@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-void	insert_actions(char *s)
+void			insert_actions(char *s)
 {
-	int i;
+	int 		i;
 
 	i = 0;
 	while (s[i])
@@ -37,7 +37,7 @@ void	insert_actions(char *s)
 	}
 }
 
-void	clean_actions(char *c, int q, int dq)
+void			clean_actions(char *c, int q, int dq)
 {
 	if ((dq || q) && *c == ' ')
 		*c = SPACE;
@@ -53,7 +53,7 @@ void	clean_actions(char *c, int q, int dq)
 		*c = VAR;
 }
 
-void	replace(char *line, int i, char c, int *flag)
+void			replace(char *line, int i, char c, int *flag)
 {
 	if (line[i] == '\\' && line[i - 1] == '\\')
 		line[i] = REPLACED;
@@ -65,9 +65,9 @@ void	replace(char *line, int i, char c, int *flag)
 	*flag = 1;
 }
 
-int		backslash(int i, char *line, int q, int dq)
+int				backslash(int i, char *line, int q, int dq)
 {
-	int flag;
+	int 		flag;
 
 	flag = 0;
 	if (line[i - 1] == '\\' && line[i] == '\\' && !q && i > 0)
@@ -98,11 +98,11 @@ int		backslash(int i, char *line, int q, int dq)
 **ok et ecrire bitch alors que echo bitch />ok ecrit bitch en stdout
 */
 
-void	quotes(char *line)
+void			quotes(char *line)
 {
-	int	q;
-	int	dq;
-	int	i;
+	int			q;
+	int			dq;
+	int			i;
 
 	q = 0;
 	dq = 0;

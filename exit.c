@@ -16,7 +16,6 @@ extern t_shell g_shell;
 
 void	exit_shell(int status, int newline)
 {
-//	free environnement;
 	ft_printf("exit");
 	if (newline)
 		ft_printf("\n");
