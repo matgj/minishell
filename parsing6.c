@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 16:52:10 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/13 18:22:56 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/02 18:28:38 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,24 @@ void	simple_quotes(char *c, int *q, int *dq)
 	{
 		*q = 0;
 		*c = REPLACED;
+	}
+}
+
+void	insert_chevrons(t_cmds *cmds)
+{
+	int i;
+	int j;
+
+	i = -1;
+	while (cmds->argv[++i])
+	{
+		j = -1;
+		while (cmds->argv[i][++j])
+		{
+			if (cmds->argv[i][j] == R_OUT)
+				cmds->argv[i][j] = '>';
+			if (cmds->argv[i][j] == R_IN)
+				cmds->argv[i][j] = '<';
+		}
 	}
 }

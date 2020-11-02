@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:35 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/25 17:13:30 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/02 17:41:26 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ void		command_management(t_cmds *cmds)
 	int		i;
 
 	i = 0;
+	cmds->path = NULL;
+	cmds->input = 0;
 	if (!cmds->argc)
 		return ;
 	command_creation(cmds);

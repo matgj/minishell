@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:51:31 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/25 17:07:03 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/02 17:56:52 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdarg.h>
 # include <string.h>
 
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 60000
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 # define STDOUT 1
@@ -37,7 +37,7 @@
 # define A 6
 # define BS_Q 16
 # define SPACE 1
-# define ARG_MAX 262144
+# define ARG_MAX 60000
 
 typedef struct		s_printf
 {
@@ -145,6 +145,7 @@ void				parsing(char *line);
 void				parse_token(char ***token, char *cmds_pipe);
 void				command_creation(t_cmds *cmds);
 void				cmd_last_arg(t_cmds *cmds);
+void				insert_chevrons(t_cmds *cmds);
 void				command_management(t_cmds *cmds);
 int					command_type_child(t_cmds cmds);
 int					command_type_parent(t_cmds cmds);

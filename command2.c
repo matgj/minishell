@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:20 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/24 13:19:37 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/02 18:35:42 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	check_pid(void)
 		env_status(130);
 	else if (g_shell.pid == 3 || g_shell.pid == 131)
 		env_status(131);
+	else if (g_shell.bad_redir == 1)
+		env_status(1);
 	else
 		env_status(WEXITSTATUS(g_shell.pid));
 	g_shell.pid = 0;

@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/24 11:51:25 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/02 18:30:14 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,19 @@ t_cmds			parse_cmd(char *cmds_pipe)
 	while (token[i])
 	{
 		cmds.argv[i] = token[i];
-		insert_actions(cmds.argv[i]);
+		//insert_actions(cmds.argv[i]);
 		i++;
 	}
 	mfree(token);
 	i = 0;
 	while (i < ARG_MAX)
 		cmds.output[i++] = -1;
+	i = 0;
+	while (cmds.argv[i])
+			insert_actions(cmds.argv[i++]);
 	command_management(&cmds);
+	insert_chevrons(&cmds);
+	test_cmd(cmds);
 	return (cmds);
 }
 
@@ -123,21 +128,21 @@ void			parsing(char *line)
 **read line and manage ctrl d
 */
 
-void			read_line(char **line)
-{
-	int			ret;
-	char		buf[1];
-	int			i;
+// void			read_line(char **line)
+// {
+// 	int			ret;
+// 	char		buf[1];
+// 	int			i;
 
-	i = 1;
-	ret = get_next_line(1, line);
-	if (!ret && !ft_strlen(*line))
-	{
-		mfree(*line);
-		exit_shell(g_shell.status, 1);
-	}
-	while (!ret)
-	{
-		ret = read(1, buf, 1);
-	}
-}
+// 	i = 1;
+// 	ret = get_next_line(1, line);
+// 	if (!ret && !ft_strlen(*line))
+// 	{
+// 		mfree(*line);
+// 		exit_shell(g_shell.status, 1);
+// 	}
+// 	while (!ret)
+// 	{
+// 		ret = read(1, buf, 1);
+// 	}
+// }

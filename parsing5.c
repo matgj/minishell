@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 14:49:19 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/24 11:22:40 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/02 18:23:25 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int		syntax_err2(char *line, int i, char c)
 {
+	if (i > 2 && ((line[i] == '>' && line[i + 1] == ';') || (line[i] == '<' && line[i + 1] == ';')))
+		return (0);
 	if (i > 2 && line[i - 2] == '<' && (line[i - 1] == '<'
 	|| line[i - 1] == ' ') && line[i] == '<')
 		return (0);
@@ -31,6 +33,7 @@ int		syntax_error(char *line)
 {
 	int		i;
 	char	c;
+	int 	b;
 
 	i = 0;
 	if (line[0] == ';' || line[0] == '|')
@@ -41,10 +44,13 @@ int		syntax_error(char *line)
 			return (0);
 		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n' &&
 		line[i] != '\f' && line[i] != '\r' && line[i] != '\v')
+		{
 			c = line[i];
+			b = line[i + 1];
+		}
 		i++;
 	}
-	if (c == '>' || c == '<' || c == '|')
+	if (c == '>' || c == '<' || c == '|' || (c == '>' && b == ';') || (c == '<' && b == ';'))
 		return (0);
 	if (i > 1 && line[i - 1] == '|' && line[i - 2] != '\\')
 		return (0);
