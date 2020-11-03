@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
+/*   By: a42 <a42@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 19:28:54 by Mathis            #+#    #+#             */
-/*   Updated: 2020/11/02 17:22:36 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/03 21:23:32 by a42              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_print_exit(char *arg)
+void		ft_print_exit(char *arg)
 {
 	ft_printf("minishell: exit: %s: numeric argument required\n", arg);
 	exit_shell(2, 1);
 }
 
-int	ft_exit(t_cmds cmds)
+int			ft_exit(t_cmds cmds)
 {
-	int i;
-	int done;
+	int		i;
+	int		done;
 
 	if (cmds.argc == 1)
 		exit_shell(g_shell.status, 1);
@@ -36,7 +36,7 @@ int	ft_exit(t_cmds cmds)
 				done = 0;
 		}
 		if (done)
-			exit_shell(ft_atoi(cmds.argv[1]),1);
+			exit_shell(ft_atoi(cmds.argv[1]), 1);
 		else
 			ft_print_exit(cmds.argv[1]);
 	}

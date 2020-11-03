@@ -1,31 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: a42 <a42@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/03 21:25:50 by a42               #+#    #+#             */
+/*   Updated: 2020/11/03 21:41:11 by a42              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
-
-/*
-** Cette fonction affiche le nom et le message d'erreur dans le cas ou la variable exportée n'est pas correcte.
-** Chaque variable fausse décrémente la variable flag qui servira pour la taille du malloc du nouveau tableau.
-** Elle est appelée dans la fonction check_error_export.
-*/
-
-int 			is_error(char **str, int *flag, int export)
-{
-	ft_putstr_fd("bash: ", 2);
-	(export) ? ft_putstr_fd("export: \'", 2) : ft_putstr_fd("unset: \'", 2);
-	ft_putstr_fd(*str, 2);
-	ft_putstr_fd("\': not a valid identifier\n", 2);
-	env_status(1);
-	*flag -= 1;
-	(export) ? *str = NULL : 0;
-	return (0);
-}
 
 /*
 ** Cette fonction permet de récuperer le nombre de caractères á récuperer
 ** avant le signe '=' (s'il existe).
 */
 
-int 			before_egal(char *argv, int egal)
+int				before_egal(char *argv, int egal)
 {
-	int 		i;
+	int			i;
+
 	i = 0;
 	while (argv[i])
 	{
@@ -37,17 +32,18 @@ int 			before_egal(char *argv, int egal)
 }
 
 /*
-** Cette fonction permet de détecter les doublons d'arguments et de les supprimer.
-** Elle permet également d'assigner la derniere valeur en cas d'export de la meme 
-** variable avec des valeurs differentes.
+** Cette fonction permet de détecter les doublons d'arguments et de les
+** supprimer.
+** Elle permet également d'assigner la derniere valeur en cas d'export
+** de la meme variable avec des valeurs differentes.
 */
 
-void 			same_it_is(t_cmds cmds, int *flag)
+void			same_it_is(t_cmds cmds, int *flag)
 {
-	int 		i;
-	int 		k;
-	int 		len;
-	int 		is_egal;
+	int			i;
+	int			k;
+	int			len;
+	int			is_egal;
 
 	i = 1;
 	is_egal = 0;
@@ -70,18 +66,22 @@ void 			same_it_is(t_cmds cmds, int *flag)
 }
 
 /*
-** Cette fonction vérifie que les variables exportées ne contiennent pas d'erreur.
-** Première lettre doit obligatoirement être un tiret du bas "_" ou une lettre alphabétique majuscule ou minuscule.
-** Aucun autre type de caractères dans le nom de la variable autres que lettre alphabétique ou tiret du bas "_".
-** Si la/les variable(s) exportée(s) ne contienne(nt) aucune erreur, elle appelle la fonction is_exist pour 
-** vérifier si elle(s) existe(nt) déjà dans le tableau d'environnement.
-** Elle retourne ensuite le nombre exacte de variables à ajouter au tableau existant.
-** Elle est appelée dans la fonction ft_export.
+** Cette fonction vérifie que les variables exportées ne contiennent
+** pas d'erreur.
+** Première lettre doit obligatoirement être un tiret du bas "_" ou
+** une lettre alphabétique majuscule ou minuscule.
+** Aucun autre type de caractères dans le nom de la variable autres que lettre
+** alphabétique ou tiret du bas "_".
+** Si la/les variable(s) exportée(s) ne contienne(nt) aucune erreur, elle
+** appelle la fonction is_exist pour vérifier si elle(s) existe(nt) déjà dans
+** le tableau d'environnement.
+** Elle retourne ensuite le nombre exacte de variables à ajouter au tableau
+** existant. Elle est appelée dans la fonction ft_export.
 */
 
 int				check_error_export(t_cmds cmds, int *flag)
 {
-	int 		i;
+	int			i;
 
 	i = 1;
 	same_it_is(cmds, flag);
@@ -100,8 +100,9 @@ int				check_error_export(t_cmds cmds, int *flag)
 }
 
 /*
-** Cette fonction malloc le nouveau tableau d'environnement avec la taille nécessaire à l'ajout des nouvelles
-** variables exportées. Elle ajoute ensuite les variables existantes puis les nouvelles.
+** Cette fonction malloc le nouveau tableau d'environnement avec la taille
+** nécessaire à l'ajout des nouvelles variables exportées. Elle ajoute ensuite
+** les variables existantes puis les nouvelles.
 ** Elle est appelée dans la fonction ft_export.
 */
 
@@ -109,7 +110,7 @@ char			**add_env(t_cmds cmds, int *flag)
 {
 	char		**tmp;
 	int			i;
-	int 		k;
+	int			k;
 
 	g_shell.env_len += (*flag);
 	if (!(tmp = (char **)ft_calloc((g_shell.env_len),
@@ -135,14 +136,14 @@ char			**add_env(t_cmds cmds, int *flag)
 }
 
 /*
-** Cette fonction à pour but d'afficher le tableau d'environnement, d'y ajouter des variables, avec ou sans valeurs
-** et de les trier.
+** Cette fonction à pour but d'afficher le tableau d'environnement, d'y
+** ajouter des variables, avec ou sans valeurs et de les trier.
 */
 
 int				ft_export(t_cmds cmds)
 {
 	char		**tmp;
-	int 		flag;
+	int			flag;
 
 	flag = cmds.argc - 1;
 	if (!cmds.argv[1])

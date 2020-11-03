@@ -1,12 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: a42 <a42@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/03 21:13:19 by a42               #+#    #+#             */
+/*   Updated: 2020/11/03 21:19:46 by a42              ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 /*
-**	Cette fonction parcours le tableau d'arguments et vérifie qu'il n'y a pas d'erreur
+**	Cette fonction parcours le tableau d'arguments et vérifie qu'il n'y a pas
+** 	d'erreur
 */
 
-int 		check_error_unset(t_cmds cmds, int *flag)
+int			check_error_unset(t_cmds cmds, int *flag)
 {
-	int 	i;
+	int		i;
 
 	i = 1;
 	same_it_is(cmds, flag);
@@ -30,11 +43,12 @@ int 		check_error_unset(t_cmds cmds, int *flag)
 ** 	Sinon elle renvoit 0.
 */
 
-int 	is_exist_unset(t_cmds cmds, int *i)
+int			is_exist_unset(t_cmds cmds, int *i)
 {
-	int 	j;
-	int 	x;
-	int 	len;
+	int		j;
+	int		x;
+	int		len;
+
 	x = 1;
 	len = 0;
 	while (x < cmds.argc)
@@ -50,7 +64,7 @@ int 	is_exist_unset(t_cmds cmds, int *i)
 		}
 		x++;
 	}
-	return(0);
+	return (0);
 }
 
 /*
@@ -58,18 +72,18 @@ int 	is_exist_unset(t_cmds cmds, int *i)
 **  tableau actuel moins les variables a supprimer via la commande unset.
 ** 	Elle parcours chaque variable du tableau d'environnement existant
 ** 	Elle appelle is_exist_unset pour vérifier si la variable en cours est égale
-** 	a l'argument indiqué via la commande unset. 
-**  Si oui, on ne la recopie pas dans le nouveau tableau, et on passe à la suivante.
-**  Si non, la variable n'est donc pas a effacé et on peut la recopier dans le nouveau tableau.
-** 	On passe ensuite à la suivante.
+** 	a l'argument indiqué via la commande unset.
+**  Si oui, on ne la recopie pas dans le nouveau tableau, et on passeà la
+**	suivante. Si non, la variable n'est donc pas a effacé et on peut la
+**	recopier dans le nouveau tableau. On passe ensuite à la suivante.
 */
 
 char		**delete_env(t_cmds cmds, int *flag)
 {
 	char	**tmp;
 	int		i;
-	int 	is_same;
-	int 	k;
+	int		is_same;
+	int		k;
 
 	g_shell.env_len -= (*flag);
 	if (!(tmp = (char **)ft_calloc((g_shell.env_len + 1), sizeof(char *))))
@@ -77,7 +91,7 @@ char		**delete_env(t_cmds cmds, int *flag)
 	k = 0;
 	i = 0;
 	while (g_shell.envp[i])
-	{	
+	{
 		is_same = is_exist_unset(cmds, &i);
 		if (!is_same)
 		{
@@ -93,7 +107,7 @@ char		**delete_env(t_cmds cmds, int *flag)
 int			ft_unset(t_cmds cmds)
 {
 	char	**tmp;
-	int 	flag;
+	int		flag;
 
 	flag = cmds.argc - 1;
 	if (!cmds.argv[1])
