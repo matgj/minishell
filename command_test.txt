@@ -67,7 +67,7 @@ pwd ..
 
 #PATH RELATIF
 /bin/mkdir -p lol/lool/lool/loool/looool/
-cd lol/lool/lool/loool/looool/ ; pwd ; cd ../../../../ ; pwd
+cd lol/lool/lool/loool/looool/ ; pwd ; cd ../../../../.. ; pwd
 ls -l builtins/export ; ls -l builtins/utils/
 
 #PATH D'ENVIRONNEMENT
