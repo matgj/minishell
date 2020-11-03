@@ -6,13 +6,25 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:50:01 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/25 17:20:41 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/03 21:32:26 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern t_shell g_shell;
+
+void	parse_cmd2(t_cmds *cmds)
+{
+	int i;
+
+	i = 0;
+	while (cmds->argv[i])
+		insert_actions(cmds->argv[i++]);
+	command_management(cmds);
+	insert_chevrons(cmds);
+}
+
 /*
 **quel type de chevron on a ? pour savoir comment
 **rediriger le resultat des commandes
@@ -86,13 +98,7 @@ void	redirection(t_cmds *cmds)
 			if (cmds->chevron == 1)
 			{
 				if ((fd = open(cmds->argv[i + 1], O_RDONLY)) < 0)
-				{
 					ft_printf("error open function redirec < input\n");
-				//	exit(1);
-					g_shell.status = 1;
-					//g_shell.reset = 1;
-					env_status(1);
-				}
 				cmds->input = fd;
 			}
 			else

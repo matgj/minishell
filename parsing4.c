@@ -6,20 +6,20 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 12:54:18 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/22 17:04:58 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/03 21:21:35 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern 			t_shell g_shell;
+extern			t_shell g_shell;
 
 char			*replace_env(char *to_find, char *line, int start, int end)
 {
-	char 		*new0;
-	char 		*new1;
-	char 		*new2;
-	char 		*tab[3];
+	char	*new0;
+	char	*new1;
+	char	*new2;
+	char	*tab[3];
 
 	tab[0] = ft_substr(line, 0, start);
 	tab[1] = ft_substr(line, end, ft_strlen(line) - end);
@@ -65,7 +65,7 @@ char			*remove_empty_var(char *line)
 
 char			*var_env2(char *line, int j, char **to_find, char ***vars_env)
 {
-	char 		*new_line;
+	char		*new_line;
 
 	if (!ft_strncmp((line + j), *to_find, ft_strlen(*to_find)))
 	{
@@ -88,7 +88,6 @@ char			*var_env(char *line)
 	while (g_shell.envp[++i])
 	{
 		dol = dol_create();
-		// printf("-----------[%s]\n", g_shell.envp[i]);
 		vars_env = ft_split(g_shell.envp[i], '=');
 		to_find = ft_strjoin(dol, vars_env[0]);
 		mfree(dol);

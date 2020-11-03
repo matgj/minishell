@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:58 by Mathis            #+#    #+#             */
-/*   Updated: 2020/11/02 18:04:40 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/03 21:18:49 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void			insert_actions(char *s)
 {
-	int 		i;
+	int		i;
 
 	i = 0;
 	while (s[i])
@@ -25,10 +25,6 @@ void			insert_actions(char *s)
 			s[i] = '|';
 		if (s[i] == SEMI)
 			s[i] = ';';
-	//	if (s[i] == R_OUT)
-		//	s[i] = '>';
-	//	if (s[i] == R_IN)
-		//	s[i] = '<';
 		if (s[i] == VAR)
 			s[i] = '$';
 		i++;
@@ -65,7 +61,7 @@ void			replace(char *line, int i, char c, int *flag)
 
 int				backslash(int i, char *line, int q, int dq)
 {
-	int 		flag;
+	int		flag;
 
 	flag = 0;
 	if (line[i - 1] == '\\' && line[i] == '\\' && !q && i > 0)

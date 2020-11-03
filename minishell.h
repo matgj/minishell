@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:51:31 by Mathis            #+#    #+#             */
-/*   Updated: 2020/11/03 21:06:02 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/03 21:30:55 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ typedef struct		s_shell
 	int		dquotes;
 	int		status;
 	char	**envp;
-	//!!!!!!!!!!!!!!!!!
-	int 	env_len;
-	int 	no_first_env;
-	//!!!!!!!!!!!!!!!!!
+	int		env_len;
+	int		no_first_env;
 	int		redir;
 	pid_t	pid;
 	char	*var_env;
@@ -182,30 +180,31 @@ void				*mmalloc(unsigned int size);
 void				*mrealloc(void *ptr, size_t size);
 int					free_all_malloc(void);
 int					mfree(void *to_mfree);
+void				parse_cmd2(t_cmds *cmds);
 extern t_list		*g_all_malloc;
 
 char				**env_import(char **envp);
 char				*command_path(t_cmds *cmds);
 
-void                *ft_memset(void *b, int c, size_t len);
-void                ft_putendl_fd(char *s, int fd);
-void                ft_putstr_fd(char *s, int fd);
+void				*ft_memset(void *b, int c, size_t len);
+void				ft_putendl_fd(char *s, int fd);
+void				ft_putstr_fd(char *s, int fd);
 int					ft_isalpha(int c);
 int					is_alnum(t_cmds cmds, int i, int export);
 void				ft_swap(char **a, char **b);
 void				put_env(char *s, int fd, int len);
-void 				is_exist(t_cmds cmds, int *flag, int export);
+void				is_exist(t_cmds cmds, int *flag, int export);
 void				sort_env(t_cmds cmds);
-int 				is_error(char **str, int *flag, int export);
+int					is_error(char **str, int *flag, int export);
 void				is_match(t_cmds cmds, int *i, int *x, int export);
-void 				same_it_is(t_cmds cmds, int *flag);
-int 				before_egal(char *argv, int egal);
-int                 ft_echo(t_cmds cmds);
-int                 ft_cd(t_cmds cmds);
-int                 ft_pwd(t_cmds cmds);
-int                 ft_export(t_cmds cmds);
-int                 ft_unset(t_cmds cmds);
-int                 ft_env(t_cmds cmds);
-int                 ft_exit(t_cmds cmds);
+void				same_it_is(t_cmds cmds, int *flag);
+int					before_egal(char *argv, int egal);
+int					ft_echo(t_cmds cmds);
+int					ft_cd(t_cmds cmds);
+int					ft_pwd(t_cmds cmds);
+int					ft_export(t_cmds cmds);
+int					ft_unset(t_cmds cmds);
+int					ft_env(t_cmds cmds);
+int					ft_exit(t_cmds cmds);
 
 #endif

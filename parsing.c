@@ -6,13 +6,13 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/11/03 21:06:03 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/03 21:31:20 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern 			t_shell g_shell;
+extern			t_shell g_shell;
 
 t_cmds			parse_cmd(char *cmds_pipe)
 {
@@ -31,18 +31,13 @@ t_cmds			parse_cmd(char *cmds_pipe)
 	while (token[i])
 	{
 		cmds.argv[i] = token[i];
-		//insert_actions(cmds.argv[i]);
 		i++;
 	}
 	mfree(token);
 	i = 0;
 	while (i < ARG_MAX)
 		cmds.output[i++] = -1;
-	i = 0;
-	while (cmds.argv[i])
-			insert_actions(cmds.argv[i++]);
-	command_management(&cmds);
-	insert_chevrons(&cmds);
+	parse_cmd2(&cmds);
 	return (cmds);
 }
 
@@ -77,7 +72,7 @@ t_cmds			*parse_pipe(char *cmds_semi)
 
 void			command_loop(t_cmds *cmds_pipe)
 {
-	int 		i;
+	int		i;
 
 	i = 0;
 	while (cmds_pipe[i].name)
@@ -85,16 +80,6 @@ void			command_loop(t_cmds *cmds_pipe)
 	check_pid();
 	mfree(cmds_pipe);
 }
-
-/*
-**d'abord on decoupe la ligne lue par gnl en tableau de ligne de commandes,
-**chaque ";" dans une ligne constitue une ligne de commande à
-**executer independamment des autres
-**ls -l | cat -e ; echo my name is $USER ==> cest comme si dabord on
-**entrait ls -l dans le terminal et qu'on appuie sur ENTER
-**puis qu'on entrait echo my name is $USER, ce sont deux
-**commandes totalement distinctes
-*/
 
 void			parsing(char *line)
 {
@@ -112,7 +97,6 @@ void			parsing(char *line)
 		print_syntax_err(line);
 		return ;
 	}
-	//mfree(line);
 	cmds_semi = ft_split(line_env, ';');
 	mfree(line_env);
 	while (cmds_semi[l])
@@ -122,26 +106,3 @@ void			parsing(char *line)
 	}
 	mfree(cmds_semi);
 }
-
-/*
-**read line and manage ctrl d
-*/
-
-// void			read_line(char **line)
-// {
-// 	int			ret;
-// 	char		buf[1];
-// 	int			i;
-
-// 	i = 1;
-// 	ret = get_next_line(1, line);
-// 	if (!ret && !ft_strlen(*line))
-// 	{
-// 		mfree(*line);
-// 		exit_shell(g_shell.status, 1);
-// 	}
-// 	while (!ret)
-// 	{
-// 		ret = read(1, buf, 1);
-// 	}
-// }
