@@ -1,0 +1,99 @@
+#COMMANDES SIMPLES
+/bin/ls
+/bin/mkdir
+/bin/cat
+
+#ARGUMENTS
+/bin/ls -l
+/bin/ls -a
+/bin/ls -la
+/bin/mkdir test_lol
+/bin/rm -rf test_lol
+/bin/cat main.c
+
+#ECHO
+echo
+echo lol      lol       
+echo -n -n -n -n lol lol lol
+echo -n lol
+echo -n
+echo -n -n -n 
+
+#EXIT
+exit
+exit 0
+exit 1
+exit 2 3 4 5
+exit lol
+exit lool loool looool loooool
+
+#VALEUR RETOUR PROCESSUS
+Lancer les commandes de #ARGUMENTS et excécuter " echo $? "
+/bin/ls sifjsjfsljfsl
+/bin/ls lkslsk sflkjskfj
+
+#POINT VIRGULE
+/bin/ls -l ; /bin/ls -a ; /bin/ls -la ; /bin/mkdir test_lol ; /bin/rm -rf test_lol
+/bin/ls -l;/bin/ls -a;/bin/ls -la;/bin/mkdir test_lol;/bin/rm -rf test_lol
+/bin/ls -l         ;/bin/ls -a      ;      /bin/ls -la           ; /bin/mkdir test_lol         ;        /bin/rm -rf test_lol
+
+#GUILLEMETS
+/bin/ls "-l     ;" ; /bin/ls "        -a    " ; /bin/ls "-la" 
+/bin/cat "main.c        "
+/bin/mkdir " test_lol        " ; /bin/rm -rf "            test_lol"
+
+
+#ENV
+env 
+export lala=uuuuuu lolo=uuuuuuu lulu=uuuuuuuuuuuu jiji
+export lala=xxxxxxx lolo=xxxxx lulu=xxxx jiji=xx
+
+#UNSET
+unset lala lolo lulu jiji
+
+#VARIABLE D'ENVIRONNEMENT
+export lala=uuuuuu lolo=uuuuuuu lulu=uuuuuuuuuuuu jiji
+echo $lala ; echo $lolo ; echo $lulu ; echo $jiji
+
+#CD 
+cd builtins/export ; bin/ls -l
+cd ../.. ; /bin/ls - l
+cd sfksskfokf
+cd .
+
+#PWD
+pwd 
+pwd builtins
+cd builtins ; pwd ; cd export ; pwd
+pwd .
+pwd ..
+
+#PATH RELATIF
+/bin/mkdir -p lol/lool/lool/loool/looool/
+cd lol/lool/lool/loool/looool/ ; pwd ; cd ../../../../ ; pwd
+ls -l builtins/export ; ls -l builtins/utils/
+
+#PATH D'ENVIRONNEMENT
+ls
+wc
+awk
+unset PATH
+mkdir path1 path2
+
+#SIMPLE QUOTE
+ls '-l'
+ls ''
+cd 'builtins/export            '
+ls '-l' '        builtins/export/'
+echo '              $PATH' '$USER           ' '         ' '     ;' 
+
+#REDIRECTION
+
+#PIPE
+
+
+#SOYONS FOU
+lfksfskjfnselfnlkfjns 
+slfk sklfmslfmk sfks;fms;f 
+mlsmflsmfekmfekmfkefkemflsfmkelmflskmflekmfskfmelmflsmfksmf
+00000000000000000000000000000000000000000000000  000000000000000000000000000000000000000000000000000000000000000
