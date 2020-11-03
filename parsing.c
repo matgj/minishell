@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:49:39 by Mathis            #+#    #+#             */
-/*   Updated: 2020/11/02 18:30:14 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/03 21:06:03 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_cmds			parse_cmd(char *cmds_pipe)
 			insert_actions(cmds.argv[i++]);
 	command_management(&cmds);
 	insert_chevrons(&cmds);
-	test_cmd(cmds);
 	return (cmds);
 }
 

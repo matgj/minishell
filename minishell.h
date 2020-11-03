@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:51:31 by Mathis            #+#    #+#             */
-/*   Updated: 2020/11/02 17:56:52 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/03 21:06:02 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,10 +186,6 @@ extern t_list		*g_all_malloc;
 
 char				**env_import(char **envp);
 char				*command_path(t_cmds *cmds);
-
-void				test_cmd(t_cmds cmds);
-void				test_env(t_cmds *cmds);
-void				test_tab_cmds(t_cmds *cmds, int i);
 
 void                *ft_memset(void *b, int c, size_t len);
 void                ft_putendl_fd(char *s, int fd);
