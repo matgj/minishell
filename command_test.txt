@@ -12,12 +12,7 @@
 /bin/cat main.c
 
 #ECHO
-echo
-echo lol      lol       
-echo -n -n -n -n lol lol lol
-echo -n lol
-echo -n
-echo -n -n -n 
+echo ; echo lol      lol       ; echo -n -n -n -n lol lol lol ; echo -n lol ; echo -n ; echo -n -n -n 
 
 #EXIT
 exit
@@ -56,10 +51,12 @@ export lala=uuuuuu lolo=uuuuuuu lulu=uuuuuuuuuuuu jiji
 echo $lala ; echo $lolo ; echo $lulu ; echo $jiji
 
 #CD 
-cd builtins/export ; bin/ls -l
-cd ../.. ; /bin/ls - l
+cd builtins/export ; /bin/ls -l
+cd ../.. ; /bin/ls -l
 cd sfksskfokf
 cd .
+cd
+
 
 #PWD
 pwd 
