@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 10:52:02 by Mathis            #+#    #+#             */
-/*   Updated: 2020/10/25 17:28:21 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/03 21:22:28 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ char			*gnl(void)
 	{
 		if ((ret = read(0, red, 1)) == -1)
 			return (NULL);
-		// if (g_reset == 1 && !(g_reset = 0))
-		 //	pos = 0;
 		if (ret == 0 && pos == 0)
 		{
 			write(2, "  \b\bexit\n", 9);
@@ -56,22 +54,17 @@ int				main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (read(0, NULL, 0) == -1)
 		return (0);
-	// if ((fd = dup(0)) == -1)
-	// 	return (0);
 	g_shell.redir = 0;
 	g_shell.dquotes = 0;
 	g_shell.bad_redir = 0;
 	g_shell.envp = env_import(envp);
 	env_status(0);
 	ft_printf("\e[1;1H\e[2J\n");
-	// printf.fd = 2;
 	while (1)
 	{
 		ft_printf("\e[1m" "bash-42$ " "\e[0m", 25);
 		signals();
-		// write(1, "reading input...\n", 6);
 		line = gnl();
-		// read_line(&line);
 		parsing(line);
 	}
 	return (0);
