@@ -14,29 +14,29 @@
 
 void	test_cmd(t_cmds cmds)
 {
-	int l;
+	// int l;
 
-	l = 0;
-	ft_printf("cmds->name:%s\n", cmds.name);
-	ft_printf("cmds->path:%s\n", cmds.path);
-	ft_printf("cmds->argc:%d\n", cmds.argc);
-	while (cmds.argv[l])
-	{
-		ft_printf("cmds->argv[%i]:%s\n", l, cmds.argv[l]);
-		l++;
-	}
-	ft_printf("cmds->chevron:%i\n", cmds.chevron);
-	ft_printf("cmds->input:%i\n", cmds.input);
+	// l = 0;
+	// ft_printf("cmds->name:%s\n", cmds.name);
+	// ft_printf("cmds->path:%s\n", cmds.path);
+	// ft_printf("cmds->argc:%d\n", cmds.argc);
+	// while (cmds.argv[l])
+	// {
+	// 	ft_printf("cmds->argv[%i]:%s\n", l, cmds.argv[l]);
+	// 	l++;
+	// }
+	// ft_printf("cmds->chevron:%i\n", cmds.chevron);
+	// ft_printf("cmds->input:%i\n", cmds.input);
 }
 
 void	test_env(t_cmds *cmds)
 {
-	int l;
+	// int l;
 
-	l = 0;
-	while (g_shell.envp[l])
-	{
-		ft_printf("g_shell->envp[%i]:%s\n", l, g_shell.envp[l]);
-		l++;
-	}
+	// l = 0;
+	// while (g_shell.envp[l])
+	// {
+	// 	ft_printf("g_shell->envp[%i]:%s\n", l, g_shell.envp[l]);
+	// 	l++;
+	// }
 }

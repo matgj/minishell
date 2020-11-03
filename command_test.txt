@@ -1,31 +1,5 @@
-#COMMANDES SIMPLES
-/bin/ls
-/bin/mkdir
-/bin/cat
 
-#ARGUMENTS
-/bin/ls -l
-/bin/ls -a
-/bin/ls -la
-/bin/mkdir test_lol
-/bin/rm -rf test_lol
-/bin/cat main.c
 
-#ECHO
-echo ; echo lol      lol       ; echo -n -n -n -n lol lol lol ; echo -n lol ; echo -n ; echo -n -n -n 
-
-#EXIT
-exit
-exit 0
-exit 1
-exit 2 3 4 5
-exit lol
-exit lool loool looool loooool
-
-#VALEUR RETOUR PROCESSUS
-Lancer les commandes de #ARGUMENTS et excécuter " echo $? "
-/bin/ls sifjsjfsljfsl
-/bin/ls lkslsk sflkjskfj
 
 #POINT VIRGULE
 /bin/ls -l ; /bin/ls -a ; /bin/ls -la ; /bin/mkdir test_lol ; /bin/rm -rf test_lol
