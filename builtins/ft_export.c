@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 22:42:24 by Mathis            #+#    #+#             */
-/*   Updated: 2020/11/04 10:56:28 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/04 11:41:24 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int		equal_sign(char *var)
 		return (-1);
 	while (var[i])
 	{
-		if (i == 0 && var[i] == '=')
-			return (-1);
-		if (var[i] == ' ')
-			return (-1);
+	//	if (i == 0 && var[i] == '=')
+	//		return (-1);
+	//	if (var[i] == ' ')
+	//		return (-1);
 		if (var[i] == '=')
 			return (1);
 		i++;
