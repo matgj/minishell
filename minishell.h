@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 20:51:31 by Mathis            #+#    #+#             */
-/*   Updated: 2020/11/03 21:30:55 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/04 10:45:10 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ void				close_fds(t_cmds cmds);
 char				*find_path(char *cmd);
 void				free_struct(t_cmds cmds);
 char				**add_env(t_cmds cmds, int *flag);
+void				add_env_status(char *env_var);
 void				plug_fd(t_cmds cmds);
 char				*find_env(char *to_find);
 void				*mmalloc(unsigned int size);
@@ -203,6 +204,8 @@ int					ft_echo(t_cmds cmds);
 int					ft_cd(t_cmds cmds);
 int					ft_pwd(t_cmds cmds);
 int					ft_export(t_cmds cmds);
+int					ft_export_ancien(t_cmds cmds);
+int					check_error_export(t_cmds cmds, int *flag);
 int					ft_unset(t_cmds cmds);
 int					ft_env(t_cmds cmds);
 int					ft_exit(t_cmds cmds);
