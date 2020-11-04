@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 22:42:24 by Mathis            #+#    #+#             */
-/*   Updated: 2020/11/04 11:41:24 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/04 13:17:46 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int		equal_sign(char *var)
 		return (-1);
 	while (var[i])
 	{
-	//	if (i == 0 && var[i] == '=')
-	//		return (-1);
-	//	if (var[i] == ' ')
-	//		return (-1);
+		if (i == 0 && var[i] == '=')
+			return (-1);
+		if (var[i] == ' ')
+			return (-1);
+		if (var[i] == ' ')
+		 	return (-1);
 		if (var[i] == '=')
 			return (1);
 		i++;
@@ -69,20 +71,20 @@ int		ft_export(t_cmds cmds)
 	{
 		while (i < cmds.argc)
 		{
-			if ((sign = equal_sign(cmds.argv[i])) == 1)
-			{
+		//	if ((sign = equal_sign(cmds.argv[i])) == 1)
+		//	{
 
 				add_env_status(cmds.argv[i]);
 				env_status(0);
-			}
-			else if (sign == -1)
-			{
-				ft_printf("minishell: export: `%s': not a valid identifier\n",
-						cmds.argv[i]);
-				env_status(1);
-			}
-			else
-				env_status(0);
+		//	}
+		//	else if (sign == -1)
+		//	{
+		//		ft_printf("minishell: export: `%s': not a valid identifier\n",
+		//				cmds.argv[i]);
+		//		env_status(1);
+		//	}
+		//	else
+		//		env_status(0);
 			i++;
 		}
 	}

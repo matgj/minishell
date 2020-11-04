@@ -6,7 +6,7 @@
 /*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 21:20:35 by a42               #+#    #+#             */
-/*   Updated: 2020/11/03 22:50:33 by Mathis           ###   ########.fr       */
+/*   Updated: 2020/11/04 13:38:19 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 int			ft_env(t_cmds cmds)
 {
 	int		i;
+	int sign;
 
 	i = 0;
 	while (g_shell.envp[i])
 	{
-		if (g_shell.envp[i][0] != '?')
-			ft_putendl_fd(g_shell.envp[i], 1);
-		i++;
+		if (g_shell.envp[i][0] != '?' && (ft_strlen(&g_shell.envp[i][0])) != 1)
+				ft_putendl_fd(g_shell.envp[i], 1);
+	i++;
 	}
 	env_status(0);
 	return (1);

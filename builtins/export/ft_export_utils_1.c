@@ -3,7 +3,7 @@
 /*
 ** Cette fonction est appelée au moment ou une variable correspond a une variable existante,
 ** dans le tableau d'environnement.
-** Dans le cas ou elle est appelé par la fonction ft_export, elle permet de remplacer la variable 
+** Dans le cas ou elle est appelé par la fonction ft_export, elle permet de remplacer la variable
 ** concernée par la nouvelle variable exportée.
 ** Dans le cas ou elle est appelé par la fonction ft_unset, elle supprime la variable sans la remplacer.
 */
@@ -19,7 +19,7 @@ void			is_match(t_cmds cmds, int *i, int *x, int export)
 		argv = before_egal(cmds.argv[*x], 1);
 		if ((envp && argv) || (!envp && argv))
 		{
-			free(g_shell.envp[*i]);
+			mfree(g_shell.envp[*i]);
 			g_shell.envp[*i] = NULL;
 			if (!(g_shell.envp[*i] = ft_strdup(cmds.argv[*x])))
 				return ;
@@ -29,8 +29,8 @@ void			is_match(t_cmds cmds, int *i, int *x, int export)
 }
 
 /*
-**	Cette fonction vérifie si la variable exportée existe déjà dans le tableau d'environnement. 
-** 	Si elle trouve une correspondance, elle free la valeur correspondante dans le tableau existant 
+**	Cette fonction vérifie si la variable exportée existe déjà dans le tableau d'environnement.
+** 	Si elle trouve une correspondance, elle free la valeur correspondante dans le tableau existant
 **	pour ensuite mettre la nouvelle valeur. La variable flag est décrémentée puis mise à NULL
 ** 	car elle ne sera pas comptabilisée comme variable a rajouter/enlever au tableau.
 */
@@ -63,7 +63,7 @@ void 			is_exist(t_cmds cmds, int *flag, int export)
 }
 
 /*
-**	Cette fonction compte le nombre de caractères avant ou après le signe '=' 
+**	Cette fonction compte le nombre de caractères avant ou après le signe '='
 **	Si on lui envoit en paramètre la lettre 'a' pour "after" elle comptera les caractères
 **	du nom de la variable.
 **	Si on lui envoit en paramètre la lettre 'b' pour "before" elle comptera les caractères
