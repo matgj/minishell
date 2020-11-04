@@ -6,7 +6,7 @@
 /*   By: a42 <a42@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 21:26:01 by a42               #+#    #+#             */
-/*   Updated: 2020/11/03 21:32:22 by a42              ###   ########.fr       */
+/*   Updated: 2020/11/04 13:56:31 by a42              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,10 @@ void			sort_env(t_cmds cmds)
 	while (tmp[i++])
 	{
 		j = i + 1;
-		while (tmp[j++])
-			if ((ft_strncmp(tmp[i], tmp[j], ft_strlen(tmp[j]))) > 0)
-				ft_swap(&tmp[i], &tmp[j]);
+		if (tmp[i])
+			while (tmp[j++])
+				if ((ft_strncmp(tmp[i], tmp[j], ft_strlen(tmp[j]))) > 0)
+					ft_swap(&tmp[i], &tmp[j]);
 	}
 	draw_env(tmp);
 }
