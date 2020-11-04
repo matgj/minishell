@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: a42 <a42@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: Mathis <Mathis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 21:20:35 by a42               #+#    #+#             */
-/*   Updated: 2020/11/03 21:20:53 by a42              ###   ########.fr       */
+/*   Updated: 2020/11/04 15:10:29 by Mathis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			ft_env(t_cmds cmds)
 	i = 0;
 	while (g_shell.envp[i])
 	{
-		if (g_shell.envp[i][0] != '?')
+		if ((g_shell.envp[i][0] != '?') && (ft_strlen(&g_shell.envp[i][0])) != 1)
 			ft_putendl_fd(g_shell.envp[i], 1);
 		i++;
 	}
