@@ -1,6 +1,6 @@
 # minishell with flmarsil
 
-First 42 team's project.
+First 42's team project.
 
 Shell allow people to communicate with kernel (action with CPU MEMORY and DEVICE) through the terminal. Kernel + Shell + some programs = UNIX OS.
 
